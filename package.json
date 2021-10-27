@@ -1,0 +1,34 @@
+{
+  "name": "archmetrics-studio",
+  "version": "1.0.0",
+  "description": "Archmetrics Studio's website",
+  "scripts": {
+    "dev": "concurrently \"cd server && npm run dev\" \"cd client && npm start\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/abdullahalshawafi/Archmetrics-Studio.git"
+  },
+  "keywords": [
+    "nodejs",
+    "docker",
+    "website",
+    "firebase",
+    "mongodb",
+    "reactjs",
+    "expressjs",
+    "mern-stack"
+  ],
+  "authors": [
+    "Abdullah Adel",
+    "Mohamed Fathy"
+  ],
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/abdullahalshawafi/Archmetrics-Studio/issues"
+  },
+  "homepage": "https://github.com/abdullahalshawafi/Archmetrics-Studio#readme",
+  "devDependencies": {
+    "concurrently": "^6.3.0"
+  }
+}
