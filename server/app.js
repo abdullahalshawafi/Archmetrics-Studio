@@ -1,16 +1,22 @@
 const express = require('express');
-const cors = require('cors');
+const dotenv = require('dotenv');
+
+const db = require('./configs/mongo');
+
 const app = express();
-app.use(cors());
+
+const PORT = process.env.PORT || 8080;
+
+dotenv.config();
+
+db().catch(err => console.log(err));
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-const PORT = process.env.PORT || 8080;
+app.use("/contact-us", require("./routes/contactUs"));
 
 app.listen(PORT, err => {
     if (err) return console.error(err);
     console.log(`Server started listening at port ${PORT}`);
 });
-
-
-app.use("/ContactUs", require("./Routes/ContactUs"));

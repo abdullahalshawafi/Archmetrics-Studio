@@ -1,17 +1,14 @@
 const router = require("express").Router();
-const MailController = require("../Controllers/MailController");
-const Validations = require("../Controllers/Validations");
+const mailController = require("../controllers/contactUsController");
+const Validations = require("../validations");
 
 
-router.get('/', async (req, res) => {
-    let Result = Validations.validateEmail(req.body.email)
-    if (!Result.validity) {
-        return res.json(result);
-    } else {
-        try {
-            MailController.SendMessage(req, res);        
-        } catch (error) {
-            res.status(500).json({ error });
-        }
+router.post('/', async (req, res) => {
+    try {
+        mailController.sendMessage(req, res);
+    } catch (error) {
+        res.status(500).json({ error });
     }
-})
+});
+
+module.exports = router;
