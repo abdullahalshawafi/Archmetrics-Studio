@@ -1,20 +1,25 @@
 const mongoose = require('mongoose');
 
 const projectModel = new mongoose.Schema({
-    name: {
-        type: String
-    },
-    Description: {
+    title: {
         type: String,
-        maxLength: 300,
+        minLength: 3,
+        maxLength: 40,
+        required: true
+    },
+    description: {
+        type: String,
+        maxLength: 2000,
         required: true
     },
     images: {
         type: [String],
+        default: ["None"],
         required: true
     },
     link: {
-        type: String
+        type: String,
+        default: "None"
     }
 }, { timestamps: true });
 

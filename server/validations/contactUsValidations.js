@@ -1,6 +1,6 @@
 const Joi = require('joi');
 
-module.exports.contactUsValidations = Joi.object({
+module.exports = Joi.object({
     name: Joi.string()
         .min(3)
         .max(40)

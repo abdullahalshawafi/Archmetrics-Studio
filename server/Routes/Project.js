@@ -1,42 +1,20 @@
 const router = require("express").Router();
-const Project = require("../models/Project");
+const {
+    getAllProjects,
+    getSingleProject,
+    createProject,
+    editProject,
+    deleteProject
+} = require("../controllers/projectController");
 
-router.post('/', async (req, res) => {
-    try {
-        const project = await Project.create(req.body);
-        await project.save();
-        res.sendStatus(200);
-    } catch (err) {
-        res.json({ error: err });
-    }
-});
+router.get('/', getAllProjects);
 
+router.get('/:id', getSingleProject);
 
-router.get('/:id', async (req, res) => {
-    try {
-        const project = await Project.findById(req.params.id);
-        res.json({ project });
-    } catch (err) {
-        res.json({ error: err });
-    }
-});
+router.post('/create', createProject);
 
-router.put('/:id', async (req, res) => {
-    try {
-        await Project.findByIdAndUpdate(req.params.id, req.body);
-        res.sendStatus(200);
-    } catch (err) {
-        res.json({ error: err });
-    }
-});
+router.put('/edit/:id', editProject);
 
-router.delete('/:id', async (req, res) => {
-    try {
-        await Project.findByIdAndRemove(req.params.id);
-        res.sendStatus(200);
-    } catch (err) {
-        res.json({ error: err });
-    }
-});
+router.delete('/delete/:id', deleteProject);
 
 module.exports = router;

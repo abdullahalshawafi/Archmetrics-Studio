@@ -1,6 +1,6 @@
 const nodemailer = require('nodemailer');
 const Message = require('../models/Message');
-const { contactUsValidations } = require('../validations');
+const contactUsValidations = require('../validations/contactUsValidations');
 
 const transport = nodemailer.createTransport({
     host: "smtp.mailtrap.io",
@@ -12,34 +12,34 @@ const transport = nodemailer.createTransport({
 });
 
 module.exports.sendMessage = async (req, res) => {
-    for (const field in req.body) {
-        if (Object.hasOwnProperty.call(req.body, field)) {
-            req.body[field] = req.body[field].trim();
-            if (field === "email") {
-                req.body[field] = req.body[field].toLowerCase();
+    try {
+        for (const field in req.body) {
+            if (Object.hasOwnProperty.call(req.body, field)) {
+                req.body[field] = req.body[field].trim();
+                if (field === "email") {
+                    req.body[field] = req.body[field].toLowerCase();
+                }
             }
         }
-    }
 
-    const { name, email, message } = req.body;
+        const { name, email, message } = req.body;
 
-    const { error } = contactUsValidations.validate(req.body);
+        const { error } = contactUsValidations.validate(req.body);
 
-    if (error) {
-        const errorMessages = error.details.map(err => err.message);
-        return res.status(400).json({ errorMessages });
-    }
+        if (error) {
+            const errorMessages = error.details.map(err => err.message);
+            return res.status(400).json({ errorMessages });
+        }
 
-    mailOptions = {
-        to: email,
-        subject: `New message from ${name}`,
-        text: message
-    }
+        mailOptions = {
+            to: email,
+            subject: `New message from ${name}`,
+            text: message
+        }
 
-    try {
         const newMessage = await new Message(req.body);
         await newMessage.save();
-        
+
         transport.sendMail(mailOptions, (error, response) => {
             if (error) {
                 console.log(error);
@@ -51,6 +51,6 @@ module.exports.sendMessage = async (req, res) => {
     }
     catch (err) {
         console.log(err);
-        return res.status(400).json({ error: "An error has occured please try again" });
+        return res.status(400).json({ error: "An error has occurred please try again" });
     }
 }
