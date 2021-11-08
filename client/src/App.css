@@ -1,3 +1,6 @@
+body{
+  font-family: sans-serif;
+}
 .Content{
   display:flex;
   flex-direction:row;
@@ -5,16 +8,51 @@
   align-items:center;
   margin-left:auto;
 }
-
+.logo{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  margin-right:2em;
+}
+.logoImg{
+  margin-top:6px;
+  width:180px;
+  height:105px;
+  width: 70px;
+  height: 40px;
+  margin-top:0px;
+  margin-left:0px
+}
 .ContentButton{
   background-color:transparent;
   font-size:20px;
   font-style:normal;
   border:none;
-  color:#656c73;
+  color:black;
   margin-right:1em;
   font-style: Bold;
   font-weight: 500;
+}
+
+.navbar{
+  width:100%;
+  height:52px;
+  display:flex;
+  flex-direction:row;
+  padding:0 1em;
+  justify-content:space-between;
+  align-items: center;
+  background-color:transparent;
+}
+
+.footer{
+  width:100%;
+  height:60px;
+  background-color: #141618;
+  display:flex;
+  flex-direction:row;
+  justify-content:space-around;
+  align-items: center;
 }
 
 .FooterIcons{
@@ -23,5 +61,61 @@
   justify-content:flex-end;
   align-items:center;
   padding:5px;
-  margin:0 5px;
+  color:white;
+}
+
+.Icon{
+  margin:0 15px;
+}
+.Copyright{
+  color:white;
+}
+
+
+.SecondSectionInfo{
+  width:70%;
+  padding:50px 50px;
+  display:flex;
+  align-items:flex-start;
+}
+
+.SecondSection{
+  display: grid;
+  grid-template-columns: auto auto auto;
+  padding-top:50px ;
+  margin-bottom: 4em;
+  justify-content: space-around;
+}
+
+@media screen and (max-width: 720px) {
+  .SecondSection{
+    grid-template-columns: auto auto;
+  }
+}
+@media screen and (max-width: 480px) {
+  .SecondSection{
+    grid-template-columns: auto;
+  }
+  .footer{
+    flex-direction: column;
+  }
+
+}
+.img{
+  position: relative;
+  top:20px;
+  margin-right: 30px;
+}
+
+.title{
+  font-size: 18px;
+  font-weight: bolder;
+}
+
+.Description{
+
+  color: #777777;
+}
+
+.Details{
 }

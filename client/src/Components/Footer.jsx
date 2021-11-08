@@ -5,14 +5,14 @@ import { faCopyright } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export function Footer(){
-    return <div>
+    return <div className="footer">
         <div>
-            <label><FontAwesomeIcon icon={faCopyright} size="lg"/>&nbsp; 2021 Archmetrics-Studio</label>
+            <label className="Copyright"><FontAwesomeIcon icon={faCopyright} size="lg"/>&nbsp; 2021 Archmetrics-Studio</label>
         </div>
         <div className="FooterIcons">
-            <FontAwesomeIcon icon={faFacebook} /> 
-            <FontAwesomeIcon icon={faTwitter} /> 
-            <FontAwesomeIcon icon={faLinkedin} /> 
+            <FontAwesomeIcon className="Icon" icon={faFacebook} /> 
+            <FontAwesomeIcon className="Icon" icon={faTwitter} /> 
+            <FontAwesomeIcon className="Icon" icon={faLinkedin} /> 
         </div>
     </div>
 }

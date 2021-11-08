@@ -1,21 +1,24 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import "../App.css"
-
+import logo from "../logo.svg"
 export function Navbar() {
-    return <div>
+    return <div className="navbar">
+        <div className="logo">
+            <img className="logoImg" src={logo} />
+        </div>
         <div className="Content">
             <Link to ="/">
                 <button className="ContentButton">Home</button>
             </Link>
             <Link to = "/Services">
-                <button>Services</button>
+                <button className="ContentButton">Services</button>
             </Link>
             <Link to ="Community">
-                <button>Community</button>
+                <button className="ContentButton">Community</button>
             </Link>
             <Link to = "Projects">
-                <button>Projects</button>
+                <button className="ContentButton">Projects</button>
             </Link>    
         </div>
     </div>
