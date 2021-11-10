@@ -43,7 +43,7 @@ function Info() {
                     return (
                         <div key={index} className="info-card">
                             <div className="icon-container">
-                                <FontAwesomeIcon className="Icon" icon={card.icon} />
+                                <FontAwesomeIcon icon={card.icon} />
                             </div>
                             <div className="card-details">
                                 <h3>{card.title}</h3>

@@ -4,11 +4,35 @@
   box-sizing: border-box;
 }
 
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
 body {
   font-family: 'Hind', sans-serif;
 }
 
-.Content {
+a {
+  text-decoration: none;
+}
+
+.nav-links {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -20,7 +44,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 2rem 2rem 2rem 0;
+  padding: 1.5rem 1.5rem 1.5rem 0;
   width: 10rem;
 }
 
@@ -29,39 +53,68 @@ body {
   height: auto;
 }
 
-.ContentButton {
+.nav-link {
+  text-transform: uppercase;
   background-color: transparent;
-  font-size: 20px;
-  font-style: normal;
+  font-size: 0.8rem;
   border: none;
-  color: black;
-  margin-right: 1em;
-  font-style: Bold;
-  font-weight: 500;
+  margin: 0 1rem;
+  letter-spacing: 0.5px;
+  font-family: "poppins", sans-serif;
+  font-weight: 700;
+}
+
+.nav-link a {
+  color: #141618;
+  transition: color 0.2s ease-in-out;
+}
+
+.nav-link:first-child {
+  margin-left: 0;
+}
+
+.nav-link:last-child {
+  margin-right: 0;
 }
 
 .navbar {
   width: 100%;
   display: flex;
   flex-direction: row;
-  padding: 0 2rem;
-  margin: 0 2rem;
+  padding: 0 4rem;
   justify-content: space-between;
   align-items: center;
-  background-color: transparent;
+  background-color: #fff;
   position: fixed;
   top: 0;
   left: 0;
+  border-bottom: rgba(234, 234, 234, 0.5) solid 1px;
+  box-shadow: 0 4px 10px -10px rgb(0 0 0 / 60%);
+  transition: background-color 0.2s ease-out;
+}
+
+.navbar-transparent {
+  background-color: transparent;
+  border-bottom: rgba(255, 255, 255, 0.15) solid 1px;
+}
+
+.navbar-transparent .nav-link a {
+  color: #fff;
+}
+
+.nav-link.active a,
+.nav-link:hover a {
+  color: #777777;
 }
 
 .footer {
   width: 100%;
-  height: 60px;
   background-color: #141618;
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
+  padding: 1.5rem 4rem;
 }
 
 .FooterIcons {
@@ -75,10 +128,18 @@ body {
 
 .Icon {
   margin: 0 15px;
+  color: white;
+  transition: all 0.2s ease-in-out;
+}
+
+.Icon:hover {
+  color: #1081d1;
+  transform: scale(0.9);
 }
 
 .Copyright {
   color: white;
+  font-size: 0.8rem;
 }
 
 
@@ -228,6 +289,10 @@ body {
 
 .info-card .icon-container {
   font-size: 1.7rem;
+}
+
+.info-card .card-details {
+  padding-left: 1.5rem;
 }
 
 .info-card .card-details h3 {
