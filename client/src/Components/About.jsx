@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 
 function About() {
     const [selectedAbout, setSelectedAbout] = useState("manifesto");
@@ -22,7 +22,7 @@ function About() {
             </div>
             <p className="about-text">{aboutText[selectedAbout]}</p>
         </div>
-    )
+    );
 }
 
-export default About
+export default About;

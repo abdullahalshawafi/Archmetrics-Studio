@@ -206,3 +206,35 @@ body {
   line-height: 1.75;
   font-size: 1.12rem;
 }
+
+.info-container {
+  background-color: #1081d1;
+  color: #fff;
+}
+
+.info-container>div {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  justify-content: space-around;
+  column-gap: 36px;
+  row-gap: 72px;
+  padding: 75px 36px;
+  margin: 0 36px;
+}
+
+.info-card {
+  display: flex;
+}
+
+.info-card .icon-container {
+  font-size: 1.7rem;
+}
+
+.info-card .card-details h3 {
+  line-height: 1.5;
+  font-size: 1rem;
+}
+
+.info-card .card-details p {
+  font-size: 0.9rem;
+}
