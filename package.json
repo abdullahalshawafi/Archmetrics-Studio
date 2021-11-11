@@ -31,5 +31,6 @@
   "homepage": "https://github.com/abdullahalshawafi/Archmetrics-Studio#readme",
   "devDependencies": {
     "concurrently": "^6.3.0"
-  }
+  },
+  "dependencies": {}
 }

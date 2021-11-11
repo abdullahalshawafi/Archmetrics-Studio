@@ -200,13 +200,33 @@ a {
   background-size: cover;
   background-attachment: fixed;
   background-repeat: no-repeat;
-  background-position: center -10rem;
+  background-position: center -8rem;
   background-color: rgba(0, 0, 0, 0.4);
   background-blend-mode: multiply;
   height: 26rem;
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.custom-carousel {
+  height: 100%;
+  width: 100%;
+}
+
+.custom-carousel .carousel-slider {
+  height: 100%;
+  display: flex;
+}
+
+.slider-container .carousel.carousel-slider>div {
+  margin-left: 2rem;
+  margin-right: 2rem;
+}
+
+.slider-container .carousel.carousel-slider>button.control-arrow {
+  height: fit-content;
+  top: 50%;
 }
 
 .slider-container .text-container {
@@ -449,7 +469,6 @@ a {
   .slider-container {
     height: 32rem;
     background-position: center top;
-    padding: 0 2rem;
   }
 }
 
