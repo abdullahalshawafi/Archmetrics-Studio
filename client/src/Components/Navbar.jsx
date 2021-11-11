@@ -19,28 +19,31 @@ export default function Navbar({ pathname }) {
     };
   }, []);
 
-  return (
-    <div className={`navbar ${isNavTop ? "navbar-transparent" : ""}`}>
-      <div className="logo">
-        <Link to="/">
-          <img
-            className="logoImg"
-            src={isNavTop ? logoWhite : logoBlack}
-            alt="Logo"
-          />
-        </Link>
+    return (
+        <div className={`navbar ${isNavTop ? "navbar-transparent" : ""}`}>
+            <div className="logo">
+                <Link to="/">
+                    <img className="logoImg" src={isNavTop ? logoWhite : logoBlack} alt="Logo" />
+                </Link>
+                
+            </div>
+            <div className="nav-links">
+                <div className={`nav-link ${pathname === 'home' ? 'active' : ''}`}>
+                    <Link to="/">
+                        Home
+                    </Link>
+                </div>
+                <div className={`nav-link ${pathname === 'services' ? 'active' : ''}`}>
+                    <Link to="/services">
+                        Services
+                    </Link>
+                </div>
+                <div className={`nav-link ${pathname === 'projects' ? 'active' : ''}`}>
+                    <Link to="/projects">
+                        Projects
+                    </Link>
+                </div>
+            </div>
       </div>
-      <div className="nav-links">
-        <div className={`nav-link ${pathname === "home" ? "active" : ""}`}>
-          <Link to="/">Home</Link>
-        </div>
-        <div className={`nav-link ${pathname === "services" ? "active" : ""}`}>
-          <Link to="/services">Services</Link>
-        </div>
-        <div className={`nav-link ${pathname === "projects" ? "active" : ""}`}>
-          <Link to="/projects">Projects</Link>
-        </div>
-      </div>
-    </div>
   );
 }
