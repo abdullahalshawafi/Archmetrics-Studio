@@ -104,7 +104,7 @@ a {
 
 .nav-link.active a,
 .nav-link:hover a {
-  color: #777777;
+  color: #777777 !important;
 }
 
 .footer {
@@ -114,7 +114,7 @@ a {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  padding: 1.5rem 4rem;
+  padding: 1.5rem 3rem;
 }
 
 .FooterIcons {
@@ -142,7 +142,6 @@ a {
   font-size: 0.8rem;
 }
 
-
 .SecondSectionInfo {
   width: 70%;
   padding: 50px 50px;
@@ -156,23 +155,6 @@ a {
   padding-top: 50px;
   margin-bottom: 4em;
   justify-content: space-around;
-}
-
-@media screen and (max-width: 720px) {
-  .SecondSection {
-    grid-template-columns: auto auto;
-  }
-}
-
-@media screen and (max-width: 480px) {
-  .SecondSection {
-    grid-template-columns: auto;
-  }
-
-  .footer {
-    flex-direction: column;
-  }
-
 }
 
 .img {
@@ -190,12 +172,11 @@ a {
   color: #777777;
 }
 
-/* .Details {} */
-
 .slider-container {
   width: 100%;
   background-image: url("./assets/main_Background.jpg");
   background-size: cover;
+  background-attachment: fixed;
   background-repeat: no-repeat;
   background-position: center -10rem;
   background-color: rgba(0, 0, 0, 0.4);
@@ -302,4 +283,47 @@ a {
 
 .info-card .card-details p {
   font-size: 0.9rem;
+}
+
+@media screen and (max-width: 960px) {
+  .navbar {
+    background-color: #fff;
+  }
+
+  .navbar-transparent .nav-link a {
+    color: #141618;
+  }
+}
+
+@media screen and (max-width: 720px) {
+
+  .SecondSection,
+  .info-container>div {
+    grid-template-columns: auto auto;
+  }
+
+  .slider-container {
+    height: 36rem;
+    padding: 0 2rem;
+  }
+}
+
+@media screen and (max-width: 480px) {
+
+  .SecondSection,
+  .info-container>div {
+    grid-template-columns: auto;
+  }
+
+  .about-container {
+    padding: 75px 18px;
+  }
+
+  .info-container>div {
+    padding: 75px 0;
+  }
+
+  .footer {
+    flex-direction: column;
+  }
 }
