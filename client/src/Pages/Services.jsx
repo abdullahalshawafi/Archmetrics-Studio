@@ -5,7 +5,7 @@ import "../App.css";
 
 export default function Services({ setPathname }) {
   useEffect(() => {
-    setPathname("home");
+    setPathname("services");
   });
 
   return (

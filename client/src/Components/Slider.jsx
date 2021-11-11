@@ -10,6 +10,7 @@ function Slider() {
         infiniteLoop
         stopOnHover
         showStatus={false}
+        showThumbs={false}
         axis="horizontal"
         className="custom-carousel"
       >
