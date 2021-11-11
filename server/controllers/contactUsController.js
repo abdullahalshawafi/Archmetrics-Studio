@@ -27,8 +27,9 @@ module.exports.sendMessage = async (req, res) => {
         const { error } = contactUsValidations.validate(req.body);
 
         if (error) {
-            const errorMessages = error.details.map(err => err.message);
-            return res.status(400).json({ errorMessages });
+            const errorMessages = {};
+            error.details.forEach(err => { errorMessages[err.context.label] = err.message });
+            return res.json({ errorMessages });
         }
 
         mailOptions = {
@@ -46,11 +47,11 @@ module.exports.sendMessage = async (req, res) => {
                 return res.send("error");
             }
             console.log(response.messageId);
-            res.status(200).json({ message: 'Thank you for contacting us, we will respond as soon as possible!' });
+            res.status(200).json({ message: `Thank you ${name} for contacting us, we will respond to you as soon as possible!` });
         });
     }
     catch (err) {
         console.log(err);
-        return res.status(400).json({ error: "An error has occurred please try again" });
+        return res.json({ message: "An error has occurred please try again" });
     }
 }

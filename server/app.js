@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 const dotenv = require('dotenv');
 
 const db = require('./configs/mongo');
@@ -7,6 +8,7 @@ const app = express();
 
 const PORT = process.env.PORT || 8080;
 
+app.use(cors());
 dotenv.config();
 
 db().catch(err => console.log(err));

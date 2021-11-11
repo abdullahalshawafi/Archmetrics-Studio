@@ -32,6 +32,29 @@ a {
   text-decoration: none;
 }
 
+.back-top-container {
+  font-size: 1.2rem;
+  position: fixed;
+  bottom: 22px;
+  right: 22px;
+  opacity: 1;
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: #303133 solid 1px;
+  background-color: #303133;
+  color: white;
+  cursor: pointer;
+  border-radius: 2px;
+  transition: opacity 0.2s ease-in-out;
+}
+
+.back-top-container:hover {
+  opacity: 0.8;
+}
+
 .nav-links {
   display: flex;
   flex-direction: row;
@@ -44,8 +67,8 @@ a {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 1.5rem 1.5rem 1.5rem 0;
-  width: 10rem;
+  padding: 0.9rem 0.9rem 0.9rem 0;
+  width: 9.2rem;
 }
 
 .logoImg {
@@ -61,7 +84,7 @@ a {
   margin: 0 1rem;
   letter-spacing: 0.5px;
   font-family: "poppins", sans-serif;
-  font-weight: 700;
+  font-weight: 600;
 }
 
 .nav-link a {
@@ -114,7 +137,7 @@ a {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  padding: 1.5rem 3rem;
+  padding: 1.5rem 4rem;
 }
 
 .FooterIcons {
@@ -173,7 +196,6 @@ a {
 }
 
 .slider-container {
-  width: 100%;
   background-image: url("./assets/main_Background.jpg");
   background-size: cover;
   background-attachment: fixed;
@@ -285,6 +307,116 @@ a {
   font-size: 0.9rem;
 }
 
+.contact-us-container {
+  padding: 75px 36px;
+  margin: 0 36px;
+  text-align: center;
+}
+
+.contact-us-details {
+  margin: 0 12rem;
+}
+
+.contact-us-details h1 {
+  text-transform: uppercase;
+  font-family: 'Poppins', sans-serif;
+  font-size: 2.1rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+
+.contact-us-details hr {
+  width: 5rem;
+  margin: 1.5rem auto;
+  background: #1081d1;
+  border: solid 1px #1081d1;
+}
+
+.contact-us-details p {
+  color: #777777;
+  letter-spacing: 0.5px;
+  font-size: 1.2rem;
+}
+
+.contact-us-form {
+  margin: 4.5rem 6.5rem 0 6.5rem;
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 1fr 1fr;
+  grid-template-areas:
+    'name email'
+    'message message'
+    'submit submit';
+}
+
+.input-field *:not(small) {
+  display: block;
+  width: 100%;
+  padding: 0.6rem 0.8rem;
+  font-family: "Poppins", sans-serif;
+  box-shadow: inset 0 2px 1px rgb(0 0 0 / 3%);
+  border: 1px solid #eaeaea;
+  border-radius: 2px;
+}
+
+.input-field *:focus-visible {
+  outline: #1081d1 1px solid;
+}
+
+.contact-us-form .name {
+  grid-area: name;
+}
+
+.contact-us-form .email {
+  grid-area: email;
+}
+
+.contact-us-form .message {
+  grid-area: message;
+}
+
+.contact-us-form .message>textarea {
+  resize: none;
+}
+
+.contact-us-form button {
+  grid-area: submit;
+  display: block;
+  width: fit-content;
+  margin: auto;
+  background-color: #1081d1;
+  padding: 1rem 2rem;
+  border: #1081d1 1px solid;
+  color: #fff;
+  text-transform: uppercase;
+  font-weight: 600;
+  font-size: 0.8rem;
+  letter-spacing: 1px;
+  cursor: pointer;
+  outline: none;
+  transition: all 0.2s ease-in-out;
+}
+
+.contact-us-form button:hover,
+.contact-us-form button:focus-visible {
+  background-color: transparent;
+  color: #1081d1;
+}
+
+.contact-us-form button:disabled {
+  background-color: transparent;
+  border: #aaa 1px solid;
+  color: #aaa;
+  cursor: not-allowed;
+}
+
+.input-field small {
+  color: red;
+  display: block;
+  text-align: left;
+  margin-top: 0.2rem;
+}
+
 @media screen and (max-width: 960px) {
   .navbar {
     background-color: #fff;
@@ -292,6 +424,18 @@ a {
 
   .navbar-transparent .nav-link a {
     color: #141618;
+  }
+
+  .contact-us-container {
+    margin: 0;
+  }
+
+  .contact-us-details {
+    margin: 0;
+  }
+
+  .contact-us-form {
+    margin: 4.5rem 0 0 0;
   }
 }
 
@@ -303,7 +447,8 @@ a {
   }
 
   .slider-container {
-    height: 36rem;
+    height: 32rem;
+    background-position: center top;
     padding: 0 2rem;
   }
 }
@@ -325,5 +470,6 @@ a {
 
   .footer {
     flex-direction: column;
+    padding: 1.5rem 2rem;
   }
 }
