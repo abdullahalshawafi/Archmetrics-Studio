@@ -229,6 +229,12 @@ a {
   top: 50%;
 }
 
+.slider-container .carousel.carousel-slider>div>ul li {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .slider-container .text-container {
   color: #fff;
   text-align: center;
@@ -473,6 +479,13 @@ a {
 }
 
 @media screen and (max-width: 480px) {
+  .slider-container .carousel.carousel-slider>button.control-arrow {
+    display: none;
+  }
+
+  .slider-container .text-container h1 {
+    font-size: 30px;
+  }
 
   .SecondSection,
   .info-container>div {
