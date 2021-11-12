@@ -3,6 +3,7 @@ import About from "../components/About";
 import ContactUs from "../components/ContactUs";
 import Info from "../components/Info";
 import Slider from "../components/Slider";
+import TeamMembers from "../components/TeamMembers";
 
 function Home({ setPathname }) {
   useEffect(() => {
@@ -14,6 +15,7 @@ function Home({ setPathname }) {
       <Slider />
       <About />
       <Info />
+      <TeamMembers/>
       <ContactUs />
     </div>
   );

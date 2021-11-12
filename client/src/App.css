@@ -518,6 +518,110 @@ a {
   color: #777777 !important;
 }
 
+
+.Team-Members-container {
+  padding: 75px 0px;
+  text-align: center;
+}
+
+.Team-Members-details {
+  margin: 0 12rem;
+}
+
+.Team-Members-details h1 {
+  text-transform: uppercase;
+  font-family: 'Poppins', sans-serif;
+  font-size: 2.1rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+
+.Team-Members-details hr {
+  width: 5rem;
+  margin: 1.5rem auto;
+  background: #1081d1;
+  border: solid 1px #1081d1;
+}
+
+.Team-Members-details p {
+  color: #777777;
+  letter-spacing: 0.5px;
+  font-size: 1.2rem;
+}
+
+.Members{
+  width: 100%;
+  margin-top:80px;
+  align-items: center;
+}
+.imgslider{
+  background-color: black;
+}
+.Div1:hover .hiddenDiv{
+  display: flex;
+  flex-direction: column;
+}
+.Div1:hover .Member {
+  opacity: 0.2
+}
+
+.Div2:hover .hiddenDiv{
+  display: flex;
+  flex-direction: column;
+}
+.Div2:hover .Member {
+  opacity: 0.2
+}
+
+.Div3:hover .hiddenDiv{
+  display: flex;
+  flex-direction: column;
+}
+.Div3:hover .Member {
+  opacity: 0.2
+}
+.Div4:hover .hiddenDiv{
+  display: flex;
+  flex-direction: column;
+}
+.Div4:hover .Member {
+  opacity: 0.2
+}
+.Div5:hover .hiddenDiv{
+  display: flex;
+  flex-direction: column;
+}
+.Div5:hover .Member {
+  opacity: 0.2
+}
+.hiddenDiv {  
+  display: none;
+  color:white;
+  align-items: center;
+  position: relative;
+  left: 0;
+  top: -270px;
+  right: 0;
+  background-color: rgba(0,0,0,.15);
+}
+.HiddenParagraph{
+  width:80%;
+}
+.Member
+{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  transition: opacity .3s ease-in-out;
+}
+
+
+.Members hr {
+  width: 5rem;
+  margin: 1.5rem auto;
+  background: #ffffff;
+  border: solid 1px #ffffff;
+}
 @media screen and (max-width: 960px) {
   .navbar {
     background-color: #fff;
@@ -527,11 +631,13 @@ a {
     color: #141618;
   }
 
-  .contact-us-container {
+  .contact-us-container,
+  .Team-Members-container{
     margin: 0;
   }
 
-  .contact-us-details {
+  .contact-us-details,
+  .Team-Members-details{
     margin: 0;
   }
 
@@ -543,7 +649,8 @@ a {
 @media screen and (max-width: 720px) {
 
   .SecondSection,
-  .info-container>div {
+  .info-container>div,
+  .Team-Members>div{
     grid-template-columns: auto auto;
   }
 
@@ -563,7 +670,8 @@ a {
   }
 
   .SecondSection,
-  .info-container>div {
+  .info-container>div,
+   .Team-Members-container>div{
     grid-template-columns: auto;
   }
 
