@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
-import About from "../components/About";
-import ContactUs from "../components/ContactUs";
-import Info from "../components/Info";
 import Slider from "../components/Slider";
+import About from "../components/About";
+import Info from "../components/Info";
 import TeamMembers from "../components/TeamMembers";
+import ContactUs from "../components/ContactUs";
 
 function Home({ setPathname }) {
   useEffect(() => {
@@ -15,7 +15,7 @@ function Home({ setPathname }) {
       <Slider />
       <About />
       <Info />
-      <TeamMembers/>
+      <TeamMembers />
       <ContactUs />
     </div>
   );

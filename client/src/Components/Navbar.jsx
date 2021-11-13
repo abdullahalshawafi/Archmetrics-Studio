@@ -20,7 +20,10 @@ export default function Navbar({ pathname }) {
   }, []);
 
   return (
-    <div className={`navbar ${isNavTop ? "navbar-transparent" : ""}`}>
+    <div
+      id="navbar"
+      className={`navbar ${isNavTop ? "navbar-transparent" : ""}`}
+    >
       <div className="logo">
         <Link to="/">
           <img

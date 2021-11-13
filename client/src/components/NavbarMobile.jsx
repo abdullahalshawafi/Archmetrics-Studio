@@ -13,8 +13,9 @@ export default function NavbarMobile({ pathname }) {
   const [click, setClick] = useState(false);
   const handleClick = () => setClick(!click);
   const closeMobileMenu = () => setClick(false);
+
   return (
-    <div className="NavbarMobile">
+    <div className="NavbarMobile" id="navbar">
       <div className="LogoMobile">
         <Link to="/">
           <img className="logoImgMobile" src={logoBlack} alt="Logo" />
