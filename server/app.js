@@ -16,8 +16,9 @@ db().catch(err => console.log(err));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use("/contact-us", require("./routes/contactUs"));
-app.use("/project", require("./routes/project"));
+app.use("/contact-us", require("./Routes/contactUs"));
+app.use("/project", require("./Routes/project"));
+app.use("/user", require("./Routes/user"));
 
 app.listen(PORT, err => {
     if (err) return console.error(err);
