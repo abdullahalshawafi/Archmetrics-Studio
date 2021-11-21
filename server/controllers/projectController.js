@@ -72,7 +72,7 @@ module.exports = {
             return res.status(500).json({ error: "An error has occurred please try again" });
         }
     },
-    
+
     deleteProject: async (req, res) => {
         try {
             await Project.findByIdAndRemove(req.params.id);

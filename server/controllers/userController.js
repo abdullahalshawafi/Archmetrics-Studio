@@ -1,39 +1,42 @@
-const User = require('../models/user');
-const bcrypt = require('bcrypt');
 const { sign } = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
+const User = require('../models/User');
 
 module.exports = {
     login: async (req, res) => {
-        const {
-            username,
-            password
-        } = req.body;
-        User.findOne({
-            username: username
-        }).then((user) => {
-            if (!user) return res.json({
-                error: "Username Doesn't Exist"
-            })
-            else {
-                bcrypt.compare(password, user.password).then((match) => {
-                    if (!match) return res.json({
-                        error: "Wrong Password"
-                    })
-                    else {
-                        const accesstoken = sign({
-                            username: user.username
-                        }, process.env.AccessToken)
-                        return res.status(200).json({
-                            token: accesstoken
-                        })
-                    }
-                })
-            }
-        })
+        try {
+            const { username, password } = req.body;
 
+            const user = await User.findOne({ username });
+
+            if (!user) {
+                return res.json({
+                    error: "Invalid username or password"
+                });
+            }
+
+            const match = await bcrypt.compare(password, user.password);
+
+            if (!match) {
+                return res.json({
+                    error: "Invalid username or password"
+                });
+            }
+
+            const accessToken = sign({ username }, process.env.AccessToken);
+
+            return res.status(200).json({
+                token: accessToken
+            });
+
+        } catch (error) {
+            return res.json({
+                error: error.message
+            });
+        }
     },
 
-    Signup: async (req, res) => {
+    signup: async (req, res) => {
         try {
             const {
                 email,
@@ -41,43 +44,28 @@ module.exports = {
                 username
             } = req.body;
 
-            let result = await User.findOne({
-                username
-            })
-            if (!result) {
-                bcrypt.hash(password, 10).then(async (hashed) => {
-                    const Data = {
-                        username: username,
-                        email: email,
-                        password: hashed,
-                    }
-                    try {
-                        const user = await User.create(Data);
-                    } catch (error) {
-                        res.json({
-                            error: error.message
-                        })
-                    }
-                }, res).then((result) => {
-                    res.json({
-                        success: "The email is signed up successful"
-                    })
+            const result = await User.findOne({ username }) || await User.findOne({ email });
 
-                }).catch((err) => res.json({
-                    error: err.message
-                }));
-            } else {
+            if (result) {
                 return res.json({
-                    error: "this username has been used before"
+                    error: "This user already exists"
                 });
             }
 
+            const user = await User.create(req.body);
+
+            user.password = await bcrypt.hash(password, 10);
+
+            await user.save();
+
+            res.json({
+                success: "User signed up successfully"
+            });
 
         } catch (error) {
             return res.json({
                 error: error.message
             });
         }
-
     }
 }
