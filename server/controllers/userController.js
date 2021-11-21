@@ -52,11 +52,9 @@ module.exports = {
                 });
             }
 
-            const user = await User.create(req.body);
+            req.body.password = await bcrypt.hash(password, 10);
 
-            user.password = await bcrypt.hash(password, 10);
-
-            await user.save();
+            await User.create(req.body);
 
             res.json({
                 success: "User signed up successfully"

@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
+import { loggedIn, login } from "./services/authServices";
 
 function Login({ setShowNavbar }) {
   const [success, setSuccess] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   const [body, setBody] = useState({
     username: "",
     password: "",
@@ -12,21 +15,27 @@ function Login({ setShowNavbar }) {
     setShowNavbar(false);
   });
 
+  if (loggedIn) {
+    return <Navigate to="/admin/dashboard" />;
+  }
+
   const handleChange = (e) => {
     setBody({ ...body, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (body.username === "abdullahadel" && body.password === "admin123") {
-      console.log(body);
-      setSuccess(true);
-    }
 
-    setBody({
-      username: "",
-      password: "",
-    });
+    setLoading(true);
+
+    const res = await login(body);
+
+    setErrorMessage(res.error);
+    setBody(res.body);
+    setLoading(res.loading);
+    setSuccess(res.success);
+
+    window.location.reload();
   };
 
   return success ? (
@@ -38,6 +47,11 @@ function Login({ setShowNavbar }) {
     >
       <form onSubmit={handleSubmit} className="p-4 bg-dark text-light rounded">
         <h2 className="text-center mb-3">Admin Login</h2>
+        {errorMessage && (
+          <div className="alert alert-danger p-2 mb-3" role="alert">
+            {errorMessage}
+          </div>
+        )}
         <div className="mb-3">
           <label htmlFor="username" className="form-label mb-1">
             Username
@@ -69,7 +83,11 @@ function Login({ setShowNavbar }) {
             autoComplete="on"
           />
         </div>
-        <button type="submit" className="btn btn-primary d-block mx-auto">
+        <button
+          type="submit"
+          className="btn btn-primary d-block mx-auto"
+          disabled={loading}
+        >
           Submit
         </button>
       </form>
