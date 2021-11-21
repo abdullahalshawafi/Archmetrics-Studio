@@ -5,9 +5,10 @@ import Info from "../components/Info";
 import TeamMembers from "../components/TeamMembers";
 import ContactUs from "../components/ContactUs";
 
-function Home({ setPathname }) {
+function Home({ setPathname, setShowNavbar }) {
   useEffect(() => {
     setPathname("home");
+    setShowNavbar(true);
   });
 
   return (

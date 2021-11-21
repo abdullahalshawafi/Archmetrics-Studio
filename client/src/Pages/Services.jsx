@@ -4,9 +4,10 @@ import ServicesSection from "../components/ServicesSection";
 import firstImg from "../assets/firstImg.png";
 import "../App.css";
 
-export default function Services({ setPathname }) {
+export default function Services({ setPathname, setShowNavbar }) {
   useEffect(() => {
     setPathname("services");
+    setShowNavbar(true);
   });
 
   return (
