@@ -1,5 +1,5 @@
 {
-  "name": "server",
+  "name": "archmetrics-backend",
   "version": "1.0.0",
   "description": "Archmetrics Studio's website backend",
   "main": "app.js",

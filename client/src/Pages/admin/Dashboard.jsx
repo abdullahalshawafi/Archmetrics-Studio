@@ -1,18 +1,9 @@
-import React, { useEffect } from "react";
+import React from "react";
+import AdminLayout from "../../layouts/AdminLayout";
 import { Link, Navigate } from "react-router-dom";
-import { loggedIn, logout } from "./services/authServices";
+import { loggedIn } from "./services/authServices";
 
-function Dashboard({ setShowNavbar }) {
-  useEffect(() => {
-    setShowNavbar(false);
-  });
-
-  const handleLogout = () => {
-    logout();
-
-    window.location.reload();
-  };
-
+function Dashboard() {
   const services = [
     {
       title: "Service",
@@ -138,19 +129,8 @@ function Dashboard({ setShowNavbar }) {
   return !loggedIn ? (
     <Navigate to="/admin/login" />
   ) : (
-    <div>
-      <button
-        onClick={handleLogout}
-        className="btn btn-warning"
-        style={{
-          position: "fixed",
-          top: "10px",
-          left: "10px",
-        }}
-      >
-        Log Out
-      </button>
-      <h1 className="pt-5 text-center fw-bold">Dashboard</h1>
+    <AdminLayout>
+      <h1 className="mt-5 pt-5 text-center fw-bold">Dashboard</h1>
       <div className="d-flex justify-content-between p-5 pt-1">
         <table className="table table-dark table-striped table-bordered table-hover m-5 mt-1 text-center">
           <thead>
@@ -196,7 +176,7 @@ function Dashboard({ setShowNavbar }) {
           </tbody>
         </table>
       </div>
-    </div>
+    </AdminLayout>
   );
 }
 

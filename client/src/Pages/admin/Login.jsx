@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Navigate } from "react-router-dom";
 import { loggedIn, login } from "./services/authServices";
 
-function Login({ setShowNavbar }) {
+function Login() {
   const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
@@ -11,11 +11,7 @@ function Login({ setShowNavbar }) {
     password: "",
   });
 
-  useEffect(() => {
-    setShowNavbar(false);
-  });
-
-  if (loggedIn) {
+  if (loggedIn || success) {
     return <Navigate to="/admin/dashboard" />;
   }
 
@@ -38,9 +34,7 @@ function Login({ setShowNavbar }) {
     window.location.reload();
   };
 
-  return success ? (
-    <Navigate to="/admin/dashboard" />
-  ) : (
+  return (
     <div
       className="d-flex justify-content-center align-items-center"
       style={{ minHeight: "100vh" }}

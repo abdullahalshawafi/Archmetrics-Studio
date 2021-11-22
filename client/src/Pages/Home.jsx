@@ -4,21 +4,21 @@ import About from "../components/About";
 import Info from "../components/Info";
 import TeamMembers from "../components/TeamMembers";
 import ContactUs from "../components/ContactUs";
+import ClientLayout from "../layouts/ClientLayout";
 
-function Home({ setPathname, setShowNavbar }) {
+function Home({ pathname, setPathname }) {
   useEffect(() => {
     setPathname("home");
-    setShowNavbar(true);
   });
 
   return (
-    <div>
+    <ClientLayout pathname={pathname}>
       <Slider />
       <About />
       <Info />
       <TeamMembers />
       <ContactUs />
-    </div>
+    </ClientLayout>
   );
 }
 
