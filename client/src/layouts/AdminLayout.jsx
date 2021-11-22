@@ -1,10 +1,10 @@
 import React from "react";
 import Navbar from "../components/admin/Navbar";
 
-function AdminLayout({ children }) {
+function AdminLayout({ adminPage, children }) {
   return (
     <div>
-      <Navbar />
+      <Navbar adminPage={adminPage} />
       {children}
     </div>
   );

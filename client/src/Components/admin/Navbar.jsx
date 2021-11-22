@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { logout } from "../../pages/admin/services/authServices";
 
-function Navbar() {
+function Navbar({ adminPage }) {
   const navList = useRef(null);
 
   const handleLogout = () => {
@@ -40,7 +40,9 @@ function Navbar() {
             >
               <li className="nav-item">
                 <Link
-                  className="nav-link active"
+                  className={`nav-link ${
+                    adminPage === "dashboard" && "active"
+                  }`}
                   aria-current="page"
                   to="/admin/dashboard"
                 >
@@ -48,18 +50,24 @@ function Navbar() {
                 </Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to="/admin/services">
-                  Services
+                <Link
+                  className={`nav-link ${adminPage === "services" && "active"}`}
+                  to="/admin/add-service"
+                >
+                  Add Service
                 </Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to="/admin/projects">
-                  Projects
+                <Link
+                  className={`nav-link ${adminPage === "projects" && "active"}`}
+                  to="/admin/add-project"
+                >
+                  Add Project
                 </Link>
               </li>
             </ul>
             <button
-              className="btn btn-outline-danger"
+              className="btn btn-outline-warning"
               onClick={handleLogout}
               type="button"
             >
