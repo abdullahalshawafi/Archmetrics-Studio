@@ -19,6 +19,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/contact-us", require("./routes/contactUs"));
 app.use("/project", require("./routes/project"));
 app.use("/user", require("./routes/user"));
+app.use("/services", require("./routes/services"));
 
 app.listen(PORT, err => {
     if (err) return console.error(err);

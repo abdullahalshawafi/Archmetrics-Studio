@@ -1,30 +1,29 @@
 const mongoose = require('mongoose');
 
-const projectModel = new mongoose.Schema({
+const servicesModel = new mongoose.Schema({
     title: {
         type: String,
         minLength: 3,
         maxLength: 40,
         required: true
     },
-    description: {
+    summary: {
         type: String,
         maxLength: 2000,
         required: true
+    },
+    description: {
+        type: String,
+        default: "None"
     },
     images: {
         type: [String],
         default: ["None"],
         required: true
     },
-    link: {
-        type: String,
-        default: "None"
-    },
-    Services:{
-        type: [String],
-        required: true
+    Projects: {
+        types: [String]
     }
 }, { timestamps: true });
 
-module.exports = mongoose.model('Project', projectModel);
+module.exports = mongoose.model('services', servicesModel);
