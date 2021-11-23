@@ -13,7 +13,7 @@ const trimInputFields = fields => {
 module.exports = {
     getAllProjects: async (req, res) => {
         try {
-            const projects = await Project.find({}).populate("services");
+            const projects = await Project.find({}, "-_id -__v -description -services");
             res.status(200).json({ projects });
         }
         catch (err) {
@@ -24,7 +24,7 @@ module.exports = {
 
     getSingleProject: async (req, res) => {
         try {
-            const project = await Project.findById(req.params.id);
+            const project = await Project.findById(req.params.id, "-_id -__v").populate("services", "-_id title slug");
             res.status(200).json(project);
         }
         catch (err) {

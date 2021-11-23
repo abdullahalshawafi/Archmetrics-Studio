@@ -64,10 +64,11 @@ function AdminServices({ adminPage, setAdminPage }) {
               type="text"
               name="title"
               id="title"
-              placeholder="Title"
+              placeholder="Service title"
               autoComplete="off"
               onChange={handleChange}
               value={body.title}
+              autoFocus
             />
           </div>
           <div className="form-group mb-3">
@@ -103,6 +104,7 @@ function AdminServices({ adminPage, setAdminPage }) {
               type="file"
               name="image"
               id="cover"
+              title=""
               onChange={readURL}
               style={{ height: "fit-content" }}
             />

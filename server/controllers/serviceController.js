@@ -16,7 +16,7 @@ module.exports = {
 
     getSingleService: async (req, res) => {
         try {
-            const service = await Service.findById(req.params.id, "-_id -__v -summary").populate("projects", "-_id -__v -projects");
+            const service = await Service.findById(req.params.id, "-_id -__v -summary").populate("projects", "-_id -__v -services");
             res.status(200).json(service);
         }
         catch (err) {

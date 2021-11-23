@@ -1,67 +1,27 @@
 export const services = [
     {
-        title: "Service",
-        slug: "service",
+        title: "Service 1",
+        slug: "service1",
     },
     {
-        title: "Service",
-        slug: "service",
+        title: "Service 2",
+        slug: "service2",
     },
     {
-        title: "Service",
-        slug: "service",
+        title: "Service 3",
+        slug: "service3",
     },
     {
-        title: "Service",
-        slug: "service",
+        title: "Service 4",
+        slug: "service4",
     },
     {
-        title: "Service",
-        slug: "service",
+        title: "Service 5",
+        slug: "service5",
     },
     {
-        title: "Service",
-        slug: "service",
-    },
-    {
-        title: "Service",
-        slug: "service",
-    },
-    {
-        title: "Service",
-        slug: "service",
-    },
-    {
-        title: "Service",
-        slug: "service",
-    },
-    {
-        title: "Service",
-        slug: "service",
-    },
-    {
-        title: "Service",
-        slug: "service",
-    },
-    {
-        title: "Service",
-        slug: "service",
-    },
-    {
-        title: "Service",
-        slug: "service",
-    },
-    {
-        title: "Service",
-        slug: "service",
-    },
-    {
-        title: "Service",
-        slug: "service",
-    },
-    {
-        title: "Service",
-        slug: "service",
+        title: "Service 6",
+        slug: "service6",
     },
 ];
 
