@@ -39,7 +39,11 @@ module.exports = {
             req.body.Services.forEach(async (service)=>{
             
                 let result = await Services.find({title: service});
-                let Projects = [...result[0].Projects];
+                let Projects 
+                if(result[0].Projects != null || result[0].Projects != undefined)
+                    Projects = [...result[0].Projects];
+                else
+                    Projects=[]
                 Projects.push(req.body.title)
                 await Services.updateOne({title:service},{
                     Projects
