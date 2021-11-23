@@ -4,13 +4,9 @@ const Services = require('../models/Services');
 module.exports = {
     getAllServices: async (req, res) => {
         try {
-            const services = await Services.find({});
+            const services = await Services.find({}, {_id:0, title: 1 });
             
-            const ServicesTitle = services.map((service) => {
-                return service.title
-            })
-            
-            res.status(200).json({ ServicesTitle });
+            res.status(200).json({ services });
 
         }
         catch (err) {

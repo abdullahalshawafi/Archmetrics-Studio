@@ -22,7 +22,7 @@ const servicesModel = new mongoose.Schema({
         required: true
     },
     Projects: {
-        types: [String]
+        type: [String]
     }
 }, { timestamps: true });
 

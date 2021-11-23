@@ -1,5 +1,6 @@
 const Project = require('../models/Project');
 const projectValidations = require('../validations/projectValidations');
+const Services = require('../models/Services');
 
 const trimInputFields = fields => {
     for (const field in fields) {
@@ -34,17 +35,20 @@ module.exports = {
 
     createProject: async (req, res) => {
         try {
-            trimInputFields(req.body);
-
-            const { error } = projectValidations.validate(req.body);
-
-            if (error) {
-                const errorMessages = error.details.map(err => err.message);
-                return res.status(400).json({ errorMessages });
-            }
-
+            
+            req.body.Services.forEach(async (service)=>{
+            
+                let result = await Services.find({title: service});
+                let Projects = [...result[0].Projects];
+                Projects.push(req.body.title)
+                await Services.updateOne({title:service},{
+                    Projects
+                })
+  
+            })
             const newProject = await new Project(req.body);
             await newProject.save();
+            
             res.sendStatus(200);
         }
         catch (err) {
