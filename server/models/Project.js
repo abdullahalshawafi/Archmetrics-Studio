@@ -14,17 +14,16 @@ const projectModel = new mongoose.Schema({
     },
     images: {
         type: [String],
-        default: ["None"],
         required: true
     },
     link: {
         type: String,
         default: "None"
     },
-    Services:{
-        type: [String],
-        required: true
-    }
+    services: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Service"
+    }]
 }, { timestamps: true });
 
 module.exports = mongoose.model('Project', projectModel);

@@ -1,6 +1,6 @@
+const Service = require('../models/Service');
 const Project = require('../models/Project');
 const projectValidations = require('../validations/projectValidations');
-const Services = require('../models/Services');
 
 const trimInputFields = fields => {
     for (const field in fields) {
@@ -13,7 +13,7 @@ const trimInputFields = fields => {
 module.exports = {
     getAllProjects: async (req, res) => {
         try {
-            const projects = await Project.find({});
+            const projects = await Project.find({}).populate("services");
             res.status(200).json({ projects });
         }
         catch (err) {
@@ -35,24 +35,19 @@ module.exports = {
 
     createProject: async (req, res) => {
         try {
-            
-            req.body.Services.forEach(async (service)=>{
-            
-                let result = await Services.find({title: service});
-                let Projects 
-                if(result[0].Projects != null || result[0].Projects != undefined)
-                    Projects = [...result[0].Projects];
-                else
-                    Projects=[]
-                Projects.push(req.body.title)
-                await Services.updateOne({title:service},{
-                    Projects
-                })
-  
-            })
-            const newProject = await new Project(req.body);
-            await newProject.save();
-            
+            const reqServices = req.body.services;
+
+            delete req.body.services;
+            const newProject = await Project.create(req.body);
+            newProject.services = [];
+
+            reqServices.forEach(async (slug) => {
+                const service = await Service.findOne({ slug });
+                newProject.services.push(service._id);
+                await newProject.save();
+                await Service.findOneAndUpdate({ slug }, { $push: { projects: newProject._id } });
+            });
+
             res.sendStatus(200);
         }
         catch (err) {

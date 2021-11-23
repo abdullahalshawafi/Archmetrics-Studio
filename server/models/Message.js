@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const messageModel = new mongoose.Schema({
+const messageSchema = new mongoose.Schema({
     name: {
         type: String,
         minLength: 3,
@@ -19,4 +19,4 @@ const messageModel = new mongoose.Schema({
     }
 }, { timestamps: true });
 
-module.exports = mongoose.model('Message', messageModel);
+module.exports = mongoose.model('Message', messageSchema);

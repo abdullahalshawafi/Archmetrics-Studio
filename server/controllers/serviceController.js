@@ -1,11 +1,10 @@
-const Services = require('../models/Services');
-
+const Service = require('../models/Service');
 
 module.exports = {
     getAllServices: async (req, res) => {
         try {
-            const services = await Services.find({}, {_id:0, title: 1 });
-            
+            const services = await Service.find({}, "-_id -__v -description -projects");
+
             res.status(200).json({ services });
 
         }
@@ -17,7 +16,7 @@ module.exports = {
 
     getSingleService: async (req, res) => {
         try {
-            const service = await Services.findById(req.params.id);
+            const service = await Service.findById(req.params.id, "-_id -__v -summary").populate("projects", "-_id -__v -projects");
             res.status(200).json(service);
         }
         catch (err) {
@@ -28,11 +27,16 @@ module.exports = {
 
     createService: async (req, res) => {
         try {
-            const {title ,summary,description , images} = req.body
-            const NoSlugTitle = title.split(' ').join('-');
-            
-            
-            await Services.create({title:NoSlugTitle ,summary,description , images});
+            const { title } = req.body
+            const slug = title.toLowerCase().split(' ').join('-');
+
+            const service = await Service.findOne({ slug });
+
+            if (service) {
+                return res.status(400).json({ error: "This service already exists" });
+            }
+
+            await Service.create({ ...req.body, slug });
 
             res.sendStatus(200);
         }
@@ -44,10 +48,11 @@ module.exports = {
 
     editService: async (req, res) => {
         try {
-            
-            
-            await Services.findByIdAndUpdate(req.params.id, req.body);
-            res.sendStatus(200);
+            const { title } = req.body
+            const slug = title.toLowerCase().split(' ').join('-');
+
+            const service = await Service.findByIdAndUpdate(req.params.id, { ...req.body, slug }, { new: true });
+            res.status(200).json({ service });
         }
         catch (err) {
             console.log(err);
@@ -57,7 +62,7 @@ module.exports = {
 
     deleteService: async (req, res) => {
         try {
-            await Services.findByIdAndRemove(req.params.id);
+            await Service.findByIdAndRemove(req.params.id);
             res.sendStatus(200);
         }
         catch (err) {

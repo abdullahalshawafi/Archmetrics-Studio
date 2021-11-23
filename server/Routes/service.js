@@ -5,7 +5,7 @@ const {
     createService,
     editService,
     deleteService
-} = require("../controllers/servicesController");
+} = require("../controllers/serviceController");
 
 router.get('/', getAllServices);
 
