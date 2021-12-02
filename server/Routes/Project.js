@@ -9,12 +9,12 @@ const {
 
 router.get('/', getAllProjects);
 
-router.get('/:id', getSingleProject);
+router.get('/:slug', getSingleProject);
 
 router.post('/create', createProject);
 
-router.put('/edit/:id', editProject);
+router.put('/edit/:slug', editProject);
 
-router.delete('/delete/:id', deleteProject);
+router.delete('/delete/:slug', deleteProject);
 
 module.exports = router;

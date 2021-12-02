@@ -7,6 +7,13 @@ const projectModel = new mongoose.Schema({
         maxLength: 40,
         required: true
     },
+    slug: {
+        type: String,
+        minLength: 3,
+        maxLength: 40,
+        unique: true,
+        required: true
+    },
     description: {
         type: String,
         maxLength: 2000,

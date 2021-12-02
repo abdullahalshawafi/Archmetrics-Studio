@@ -9,12 +9,12 @@ const {
 
 router.get('/', getAllServices);
 
-router.get('/:id', getSingleService);
+router.get('/:slug', getSingleService);
 
 router.post('/create', createService);
 
-router.put('/edit/:id', editService);
+router.put('/edit/:slug', editService);
 
-router.delete('/delete/:id', deleteService);
+router.delete('/delete/:slug', deleteService);
 
 module.exports = router;

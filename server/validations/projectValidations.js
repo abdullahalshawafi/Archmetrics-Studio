@@ -19,6 +19,17 @@ module.exports = Joi.object({
             'string.max': "Description must be less than 2000 characters!",
         }),
 
-    images: Joi.array(),
+    images: Joi.array()
+        .required()
+        .min(1)
+        .messages({
+            'array.min': "You must upload images for your project!",
+        }),
+    services: Joi.array()
+        .required()
+        .min(1)
+        .messages({
+            'array.min': "You must add the services used in this project!",
+        }),
     link: Joi.string(),
 }).options({ abortEarly: false });

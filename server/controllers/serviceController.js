@@ -1,3 +1,4 @@
+const trimInputFields = require('../helpers/trimInputFields');
 const Service = require('../models/Service');
 
 module.exports = {
@@ -16,7 +17,7 @@ module.exports = {
 
     getSingleService: async (req, res) => {
         try {
-            const service = await Service.findById(req.params.id, "-_id -__v -summary").populate("projects", "-_id -__v -services");
+            const service = await Service.findOne({ slug: req.params.slug }, "-_id -__v -summary").populate("projects", "-_id -__v -services");
             res.status(200).json(service);
         }
         catch (err) {
@@ -27,8 +28,9 @@ module.exports = {
 
     createService: async (req, res) => {
         try {
-            const { title } = req.body
-            const slug = title.toLowerCase().split(' ').join('-');
+            trimInputFields(req.body);
+
+            const slug = req.body.title.toLowerCase().split(' ').join('-');
 
             const service = await Service.findOne({ slug });
 
@@ -48,10 +50,17 @@ module.exports = {
 
     editService: async (req, res) => {
         try {
-            const { title } = req.body
-            const slug = title.toLowerCase().split(' ').join('-');
+            trimInputFields(req.body);
 
-            const service = await Service.findByIdAndUpdate(req.params.id, { ...req.body, slug }, { new: true });
+            const slug = req.body.title.toLowerCase().split(' ').join('-');
+
+            let service = await Service.findOne({ slug });
+
+            if (service) {
+                return res.status(400).json({ error: "This service already exists" });
+            }
+
+            service = await Service.findOneAndUpdate({ slug: req.params.slug }, { ...req.body, slug }, { new: true });
             res.status(200).json({ service });
         }
         catch (err) {
@@ -62,7 +71,7 @@ module.exports = {
 
     deleteService: async (req, res) => {
         try {
-            await Service.findByIdAndRemove(req.params.id);
+            await Service.findOneAndRemove({ slug: req.params.slug });
             res.sendStatus(200);
         }
         catch (err) {
