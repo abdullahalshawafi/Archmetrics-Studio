@@ -8,6 +8,7 @@ import ClientLayout from "../layouts/ClientLayout";
 
 function Home({ pathname, setPathname }) {
   useEffect(() => {
+    window.scrollTo(0, 0);
     setPathname("home");
   });
 

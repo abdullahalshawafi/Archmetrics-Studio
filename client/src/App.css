@@ -189,14 +189,14 @@ a {
   grid-row: 1 / 3;
 }
 
-.info-card {
+.info-details-container {
   height: 100%;
   position: relative;
   cursor: pointer;
   background-color: var(--black-color);
 }
 
-.info-card .img {
+.info-details-container .img {
   opacity: 1;
   width: 100%;
   height: 100%;
@@ -205,7 +205,7 @@ a {
   transition: opacity 0.3s ease-in-out;
 }
 
-.info-card .details {
+.info-details-container .details {
   display: none;
   position: absolute;
   top: 0;
@@ -214,30 +214,30 @@ a {
   color: var(--white-color);
 }
 
-.info-card:hover .details {
+.info-details-container:hover .details {
   display: block;
 }
 
-.info-card:hover .img {
+.info-details-container:hover .img {
   opacity: 0.4;
 }
 
-.services a:first-child .info-card .details h3,
-.projects a:first-child .info-card .details h3 {
+.services a:first-child .info-details-container .details h3,
+.projects a:first-child .info-details-container .details h3 {
   font-size: 4.5em;
 }
 
-.services a:first-child .info-card .details h5,
-.projects a:first-child .info-card .details h5 {
+.services a:first-child .info-details-container .details h5,
+.projects a:first-child .info-details-container .details h5 {
   font-size: 2em;
 }
 
-.info-card .details h3 {
+.info-details-container .details h3 {
   font-weight: 800;
   font-size: 2.5em;
 }
 
-.info-card .details h5 {
+.info-details-container .details h5 {
   font-size: 1em;
 }
 
@@ -619,20 +619,12 @@ a {
   background-color: var(--black-color);
 }
 
-.Div1:hover .hiddenDiv,
-.Div2:hover .hiddenDiv,
-.Div3:hover .hiddenDiv,
-.Div4:hover .hiddenDiv,
-.Div5:hover .hiddenDiv {
+.member-slide:hover .hiddenDiv {
   display: flex;
   flex-direction: column;
 }
 
-.Div1:hover .Member,
-.Div2:hover .Member,
-.Div3:hover .Member,
-.Div4:hover .Member,
-.Div5:hover .Member {
+.member-slide:hover .Member {
   opacity: 0.2
 }
 
@@ -675,6 +667,62 @@ a {
   background: var(--white-color);
   border: solid 1px var(--white-color);
   opacity: 1;
+}
+
+.cover-container {
+  position: relative;
+  width: 100%;
+  height: 23rem;
+  background-color: rgba(0, 0, 0, 0.2);
+  background-blend-mode: multiply;
+  overflow: hidden;
+}
+
+.cover-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  z-index: -1;
+}
+
+.cover-container .cover-details {
+  position: absolute;
+  color: var(--white-color);
+  z-index: 2;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -10%);
+}
+
+.cover-container .cover-details h1 {
+  font-weight: 800;
+  font-size: 3.5rem;
+  text-transform: uppercase;
+}
+
+.service-details,
+.project-details,
+.recent-projects {
+  padding: 75px;
+  color: var(--black-color);
+}
+
+.service-details h1,
+.project-details h1,
+.recent-projects h1 {
+  font-size: 3rem;
+  font-weight: 800;
+}
+
+.service-details p,
+.project-details p {
+  font-size: 1.25rem;
+  text-align: justify;
+}
+
+.recent-projects {
+  padding-top: 0;
 }
 
 @media screen and (max-width: 960px) {

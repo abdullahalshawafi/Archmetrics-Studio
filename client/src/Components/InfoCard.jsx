@@ -1,14 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-export default function InfoCard({ type, cover, title, slug, summary }) {
+export default function InfoCard({ type, info }) {
   return (
-    <Link to={`/${type}/${slug}`}>
-      <div className="info-card">
-        <img src={cover} className="img" alt="info" />
+    <Link to={`/${type}/${info.slug}`}>
+      <div className="info-details-container">
+        <img src={info.cover} className="img" alt="info" />
         <div className="details">
-          <h3>{title}</h3>
-          <h5>{summary}</h5>
+          <h3>{info.title}</h3>
+          <h5>{info.summary}</h5>
         </div>
       </div>
     </Link>

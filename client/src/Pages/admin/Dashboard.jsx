@@ -3,8 +3,8 @@ import AdminLayout from "../../layouts/AdminLayout";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link, Navigate } from "react-router-dom";
-import { loggedIn } from "./services/authServices";
-import { projects, services } from "./services/data";
+import { loggedIn } from "../../services/authServices";
+import { projects, services } from "../../services/data";
 
 function Dashboard({ adminPage, setAdminPage }) {
   useEffect(() => {

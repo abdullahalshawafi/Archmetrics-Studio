@@ -30,7 +30,7 @@ export default function TeamMembers() {
           visibleSlides={IsMobile ? 1 : 5}
         >
           <Slider>
-            <Slide className="Div1">
+            <Slide className="member-slide">
               <img className="Member" src={first} alt="first" />
               <div className="hiddenDiv">
                 <h3>Håvard Vasshaug</h3>
@@ -43,7 +43,7 @@ export default function TeamMembers() {
                 </p>
               </div>
             </Slide>
-            <Slide className="Div2">
+            <Slide className="member-slide">
               <img className="Member" src={second} alt="first" />
               <div className="hiddenDiv">
                 <h3>Dimitar Venkov</h3>
@@ -56,7 +56,7 @@ export default function TeamMembers() {
                 </p>
               </div>
             </Slide>
-            <Slide className="Div3">
+            <Slide className="member-slide">
               <img className="Member" src={third} alt="first" />
               <div className="hiddenDiv">
                 <h3>Julien Benoit</h3>
@@ -69,7 +69,7 @@ export default function TeamMembers() {
                 </p>
               </div>
             </Slide>
-            <Slide className="Div4">
+            <Slide className="member-slide">
               <img className="Member" src={fourth} alt="first" />
               <div className="hiddenDiv">
                 <h3>Konrad K Sobon</h3>
@@ -81,7 +81,7 @@ export default function TeamMembers() {
                 </p>
               </div>
             </Slide>
-            <Slide className="Div5">
+            <Slide className="member-slide">
               <img className="Member" src={fifth} alt="first" />
               <div className="hiddenDiv">
                 <h3>Adam Sheather</h3>

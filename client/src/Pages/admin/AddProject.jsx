@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 // import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 // import { CKEditor } from "@ckeditor/ckeditor5-react";
 import AdminLayout from "../../layouts/AdminLayout";
-import { services } from "./services/data";
+import { services } from "../../services/data";
 
 function AdminServices({ adminPage, setAdminPage }) {
   const [body, setBody] = useState({

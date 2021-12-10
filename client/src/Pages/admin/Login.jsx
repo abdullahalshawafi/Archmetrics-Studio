@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { Navigate } from "react-router-dom";
-import { loggedIn, login } from "./services/authServices";
+import { Link, Navigate } from "react-router-dom";
+import { loggedIn, login } from "../../services/authServices";
 
 function Login() {
   const [success, setSuccess] = useState(false);
@@ -39,6 +39,12 @@ function Login() {
       className="d-flex justify-content-center align-items-center"
       style={{ minHeight: "100vh" }}
     >
+      <Link
+        to="/"
+        className="btn btn-secondary position-fixed top-0 start-0 m-2"
+      >
+        Home
+      </Link>
       <form onSubmit={handleSubmit} className="p-4 bg-dark text-light rounded">
         <h2 className="text-center mb-3">Admin Login</h2>
         {errorMessage && (
