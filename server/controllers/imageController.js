@@ -22,7 +22,22 @@ localReadStream.pipe(remoteWriteStream)
   .on('error', function(err) {console.log(err)})
   .on('finish', function() {
       console.log("Done Uploading")
-    // The file upload is complete.
+      //let imageurl = 'https://storage.googleapis.com/archmetrics/'+FileName
+      // The file upload is complete.
   });
 }
 
+
+module.exports.uploadtoTemp=(req,res)=>{
+  String.prototype.replaceAll = function(match, replace) {
+    return this.replace(new RegExp(match, 'g'), () => replace);
+  }
+  let uploadDate = new Date().toISOString();   
+  uploadDate = uploadDate.replaceAll(':', '-');
+  const image = uploadDate + req.files.image.name;
+  target_path = path.join(__dirname,'..','..','photos',image)
+  fs.writeFile(target_path,req.files.image.data ,function(err) {
+      if (err) throw err;
+  });
+  res.json(image);
+}

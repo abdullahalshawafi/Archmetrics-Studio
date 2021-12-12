@@ -2,7 +2,7 @@ const Service = require('../models/Service');
 const Project = require('../models/Project');
 const projectValidations = require('../validations/projectValidations');
 const trimInputFields = require('../helpers/trimInputFields');
-
+const {UploadtoGCP} = require('./imageController')
 module.exports = {
     getAllProjects: async (req, res) => {
         try {
@@ -49,12 +49,23 @@ module.exports = {
 
             delete req.body.services;
 
-            const newProject = await Project.create({ ...req.body, slug });
+            let images=req.body.images
+
+            images.forEach((img)=>{
+                UploadtoGCP(img)
+            })
+            images = images.map((img)=>{
+                return 'https://storage.googleapis.com/archmetrics/'+img
+            })
+
+            const {title,description,link,services} = req.body
+
+            const newProject = await Project.create({ title,description,link,services,images, slug });
             newProject.services = [];
 
-            const services = await Service.find({ slug: { "$in": reqServices } });
+            const servicesdb = await Service.find({ slug: { "$in": reqServices } });
 
-            services.forEach(async service => {
+            servicesdb.forEach(async service => {
                 newProject.services.push(service._id);
                 await Service.findByIdAndUpdate(service._id, { "$push": { projects: newProject._id } });
             });
