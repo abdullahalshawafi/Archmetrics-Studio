@@ -25,10 +25,10 @@ function ServiceDetails({ pathname, setPathname }) {
         <h1>{service.title}</h1>
         <p>{service.description}</p>
       </div>
-      <div className="recent-projects">
+      <div className="recent-projects-container">
         <h1>Recent related projects</h1>
-        <div className="d-flex flex-md-row flex-column">
-          {projects.map(({ summary, ...project }, index) => (
+        <div className="recent-projects d-flex flex-md-row flex-column">
+          {projects.slice(0, 3).map(({ summary, ...project }, index) => (
             <InfoCard key={index} type="projects" info={project} />
           ))}
         </div>

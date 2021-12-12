@@ -29,6 +29,12 @@ export const login = async (body) => {
         }
     } catch (err) {
         console.log(err.message);
+        return {
+            error: err.message,
+            body,
+            loading: false,
+            success: false
+        }
     }
 }
 

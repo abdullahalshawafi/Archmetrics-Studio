@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
+const Service = require('./Service');
 
-const projectModel = new mongoose.Schema({
+const projectSchema = new mongoose.Schema({
     title: {
         type: String,
         minLength: 3,
@@ -23,9 +24,9 @@ const projectModel = new mongoose.Schema({
         type: [String],
         required: true
     },
-    link: {
+    client: {
         type: String,
-        default: "None"
+        required: true
     },
     services: [{
         type: mongoose.Schema.Types.ObjectId,
@@ -33,4 +34,9 @@ const projectModel = new mongoose.Schema({
     }]
 }, { timestamps: true });
 
-module.exports = mongoose.model('Project', projectModel);
+projectSchema.pre('remove', next => {
+    Service.remove({ _id: { "$in": this.services } }).exec();
+    next();
+});
+
+module.exports = mongoose.model('Project', projectSchema);

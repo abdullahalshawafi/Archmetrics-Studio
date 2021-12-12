@@ -2,7 +2,8 @@ const Service = require('../models/Service');
 const Project = require('../models/Project');
 const projectValidations = require('../validations/projectValidations');
 const trimInputFields = require('../helpers/trimInputFields');
-const {UploadtoGCP} = require('./imageController')
+const { UploadToGCP } = require('./imageController')
+
 module.exports = {
     getAllProjects: async (req, res) => {
         try {
@@ -39,6 +40,7 @@ module.exports = {
 
             const slug = req.body.title.toLowerCase().split(' ').join('-');
 
+            // Check if the project already exists
             const project = await Project.findOne({ slug });
 
             if (project) {
@@ -46,30 +48,35 @@ module.exports = {
             }
 
             const reqServices = req.body.services;
+            let images = req.body.images
 
             delete req.body.services;
+            delete req.body.images;
 
-            let images=req.body.images
+            // Upload images to cloud storage if we are in production
+            if (process.env.NODE_ENV === 'production') {
+                images = images.map((img) => {
+                    UploadToGCP(img)
+                    return 'https://storage.googleapis.com/archmetrics/' + img
+                });
+            }
 
-            images.forEach((img)=>{
-                UploadtoGCP(img)
-            })
-            images = images.map((img)=>{
-                return 'https://storage.googleapis.com/archmetrics/'+img
-            })
+            // Create a new project
+            const newProject = await Project.create({ ...req.body, reqServices, images, slug });
 
-            const {title,description,link,services} = req.body
-
-            const newProject = await Project.create({ title,description,link,services,images, slug });
+            // Initialize the services of the project to an empty array
             newProject.services = [];
 
-            const servicesdb = await Service.find({ slug: { "$in": reqServices } });
+            // Get from the services collection, the services that are used in the new project
+            const projectServices = await Service.find({ slug: { "$in": reqServices } });
 
-            servicesdb.forEach(async service => {
+            // For each service, add it to the project's services array and add the project to the service's projects array
+            projectServices.forEach(async service => {
                 newProject.services.push(service._id);
                 await Service.findByIdAndUpdate(service._id, { "$push": { projects: newProject._id } });
             });
 
+            // Finally, save the project
             await newProject.save();
 
             res.sendStatus(200);

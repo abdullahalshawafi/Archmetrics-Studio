@@ -1,8 +1,8 @@
 const router = require("express").Router();
 const {
-    uploadtoTemp
+    uploadToTemp
 } = require("../controllers/imageController");
 
-router.post('/upload', uploadtoTemp);
+router.post('/upload', uploadToTemp);
 
 module.exports = router;

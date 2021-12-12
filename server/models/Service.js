@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const Project = require('./Project');
 
 const serviceSchema = new mongoose.Schema({
     title: {
@@ -32,5 +33,10 @@ const serviceSchema = new mongoose.Schema({
         ref: "Project"
     }]
 }, { timestamps: true });
+
+serviceSchema.pre('remove', next => {
+    Project.remove({ _id: { "$in": this.projects } }).exec();
+    next();
+});
 
 module.exports = mongoose.model('Service', serviceSchema);

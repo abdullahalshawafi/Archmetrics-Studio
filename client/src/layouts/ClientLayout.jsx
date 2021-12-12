@@ -17,18 +17,18 @@ function ClientLayout({ pathname, children }) {
   };
 
   useEffect(() => {
-    let prevScrollPos = window.pageYOffset;
+    // let prevScrollPos = window.pageYOffset;
 
     const handleWindowScroll = () => {
-      const currentScrollPos = window.pageYOffset;
+      // const currentScrollPos = window.pageYOffset;
 
-      if (prevScrollPos > currentScrollPos) {
-        document.getElementById("navbar").style.top = "0";
-      } else {
-        document.getElementById("navbar").style.top = "-100%";
-      }
+      // if (prevScrollPos > currentScrollPos) {
+      //   document.getElementById("navbar").style.top = "0";
+      // } else {
+      //   document.getElementById("navbar").style.top = "-100%";
+      // }
 
-      prevScrollPos = currentScrollPos;
+      // prevScrollPos = currentScrollPos;
 
       setShowButton(window.pageYOffset > 300 ? true : false);
     };
@@ -40,7 +40,7 @@ function ClientLayout({ pathname, children }) {
     };
   }, []);
 
-  const isMobile = useMediaQuery({ query: "(max-width:480px)" });
+  const isMobile = useMediaQuery({ query: "(max-width:630px)" });
 
   return (
     <div>

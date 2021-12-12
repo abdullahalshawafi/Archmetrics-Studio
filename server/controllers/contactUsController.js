@@ -3,11 +3,11 @@ const Message = require('../models/Message');
 const contactUsValidations = require('../validations/contactUsValidations');
 
 const transport = nodemailer.createTransport({
-    host: "smtp.mailtrap.io",
-    port: 587,
+    host: process.env.MAIL_HOST,
+    port: process.env.MAIL_PORT,
     auth: {
-        user: process.env.EMAIL,
-        pass: process.env.PASS
+        user: process.env.MAIL_USER,
+        pass: process.env.MAIL_PASS
     }
 });
 
@@ -32,10 +32,20 @@ module.exports.sendMessage = async (req, res) => {
             return res.json({ errorMessages });
         }
 
+        const html = `
+            <div style="font-family: system-ui">
+                <h3>From: ${name}, "${email}"</h3>
+                <p>
+                    <pre>${message}</pre>
+                </p>
+            </div>
+        `;
+
         mailOptions = {
-            to: email,
+            from: process.env.MAIL_EMAIL,
+            to: process.env.MAIL_EMAIL,
             subject: `New message from ${name}`,
-            text: message
+            html
         }
 
         const newMessage = await new Message(req.body);

@@ -46,7 +46,7 @@ function ContactUs() {
   return (
     <div className="contact-us-container">
       <div className="contact-us-details">
-        <h1>Tell us about your project</h1>
+        <h1>Contact Us</h1>
         <hr />
         <p>
           We thrive when coming up with innovative ideas also understand that a

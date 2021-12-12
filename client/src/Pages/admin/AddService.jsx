@@ -6,7 +6,7 @@ function AdminServices({ adminPage, setAdminPage }) {
     title: "",
     summary: "",
     description: "",
-    image: "",
+    cover: "",
   });
 
   const defaultText = useRef(null);
@@ -19,7 +19,7 @@ function AdminServices({ adminPage, setAdminPage }) {
     if (input.target.files.length) {
       const reader = new FileReader();
       reader.onload = (e) => {
-        setBody({ ...body, image: input.target.files[0] });
+        setBody({ ...body, cover: input.target.files[0] });
         defaultText.current.setAttribute("style", "display: none;");
         imagePreview.current.setAttribute("src", e.target.result);
         imagePreview.current.setAttribute(
@@ -48,7 +48,7 @@ function AdminServices({ adminPage, setAdminPage }) {
       title: "",
       summary: "",
       description: "",
-      image: "",
+      cover: "",
     });
   };
 
@@ -102,7 +102,7 @@ function AdminServices({ adminPage, setAdminPage }) {
             <input
               className="form-control"
               type="file"
-              name="image"
+              name="cover"
               id="cover"
               title=""
               onChange={readURL}
