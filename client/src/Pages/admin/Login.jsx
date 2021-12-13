@@ -31,7 +31,7 @@ function Login() {
     setLoading(res.loading);
     setSuccess(res.success);
 
-    if (success) {
+    if (res.success) {
       window.location.reload();
     }
   };
