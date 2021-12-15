@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
-import { logout } from "../../services/authServices";
+import { logout } from "../../services/auth";
 
 function Navbar({ adminPage }) {
   const navList = useRef(null);

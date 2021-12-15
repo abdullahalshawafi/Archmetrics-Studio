@@ -11,6 +11,16 @@ module.exports = Joi.object({
             'string.max': "Title must be less than 40 characters!",
         }),
 
+    client: Joi.string()
+        .min(3)
+        .max(40)
+        .required()
+        .messages({
+            'string.empty': "Client field is required!",
+            'string.min': "Client must have at least 3 characters!",
+            'string.max': "Client must be less than 40 characters!",
+        }),
+
     description: Joi.string()
         .max(2000)
         .required()

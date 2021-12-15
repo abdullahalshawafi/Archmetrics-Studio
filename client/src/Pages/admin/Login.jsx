@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, Navigate } from "react-router-dom";
-import { loggedIn, login } from "../../services/authServices";
+import { loggedIn, login } from "../../services/auth";
 
 function Login() {
   const [success, setSuccess] = useState(false);

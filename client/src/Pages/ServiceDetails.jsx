@@ -1,38 +1,50 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import ClientLayout from "../layouts/ClientLayout";
 import InfoCard from "../components/InfoCard";
-import { services, projects } from "../services/data";
+import { getSingleService } from "../services/services";
 
 function ServiceDetails({ pathname, setPathname }) {
   let { service } = useParams();
-  service = services.find(({ slug }) => slug === service);
+  const [serviceDetails, setServiceDetails] = useState({});
 
   useEffect(() => {
     window.scrollTo(0, 0);
     setPathname("");
   });
 
+  useEffect(() => {
+    getSingleService(service, setServiceDetails);
+  }, [service]);
+
   return (
     <ClientLayout pathname={pathname}>
-      <div className="cover-container">
-        <img src={service.cover} alt="Service cover" />
-        <div className="cover-details">
-          <h1>{service.title}</h1>
+      {serviceDetails && (
+        <div>
+          <div className="cover-container">
+            <img src={serviceDetails.cover} alt="Service cover" />
+            <div className="cover-details">
+              <h1>{serviceDetails.title}</h1>
+            </div>
+          </div>
+          <div className="service-details">
+            <h1>{serviceDetails.title}</h1>
+            <p>{serviceDetails.description}</p>
+          </div>
+          {serviceDetails.projects?.length && (
+            <div className="recent-projects-container">
+              <h1>Recent related projects</h1>
+              <div className="recent-projects d-flex flex-md-row flex-column">
+                {serviceDetails.projects.map(
+                  ({ summary, ...project }, index) => (
+                    <InfoCard key={index} type="projects" info={project} />
+                  )
+                )}
+              </div>
+            </div>
+          )}
         </div>
-      </div>
-      <div className="service-details">
-        <h1>{service.title}</h1>
-        <p>{service.description}</p>
-      </div>
-      <div className="recent-projects-container">
-        <h1>Recent related projects</h1>
-        <div className="recent-projects d-flex flex-md-row flex-column">
-          {projects.slice(0, 3).map(({ summary, ...project }, index) => (
-            <InfoCard key={index} type="projects" info={project} />
-          ))}
-        </div>
-      </div>
+      )}
     </ClientLayout>
   );
 }

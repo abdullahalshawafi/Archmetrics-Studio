@@ -1,15 +1,21 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import ClientLayout from "../layouts/ClientLayout";
 import InfoCard from "../components/InfoCard";
 import cover from "../assets/main_Background.jpg";
-import { services } from "../services/data";
+import { getServices } from "../services/services";
 import "../App.css";
 
 export default function Services({ pathname, setPathname }) {
+  const [services, setServices] = useState([]);
+
   useEffect(() => {
     window.scrollTo(0, 0);
     setPathname("services");
   });
+
+  useEffect(() => {
+    getServices(setServices);
+  }, []);
 
   return (
     <ClientLayout pathname={pathname}>
