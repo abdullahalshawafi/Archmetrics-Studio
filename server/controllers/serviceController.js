@@ -1,6 +1,6 @@
 const trimInputFields = require('../helpers/trimInputFields');
 const Service = require('../models/Service');
-
+const { UploadToGCP } = require('./imageController');
 module.exports = {
     getAllServices: async (req, res) => {
         try {
@@ -36,6 +36,12 @@ module.exports = {
 
             if (service) {
                 return res.status(400).json({ error: "This service already exists" });
+            }
+
+            // Upload cover image to cloud storage if we are in production
+            if (process.env.NODE_ENV === 'production') {
+                UploadToGCP(req.body.cover);
+                req.body.cover = 'https://storage.googleapis.com/archmetrics/' + req.body.cover;
             }
 
             await Service.create({ ...req.body, slug });

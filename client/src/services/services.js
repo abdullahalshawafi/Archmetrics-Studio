@@ -5,6 +5,25 @@ export const getServices = async (setter) => {
     setter(res.data.services);
 };
 
+export const uploadServiceCover = async (cover) => {
+    const data = new FormData();
+    data.append("image", cover);
+
+    const res = await axios.post(`${process.env.REACT_APP_BASE_URL}/image/upload`, data, {
+        headers: { 'Content-Type': 'multipart/form-data' }
+    });
+
+    return res.data;
+};
+
+export const createService = async (body) => {
+    const res = await axios.post(`${process.env.REACT_APP_BASE_URL}/service/create`, body, {
+        headers: { 'Content-Type': 'application/json' }
+    });
+
+    return res.status;
+};
+
 export const getSingleService = async (service, setter) => {
     const res = await axios.get(`${process.env.REACT_APP_BASE_URL}/service/${service}`);
     if (res.data.service.projects.length > 3) {

@@ -21,11 +21,23 @@ function Dashboard({ adminPage, setAdminPage }) {
   }, []);
 
   const handleServiceDelete = (service) => {
-    deleteService(services, service, setServices);
+    if (
+      window.confirm(
+        "Are you sure you want to delete this service? It can't be undone"
+      )
+    ) {
+      deleteService(services, service, setServices);
+    }
   };
 
   const handleProjectDelete = (project) => {
-    deleteProject(projects, project, setProjects);
+    if (
+      window.confirm(
+        "Are you sure you want to delete this service? It can't be undone"
+      )
+    ) {
+      deleteProject(projects, project, setProjects);
+    }
   };
 
   return !loggedIn ? (

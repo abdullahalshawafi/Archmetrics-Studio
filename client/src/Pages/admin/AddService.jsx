@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import AdminLayout from "../../layouts/AdminLayout";
+import { createService, uploadServiceCover } from "../../services/services";
 
 function AdminServices({ adminPage, setAdminPage }) {
   const [body, setBody] = useState({
@@ -11,15 +12,25 @@ function AdminServices({ adminPage, setAdminPage }) {
 
   const defaultText = useRef(null);
   const imagePreview = useRef(null);
+
   useEffect(() => {
     setAdminPage("services");
   });
 
+  const removeImagePreview = () => {
+    defaultText.current.setAttribute("style", "display: block;");
+    imagePreview.current.setAttribute("src", "#");
+    imagePreview.current.setAttribute("style", "display: none;");
+  };
+
   const readURL = (input) => {
     if (input.target.files.length) {
       const reader = new FileReader();
-      reader.onload = (e) => {
-        setBody({ ...body, cover: input.target.files[0] });
+      reader.onload = async (e) => {
+        setBody({
+          ...body,
+          cover: await uploadServiceCover(input.target.files[0]),
+        });
         defaultText.current.setAttribute("style", "display: none;");
         imagePreview.current.setAttribute("src", e.target.result);
         imagePreview.current.setAttribute(
@@ -29,9 +40,7 @@ function AdminServices({ adminPage, setAdminPage }) {
       };
       reader.readAsDataURL(input.target.files[0]);
     } else {
-      defaultText.current.setAttribute("style", "display: block;");
-      imagePreview.current.setAttribute("src", "#");
-      imagePreview.current.setAttribute("style", "display: none;");
+      removeImagePreview();
     }
   };
 
@@ -39,17 +48,22 @@ function AdminServices({ adminPage, setAdminPage }) {
     setBody({ ...body, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     console.log(body);
 
-    setBody({
-      title: "",
-      summary: "",
-      description: "",
-      cover: "",
-    });
+    if ((await createService(body)) === 200) {
+      removeImagePreview();
+      setBody({
+        title: "",
+        summary: "",
+        description: "",
+        cover: "",
+      });
+    } else {
+      alert("An error occurred. Please try again.");
+    }
   };
 
   return (
@@ -69,6 +83,7 @@ function AdminServices({ adminPage, setAdminPage }) {
               onChange={handleChange}
               value={body.title}
               autoFocus
+              required
             />
           </div>
           <div className="form-group mb-3">
@@ -82,6 +97,7 @@ function AdminServices({ adminPage, setAdminPage }) {
               placeholder="Service summary"
               onChange={handleChange}
               value={body.summary}
+              required
             ></textarea>
           </div>
           <div className="form-group mb-3">
@@ -95,6 +111,7 @@ function AdminServices({ adminPage, setAdminPage }) {
               placeholder="Service description"
               onChange={handleChange}
               value={body.description}
+              required
             ></textarea>
           </div>
           <div className="form-group mb-3">
@@ -107,9 +124,10 @@ function AdminServices({ adminPage, setAdminPage }) {
               title=""
               onChange={readURL}
               style={{ height: "fit-content" }}
+              required
             />
             <div className="bg-secondary">
-              <div className="w-50 mx-auto my-3 py-3">
+              <div className="d-flex justify-content-center w-50 mx-auto my-3 py-3">
                 <img
                   src="#"
                   alt="preview"

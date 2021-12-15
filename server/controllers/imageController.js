@@ -3,7 +3,7 @@ const { Storage } = require("@google-cloud/storage");
 const path = require('path');
 
 const storage = new Storage({
-  keyFilename: path.join(__dirname, "./warm-sunlight-331910-45e7ded0be86.json"),
+  keyFilename: path.join(__dirname, "../warm-sunlight-331910-45e7ded0be86.json"),
   projectId: 'warm-sunlight-331910'
 });
 

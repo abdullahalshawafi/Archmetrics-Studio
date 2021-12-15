@@ -2,14 +2,17 @@ import React, { useEffect, useRef, useState } from "react";
 // import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 // import { CKEditor } from "@ckeditor/ckeditor5-react";
 import AdminLayout from "../../layouts/AdminLayout";
-import { services } from "../../services/data";
+import { getServices } from "../../services/services";
 
 function AdminServices({ adminPage, setAdminPage }) {
+  const [services, setServices] = useState(null);
   const [body, setBody] = useState({
     title: "",
+    date: "",
     client: "",
     description: "",
-    image: "",
+    cover: "",
+    images: [],
   });
 
   const imagePreview = useRef(null);
@@ -19,11 +22,15 @@ function AdminServices({ adminPage, setAdminPage }) {
     setAdminPage("projects");
   });
 
+  useEffect(() => {
+    getServices(setServices);
+  }, []);
+
   const readURL = (input) => {
     if (input.target.files.length) {
       const reader = new FileReader();
       reader.onload = (e) => {
-        setBody({ ...body, image: input.target.files[0] });
+        setBody({ ...body, cover: input.target.files[0] });
         defaultText.current.setAttribute("style", "display: none;");
         imagePreview.current.setAttribute("src", e.target.result);
         imagePreview.current.setAttribute(
@@ -50,9 +57,11 @@ function AdminServices({ adminPage, setAdminPage }) {
 
     setBody({
       title: "",
+      date: "",
       client: "",
       description: "",
-      image: "",
+      cover: "",
+      images: [],
     });
   };
 
@@ -61,18 +70,32 @@ function AdminServices({ adminPage, setAdminPage }) {
       <div className="pt-5 m-5">
         <h2 className="page-title">Add a project</h2>
         <form onSubmit={handleSubmit} encType="multipart/form-data">
+          <div className="form-group mb-3">
+            <label htmlFor="title">Title</label>
+            <input
+              className="form-control"
+              type="text"
+              name="title"
+              id="title"
+              placeholder="Project title"
+              autoComplete="off"
+              onChange={handleChange}
+              value={body.title}
+              autoFocus
+            />
+          </div>
           <div className="row">
             <div className="col-12 col-md-6 form-group mb-3">
-              <label htmlFor="title">Title</label>
+              <label htmlFor="date">Date</label>
               <input
                 className="form-control"
-                type="text"
-                name="title"
-                id="title"
-                placeholder="Project title"
+                type="date"
+                name="date"
+                id="date"
+                placeholder="Project date"
                 autoComplete="off"
                 onChange={handleChange}
-                value={body.title}
+                value={body.date}
                 autoFocus
               />
             </div>
@@ -118,7 +141,7 @@ function AdminServices({ adminPage, setAdminPage }) {
             /> */}
           </div>
           <p className="mb-0">Related Services</p>
-          {services.map((service, index) => (
+          {services?.map((service, index) => (
             <div key={index} className="form-check mb-1">
               <input
                 type="checkbox"
@@ -137,7 +160,7 @@ function AdminServices({ adminPage, setAdminPage }) {
             <input
               className="form-control"
               type="file"
-              name="image"
+              name="cover"
               id="cover"
               title=""
               onChange={readURL}
