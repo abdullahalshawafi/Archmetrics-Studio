@@ -7,7 +7,7 @@ const { UploadToGCP } = require('./imageController')
 module.exports = {
     getAllProjects: async (req, res) => {
         try {
-            const projects = await Project.find({}, "-_id -__v -description -services");
+            const projects = await Project.find({}, "-_id -__v -description -services").sort({ title: 'asc' });
             res.status(200).json({ projects });
         }
         catch (err) {
@@ -18,8 +18,8 @@ module.exports = {
 
     getSingleProject: async (req, res) => {
         try {
-            const project = await Project.findOne({ slug: req.params.slug }, "-_id -__v").populate("services", "-_id title slug");
-            res.status(200).json(project);
+            const project = await Project.findOne({ slug: req.params.slug }, "-_id -__v").populate("services", "-_id title slug", null, { sort: { title: 'asc' } });
+            res.status(200).json({ project });
         }
         catch (err) {
             console.log(err);
@@ -135,7 +135,14 @@ module.exports = {
 
     deleteProject: async (req, res) => {
         try {
-            await Project.findOneAndRemove({ slug: req.params.slug });
+            const { _id, services } = await Project.findOneAndRemove({ slug: req.params.slug });
+
+            services.forEach(async service => {
+                const updatedService = await Service.findById(service._id);
+                updatedService.projects = updatedService.projects.filter(projectId => !projectId.equals(_id));
+                await updatedService.save();
+            });
+
             res.sendStatus(200);
         }
         catch (err) {

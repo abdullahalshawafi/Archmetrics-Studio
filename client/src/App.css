@@ -693,6 +693,8 @@ a {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -10%);
+  text-transform: uppercase;
+  text-align: center;
   width: fit-content;
 }
 
@@ -700,12 +702,14 @@ a {
   font-weight: 800;
   font-size: 50px;
   margin: 0 2rem;
-  text-align: center;
-  text-transform: uppercase;
+}
+
+.cover-container .cover-details h4 {
+  font-weight: 600;
 }
 
 .service-details,
-.project-details,
+.project-details-container,
 .recent-projects-container {
   padding: 75px;
   color: var(--black-color);
@@ -717,6 +721,10 @@ a {
 .recent-projects-container h1 {
   font-size: 3rem;
   font-weight: 800;
+}
+
+.project-details h4 {
+  font-weight: 600;
 }
 
 .service-details p,
@@ -736,8 +744,15 @@ a {
   transform: translate(-50%, -50%);
   padding: 0;
   width: 100%;
-  margin: 0 0.5rem;
   text-align: center;
+}
+
+.recent-projects {
+  gap: 1rem;
+}
+
+.recent-projects>a {
+  width: calc(100% / 3);
 }
 
 @media screen and (max-width: 1100px) {
@@ -853,7 +868,7 @@ a {
   }
 
   .service-details,
-  .project-details,
+  .project-details-container,
   .recent-projects-container {
     padding: 75px 35px;
   }

@@ -34,9 +34,4 @@ const serviceSchema = new mongoose.Schema({
     }]
 }, { timestamps: true });
 
-serviceSchema.pre('remove', next => {
-    Project.remove({ _id: { "$in": this.projects } }).exec();
-    next();
-});
-
 module.exports = mongoose.model('Service', serviceSchema);

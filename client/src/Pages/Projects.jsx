@@ -1,15 +1,21 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import ClientLayout from "../layouts/ClientLayout";
 import InfoCard from "../components/InfoCard";
 import cover from "../assets/main_Background.jpg";
-import { projects } from "../services/data";
+import { getProjects } from "../services/projects";
 import "../App.css";
 
 export default function Projects({ pathname, setPathname }) {
+  const [projects, setProjects] = useState([]);
+
   useEffect(() => {
     window.scrollTo(0, 0);
     setPathname("projects");
   });
+
+  useEffect(() => {
+    getProjects(setProjects);
+  }, []);
 
   return (
     <ClientLayout pathname={pathname}>

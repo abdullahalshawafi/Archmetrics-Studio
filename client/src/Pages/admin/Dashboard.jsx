@@ -1,15 +1,32 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import AdminLayout from "../../layouts/AdminLayout";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link, Navigate } from "react-router-dom";
 import { loggedIn } from "../../services/auth";
-import { projects, services } from "../../services/data";
+import { getServices, deleteService } from "../../services/services";
+import { getProjects, deleteProject } from "../../services/projects";
 
 function Dashboard({ adminPage, setAdminPage }) {
+  const [services, setServices] = useState([]);
+  const [projects, setProjects] = useState([]);
+
   useEffect(() => {
     setAdminPage("dashboard");
   });
+
+  useEffect(() => {
+    getServices(setServices);
+    getProjects(setProjects);
+  }, []);
+
+  const handleServiceDelete = (service) => {
+    deleteService(services, service, setServices);
+  };
+
+  const handleProjectDelete = (project) => {
+    deleteProject(projects, project, setProjects);
+  };
 
   return !loggedIn ? (
     <Navigate to="/admin/login" />
@@ -43,7 +60,10 @@ function Dashboard({ adminPage, setAdminPage }) {
                       </Link>
                     </td>
                     <td>
-                      <button className="btn btn-link text-decoration-none text-danger">
+                      <button
+                        className="btn btn-link text-decoration-none text-danger"
+                        onClick={() => handleServiceDelete(service.slug)}
+                      >
                         Delete{" "}
                         <FontAwesomeIcon className="ms-2" icon={faTrash} />
                       </button>
@@ -82,7 +102,10 @@ function Dashboard({ adminPage, setAdminPage }) {
                       </Link>
                     </td>
                     <td>
-                      <button className="btn btn-link text-decoration-none text-danger">
+                      <button
+                        className="btn btn-link text-decoration-none text-danger"
+                        onClick={() => handleProjectDelete(project.slug)}
+                      >
                         Delete{" "}
                         <FontAwesomeIcon className="ms-2" icon={faTrash} />
                       </button>

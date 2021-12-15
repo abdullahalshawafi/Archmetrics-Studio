@@ -21,6 +21,14 @@ module.exports = Joi.object({
             'string.max': "Client must be less than 40 characters!",
         }),
 
+    date: Joi.string()
+        .min(3)
+        .max(40)
+        .required()
+        .messages({
+            'string.empty': "Project date field is required!",
+        }),
+
     description: Joi.string()
         .max(2000)
         .required()
@@ -29,12 +37,19 @@ module.exports = Joi.object({
             'string.max': "Description must be less than 2000 characters!",
         }),
 
+    cover: Joi.string()
+        .required()
+        .messages({
+            'string.empty': "You must upload a cover image for your project!",
+        }),
+
     images: Joi.array()
         .required()
         .min(1)
         .messages({
             'array.min': "You must upload images for your project!",
         }),
+
     services: Joi.array()
         .required()
         .min(1)

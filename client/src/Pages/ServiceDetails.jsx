@@ -6,7 +6,7 @@ import { getSingleService } from "../services/services";
 
 function ServiceDetails({ pathname, setPathname }) {
   let { service } = useParams();
-  const [serviceDetails, setServiceDetails] = useState({});
+  const [serviceDetails, setServiceDetails] = useState(null);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -31,7 +31,7 @@ function ServiceDetails({ pathname, setPathname }) {
             <h1>{serviceDetails.title}</h1>
             <p>{serviceDetails.description}</p>
           </div>
-          {serviceDetails.projects?.length && (
+          {serviceDetails.projects.length && (
             <div className="recent-projects-container">
               <h1>Recent related projects</h1>
               <div className="recent-projects d-flex flex-md-row flex-column">
