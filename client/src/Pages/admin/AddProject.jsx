@@ -2,21 +2,31 @@ import React, { useEffect, useRef, useState } from "react";
 // import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 // import { CKEditor } from "@ckeditor/ckeditor5-react";
 import AdminLayout from "../../layouts/AdminLayout";
+import { uploadCover } from "../../services";
+import { createProject } from "../../services/projects";
 import { getServices } from "../../services/services";
 
 function AdminServices({ adminPage, setAdminPage }) {
   const [services, setServices] = useState(null);
+  const [checkedServices, setCheckedServices] = useState(null);
   const [body, setBody] = useState({
     title: "",
     date: "",
     client: "",
     description: "",
+    services: [],
     cover: "",
     images: [],
   });
 
   const imagePreview = useRef(null);
   const defaultText = useRef(null);
+
+  const removeImagePreview = () => {
+    defaultText.current.setAttribute("style", "display: block;");
+    imagePreview.current.setAttribute("src", "#");
+    imagePreview.current.setAttribute("style", "display: none;");
+  };
 
   useEffect(() => {
     setAdminPage("projects");
@@ -26,11 +36,17 @@ function AdminServices({ adminPage, setAdminPage }) {
     getServices(setServices);
   }, []);
 
+  useEffect(() => {
+    if (services) {
+      setCheckedServices(new Array(services.length).fill(false));
+    }
+  }, [services]);
+
   const readURL = (input) => {
     if (input.target.files.length) {
       const reader = new FileReader();
-      reader.onload = (e) => {
-        setBody({ ...body, cover: input.target.files[0] });
+      reader.onload = async (e) => {
+        setBody({ ...body, cover: await uploadCover(input.target.files[0]) });
         defaultText.current.setAttribute("style", "display: none;");
         imagePreview.current.setAttribute("src", e.target.result);
         imagePreview.current.setAttribute(
@@ -40,9 +56,7 @@ function AdminServices({ adminPage, setAdminPage }) {
       };
       reader.readAsDataURL(input.target.files[0]);
     } else {
-      defaultText.current.setAttribute("style", "display: block;");
-      imagePreview.current.setAttribute("src", "#");
-      imagePreview.current.setAttribute("style", "display: none;");
+      removeImagePreview();
     }
   };
 
@@ -50,19 +64,43 @@ function AdminServices({ adminPage, setAdminPage }) {
     setBody({ ...body, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleCheckboxChange = (position) => {
+    const updatedCheckedServices = checkedServices.map((service, index) =>
+      index === position ? !service : service
+    );
 
-    console.log(body);
+    setCheckedServices(updatedCheckedServices);
 
-    setBody({
-      title: "",
-      date: "",
-      client: "",
-      description: "",
-      cover: "",
-      images: [],
+    const temp = [];
+    updatedCheckedServices.forEach((service, index) => {
+      if (service) {
+        temp.push(services[index].slug);
+      }
     });
+
+    setBody({ ...body, services: temp });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    console.log(body);
+    if ((await createProject(body)) === 200) {
+      removeImagePreview();
+      setCheckedServices(new Array(services.length).fill(false));
+      setBody({
+        title: "",
+        date: "",
+        client: "",
+        description: "",
+        services: [],
+        cover: "",
+        images: [],
+      });
+      alert("Project created successfully!");
+      window.location.reload();
+    } else {
+      alert("An error occurred. Please try again.");
+    }
   };
 
   return (
@@ -96,7 +134,6 @@ function AdminServices({ adminPage, setAdminPage }) {
                 autoComplete="off"
                 onChange={handleChange}
                 value={body.date}
-                autoFocus
               />
             </div>
             <div className="col-12 col-md-6 form-group mb-3">
@@ -141,20 +178,23 @@ function AdminServices({ adminPage, setAdminPage }) {
             /> */}
           </div>
           <p className="mb-0">Related Services</p>
-          {services?.map((service, index) => (
-            <div key={index} className="form-check mb-1">
-              <input
-                type="checkbox"
-                className="form-check-input"
-                name={service.slug}
-                id={service.slug}
-                onChange={handleChange}
-              />
-              <label htmlFor={service.slug} className="form-check-label">
-                {service.title}
-              </label>
-            </div>
-          ))}
+          {checkedServices &&
+            services?.map((service, index) => (
+              <div key={index} className="form-check mb-1">
+                <input
+                  type="checkbox"
+                  className="form-check-input"
+                  name={service.slug}
+                  value={service.slug}
+                  id={service.slug}
+                  checked={checkedServices[index]}
+                  onChange={() => handleCheckboxChange(index)}
+                />
+                <label htmlFor={service.slug} className="form-check-label">
+                  {service.title}
+                </label>
+              </div>
+            ))}
           <div className="form-group mt-2">
             <label htmlFor="cover">Cover Image</label>
             <input
@@ -167,7 +207,7 @@ function AdminServices({ adminPage, setAdminPage }) {
               style={{ height: "fit-content" }}
             />
             <div className="bg-secondary">
-              <div className="w-50 mx-auto my-3 py-3">
+              <div className="d-flex justify-content-center w-50 mx-auto my-3 py-3">
                 <img
                   src="#"
                   alt="preview"

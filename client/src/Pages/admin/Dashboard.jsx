@@ -33,7 +33,7 @@ function Dashboard({ adminPage, setAdminPage }) {
   const handleProjectDelete = (project) => {
     if (
       window.confirm(
-        "Are you sure you want to delete this service? It can't be undone"
+        "Are you sure you want to delete this project? It can't be undone"
       )
     ) {
       deleteProject(projects, project, setProjects);
@@ -65,7 +65,7 @@ function Dashboard({ adminPage, setAdminPage }) {
                     <td>{index + 1}</td>
                     <td>
                       <Link
-                        to={`/services/${service.slug}`}
+                        to={`/admin/edit-services/${service.slug}`}
                         className="text-light"
                       >
                         {service.title}
@@ -107,7 +107,7 @@ function Dashboard({ adminPage, setAdminPage }) {
                     <td>{index + 1}</td>
                     <td>
                       <Link
-                        to={`/projects/${project.slug}`}
+                        to={`/admin/edit-projects/${project.slug}`}
                         className="text-light"
                       >
                         {project.title}

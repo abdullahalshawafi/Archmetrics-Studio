@@ -1,6 +1,5 @@
 const Service = require('../models/Service');
 const Project = require('../models/Project');
-const projectValidations = require('../validations/projectValidations');
 const trimInputFields = require('../helpers/trimInputFields');
 const { UploadToGCP } = require('./imageController')
 
@@ -31,13 +30,7 @@ module.exports = {
         try {
             trimInputFields(req.body);
 
-            const { error } = projectValidations.validate(req.body);
-
-            if (error) {
-                const errorMessages = error.details.map(err => err.message);
-                return res.status(400).json({ errorMessages });
-            }
-
+            // Generate a slug for the project
             const slug = req.body.title.toLowerCase().split(' ').join('-');
 
             // Check if the project already exists
@@ -48,21 +41,21 @@ module.exports = {
             }
 
             const reqServices = req.body.services;
-            let images = req.body.images
-
             delete req.body.services;
-            delete req.body.images;
 
-            // Upload images to cloud storage if we are in production
+            // Upload project's cover image and gallery images to cloud storage if we are in production
             if (process.env.NODE_ENV === 'production') {
-                images = images.map((img) => {
+                UploadToGCP(req.body.cover);
+                req.body.cover = 'https://storage.googleapis.com/archmetrics/' + req.body.cover;
+
+                req.body.images = req.body.images.map((img) => {
                     UploadToGCP(img)
                     return 'https://storage.googleapis.com/archmetrics/' + img
                 });
             }
 
             // Create a new project
-            const newProject = await Project.create({ ...req.body, reqServices, images, slug });
+            const newProject = await Project.create({ ...req.body, slug });
 
             // Initialize the services of the project to an empty array
             newProject.services = [];

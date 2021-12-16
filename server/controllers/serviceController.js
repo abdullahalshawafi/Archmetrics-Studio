@@ -1,4 +1,5 @@
 const trimInputFields = require('../helpers/trimInputFields');
+const Project = require('../models/Project');
 const Service = require('../models/Service');
 const { UploadToGCP } = require('./imageController');
 module.exports = {

@@ -34,10 +34,8 @@ module.exports.sendMessage = async (req, res) => {
 
         const html = `
             <div style="font-family: system-ui">
-                <h3>From: ${name}, "${email}"</h3>
-                <p>
-                    <pre>${message}</pre>
-                </p>
+                <h3>From: ${name}, 	&lt;${email}&gt;</h3>
+                <p style="font-size: 1.25rem;white-space: pre;">${message}</p>
             </div>
         `;
 

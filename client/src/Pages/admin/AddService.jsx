@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import AdminLayout from "../../layouts/AdminLayout";
-import { createService, uploadServiceCover } from "../../services/services";
+import { uploadCover } from "../../services";
+import { createService } from "../../services/services";
 
 function AdminServices({ adminPage, setAdminPage }) {
   const [body, setBody] = useState({
@@ -27,10 +28,7 @@ function AdminServices({ adminPage, setAdminPage }) {
     if (input.target.files.length) {
       const reader = new FileReader();
       reader.onload = async (e) => {
-        setBody({
-          ...body,
-          cover: await uploadServiceCover(input.target.files[0]),
-        });
+        setBody({ ...body, cover: await uploadCover(input.target.files[0]) });
         defaultText.current.setAttribute("style", "display: none;");
         imagePreview.current.setAttribute("src", e.target.result);
         imagePreview.current.setAttribute(
@@ -51,8 +49,6 @@ function AdminServices({ adminPage, setAdminPage }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log(body);
-
     if ((await createService(body)) === 200) {
       removeImagePreview();
       setBody({
@@ -61,6 +57,8 @@ function AdminServices({ adminPage, setAdminPage }) {
         description: "",
         cover: "",
       });
+      alert("Service created successfully!");
+      window.location.reload();
     } else {
       alert("An error occurred. Please try again.");
     }
