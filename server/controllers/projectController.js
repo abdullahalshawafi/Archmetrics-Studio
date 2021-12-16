@@ -1,7 +1,7 @@
 const Service = require('../models/Service');
 const Project = require('../models/Project');
 const trimInputFields = require('../helpers/trimInputFields');
-const { UploadToGCP } = require('./imageController')
+const { UploadToGCP,deleteFile } = require('./imageController')
 
 module.exports = {
     getAllProjects: async (req, res) => {
@@ -47,13 +47,11 @@ module.exports = {
             if (process.env.NODE_ENV === 'production') {
                 UploadToGCP(req.body.cover);
                 req.body.cover = 'https://storage.googleapis.com/archmetrics/' + req.body.cover;
-
                 req.body.images = req.body.images.map((img) => {
                     UploadToGCP(img)
                     return 'https://storage.googleapis.com/archmetrics/' + img
                 });
             }
-
             // Create a new project
             const newProject = await Project.create({ ...req.body, slug });
 
@@ -83,27 +81,43 @@ module.exports = {
     editProject: async (req, res) => {
         try {
             trimInputFields(req.body);
-
-            const { error } = projectValidations.validate(req.body);
-
-            if (error) {
-                const errorMessages = error.details.map(err => err.message);
-                return res.status(400).json({ errorMessages });
-            }
-
+            const diff = (a, b) => a.filter((v) => !b.includes(v));
+            const intersection = (a, b) => a.filter((v) => b.includes(v));
             const slug = req.body.title.toLowerCase().split(' ').join('-');
 
             const project = await Project.findOne({ slug });
+            let images = req.body.images 
 
+            
             if (project && req.params.slug !== slug) {
                 return res.status(400).json({ error: "This project already exists" });
             }
 
+            if (process.env.NODE_ENV === 'production') {
+            
+                if(diff(images,project.images).length != 0){
+                    let deleted_images = diff(project.images ,images)
+                    
+                    images = images.map((image)=>{
+                        if(!image.includes('https://storage.googleapis.com/archmetrics/')){
+                            UploadToGCP(image)
+                            return 'https://storage.googleapis.com/archmetrics/' + image
+                        }else return image
+                    })
+                    if(deleted_images.length !=0){
+                        deleted_images.forEach((image)=>{
+                            deleteFile(image)
+                        })
+                    }
+                }
+            }
+            
             const reqServices = req.body.services;
 
             delete req.body.services;
+            delete req.body.images;
 
-            const updatedProject = await Project.findOneAndUpdate({ slug: req.params.slug }, { ...req.body, slug }, { new: true });
+            const updatedProject = await Project.findOneAndUpdate({ slug: req.params.slug }, { ...req.body,images, slug }, { new: true });
             updatedProject.services = [];
 
             const services = await Service.find({ slug: { "$in": reqServices } }).populate("projects", "_id");
@@ -128,6 +142,13 @@ module.exports = {
 
     deleteProject: async (req, res) => {
         try {
+            
+            const project = await Project.findOne({ slug:req.params.slug });
+            if (process.env.NODE_ENV === 'production') {
+                project.images.forEach((img)=>{
+                    deleteFile(img)
+                })
+            }
             const { _id, services } = await Project.findOneAndRemove({ slug: req.params.slug });
 
             services.forEach(async service => {

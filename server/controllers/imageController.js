@@ -1,5 +1,7 @@
 const fs = require('fs');
-const { Storage } = require("@google-cloud/storage");
+const {
+  Storage
+} = require("@google-cloud/storage");
 const path = require('path');
 
 const storage = new Storage({
@@ -13,9 +15,20 @@ module.exports = {
     const localReadStream = fs.createReadStream(`temp/${FileName}`);
     const remoteWriteStream = bucket.file(FileName).createWriteStream();
     localReadStream.pipe(remoteWriteStream)
-      .on('error', (err) => { console.log(err) })
+      .on('error', (err) => {
+        console.log(err)
+      })
       .on('finish', () => {
         console.log("Done Uploading")
+        try {
+          fs.unlinkSync(path.join(__dirname, '..', `temp/${FileName}`),(err)=>{
+            if (err) { 
+              console.log(err); 
+            } 
+          });    
+        } catch (error) {
+         console.log(error) 
+        }
         //let imageurl = 'https://storage.googleapis.com/archmetrics/'+FileName
         // The file upload is complete.
       });
@@ -28,5 +41,15 @@ module.exports = {
       if (err) throw err;
       res.json(image);
     });
+  },
+  deleteFile: async (image) => {
+    try {
+      const name = image.replace('https://storage.googleapis.com/archmetrics/','')
+      await storage.bucket('archmetrics').file(name).delete();
+      console.log(`gs://archmetrics/${name} deleted.`);
+    } catch (error) {
+        console.log(error)
+    }
+
   }
 }

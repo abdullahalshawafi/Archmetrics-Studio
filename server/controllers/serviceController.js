@@ -1,7 +1,7 @@
 const trimInputFields = require('../helpers/trimInputFields');
 const Project = require('../models/Project');
 const Service = require('../models/Service');
-const { UploadToGCP } = require('./imageController');
+const { UploadToGCP,deleteFile } = require('./imageController');
 module.exports = {
     getAllServices: async (req, res) => {
         try {
@@ -67,6 +67,12 @@ module.exports = {
                 return res.status(400).json({ error: "This service already exists" });
             }
 
+            if (process.env.NODE_ENV === 'production' && service.cover != req.body.cover) {
+                UploadToGCP(req.body.cover);
+                req.body.cover = 'https://storage.googleapis.com/archmetrics/' + req.body.cover;
+                deleteFile(service.cover)
+            }
+
             service = await Service.findOneAndUpdate({ slug: req.params.slug }, { ...req.body, slug }, { new: true });
             res.status(200);
         }
@@ -78,6 +84,11 @@ module.exports = {
 
     deleteService: async (req, res) => {
         try {
+            const service = await Service.findOne({ slug:req.params.slug });
+            if (process.env.NODE_ENV === 'production') {
+                    deleteFile(service.cover)
+            }
+             
             const { _id, projects } = await Service.findOneAndRemove({ slug: req.params.slug });
 
             projects.forEach(async service => {
