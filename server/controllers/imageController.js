@@ -1,8 +1,6 @@
-const fs = require('fs');
-const {
-  Storage
-} = require("@google-cloud/storage");
 const path = require('path');
+const fs = require('fs-extra');
+const { Storage } = require("@google-cloud/storage");
 
 const storage = new Storage({
   keyFilename: path.join(__dirname, "../warm-sunlight-331910-45e7ded0be86.json"),
@@ -10,7 +8,7 @@ const storage = new Storage({
 });
 
 module.exports = {
-  UploadToGCP: (FileName) => {
+  uploadToGCP: (FileName) => {
     const bucket = storage.bucket('archmetrics');
     const localReadStream = fs.createReadStream(`temp/${FileName}`);
     const remoteWriteStream = bucket.file(FileName).createWriteStream();
@@ -19,37 +17,26 @@ module.exports = {
         console.log(err)
       })
       .on('finish', () => {
+        fs.removeSync(path.join(__dirname, `../temp/${FileName}`));
         console.log("Done Uploading")
-        try {
-          fs.unlinkSync(path.join(__dirname, '..', `temp/${FileName}`),(err)=>{
-            if (err) { 
-              console.log(err); 
-            } 
-          });    
-        } catch (error) {
-         console.log(error) 
-        }
-        //let imageurl = 'https://storage.googleapis.com/archmetrics/'+FileName
-        // The file upload is complete.
       });
   },
+
   uploadToTemp: (req, res) => {
     const uploadDate = new Date().toISOString().replace(/:/g, '-');
     const image = uploadDate + req.files.image.name;
-    const targetPath = path.join(__dirname, '..', 'temp', image)
-    fs.writeFile(targetPath, req.files.image.data, (err) => {
-      if (err) throw err;
-      res.json(image);
-    });
+    const targetPath = path.join(__dirname, `../temp/${image}`)
+    fs.outputFileSync(targetPath, req.files.image.data);
+    res.json(image);
   },
+
   deleteFile: async (image) => {
     try {
-      const name = image.replace('https://storage.googleapis.com/archmetrics/','')
+      const name = image.replace('https://storage.googleapis.com/archmetrics/', '')
       await storage.bucket('archmetrics').file(name).delete();
       console.log(`gs://archmetrics/${name} deleted.`);
     } catch (error) {
-        console.log(error)
+      console.log(error)
     }
-
   }
 }

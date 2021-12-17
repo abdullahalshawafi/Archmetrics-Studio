@@ -1,7 +1,8 @@
 const trimInputFields = require('../helpers/trimInputFields');
 const Project = require('../models/Project');
 const Service = require('../models/Service');
-const { UploadToGCP,deleteFile } = require('./imageController');
+const { uploadToGCP, deleteFile } = require('./imageController');
+
 module.exports = {
     getAllServices: async (req, res) => {
         try {
@@ -39,11 +40,9 @@ module.exports = {
                 return res.status(400).json({ error: "This service already exists" });
             }
 
-            // Upload cover image to cloud storage if we are in production
-            if (process.env.NODE_ENV === 'production') {
-                UploadToGCP(req.body.cover);
-                req.body.cover = 'https://storage.googleapis.com/archmetrics/' + req.body.cover;
-            }
+            // Upload cover image to cloud storage
+            uploadToGCP(req.body.cover);
+            req.body.cover = 'https://storage.googleapis.com/archmetrics/' + req.body.cover;
 
             await Service.create({ ...req.body, slug });
 
@@ -63,17 +62,18 @@ module.exports = {
 
             let service = await Service.findOne({ slug });
 
-            if (service) {
+            if (service && req.params.slug !== slug) {
                 return res.status(400).json({ error: "This service already exists" });
             }
 
-            if (process.env.NODE_ENV === 'production' && service.cover != req.body.cover) {
-                UploadToGCP(req.body.cover);
-                req.body.cover = 'https://storage.googleapis.com/archmetrics/' + req.body.cover;
+            if (service.cover !== req.body.cover) {
                 deleteFile(service.cover)
+                uploadToGCP(req.body.cover);
+                req.body.cover = 'https://storage.googleapis.com/archmetrics/' + req.body.cover;
             }
 
             service = await Service.findOneAndUpdate({ slug: req.params.slug }, { ...req.body, slug }, { new: true });
+
             res.status(200);
         }
         catch (err) {
@@ -84,12 +84,9 @@ module.exports = {
 
     deleteService: async (req, res) => {
         try {
-            const service = await Service.findOne({ slug:req.params.slug });
-            if (process.env.NODE_ENV === 'production') {
-                    deleteFile(service.cover)
-            }
-             
-            const { _id, projects } = await Service.findOneAndRemove({ slug: req.params.slug });
+            const { _id, cover, projects } = await Service.findOneAndRemove({ slug: req.params.slug });
+
+            deleteFile(cover);
 
             projects.forEach(async service => {
                 const updatedProject = await Project.findById(service._id);
