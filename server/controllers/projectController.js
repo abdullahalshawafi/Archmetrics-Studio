@@ -6,7 +6,7 @@ const { uploadToGCP, deleteFile } = require('./imageController')
 module.exports = {
     getAllProjects: async (req, res) => {
         try {
-            const projects = await Project.find({}, "-_id -__v -description -services").sort({ title: 'asc' });
+            const projects = await Project.find({}, "-_id -__v -description -services").sort({year: -1});
             res.status(200).json({ projects });
         }
         catch (err) {
@@ -43,14 +43,15 @@ module.exports = {
             const reqServices = req.body.services;
             delete req.body.services;
 
-            // Upload project's cover image and gallery images to cloud storage
-            uploadToGCP(req.body.cover);
-            req.body.cover = 'https://storage.googleapis.com/archmetrics/' + req.body.cover;
-            req.body.images = req.body.images.map((img) => {
+            if (process.env.NODE_ENV === "production") {
+             // Upload project's cover image and gallery images to cloud storage
+                uploadToGCP(req.body.cover);
+                req.body.cover = 'https://storage.googleapis.com/archmetrics/' + req.body.cover;
+                req.body.images = req.body.images.map((img) => {
                 uploadToGCP(img)
                 return 'https://storage.googleapis.com/archmetrics/' + img
             });
-
+}
             // Create a new project
             const newProject = await Project.create({ ...req.body, slug });
 

@@ -11,12 +11,15 @@ function AdminServices({ adminPage, setAdminPage }) {
   const [checkedServices, setCheckedServices] = useState(null);
   const [body, setBody] = useState({
     title: "",
-    date: "",
+    year: "",
+    location: "",
     client: "",
     description: "",
     services: [],
     cover: "",
     images: [],
+    type: [],
+    stages: [],
   });
 
   const imagePreview = useRef(null);
@@ -89,12 +92,15 @@ function AdminServices({ adminPage, setAdminPage }) {
       setCheckedServices(new Array(services.length).fill(false));
       setBody({
         title: "",
-        date: "",
+        year: "",
+        location: "",
         client: "",
         description: "",
         services: [],
         cover: "",
         images: [],
+        type: [],
+        stages: [],
       });
       alert("Project created successfully!");
       window.location.reload();
@@ -123,17 +129,17 @@ function AdminServices({ adminPage, setAdminPage }) {
             />
           </div>
           <div className="row">
-            <div className="col-12 col-md-6 form-group mb-3">
-              <label htmlFor="date">Date</label>
+          <div className="col-12 col-md-6 form-group mb-3">
+              <label htmlFor="date">year</label>
               <input
                 className="form-control"
-                type="date"
-                name="date"
+                type="number"
+                name="year"
                 id="date"
-                placeholder="Project date"
+                placeholder="Project year"
                 autoComplete="off"
                 onChange={handleChange}
-                value={body.date}
+                value={body.year}
               />
             </div>
             <div className="col-12 col-md-6 form-group mb-3">
@@ -147,6 +153,19 @@ function AdminServices({ adminPage, setAdminPage }) {
                 autoComplete="off"
                 onChange={handleChange}
                 value={body.client}
+              />
+            </div>
+            <div className="col-12 col-md-6 form-group mb-3">
+              <label htmlFor="client">location</label>
+              <input
+                className="form-control"
+                type="text"
+                name="location"
+                id="location"
+                placeholder="Project location"
+                autoComplete="off"
+                onChange={handleChange}
+                value={body.location}
               />
             </div>
           </div>

@@ -26,17 +26,27 @@ function ProjectDetails({ pathname, setPathname }) {
             <div className="cover-details">
               <h1>{projectDetails.title}</h1>
               <h4>
-                {moment(new Date(projectDetails.date)).format("MMMM D, YYYY")}
+                {(projectDetails.year)}
               </h4>
             </div>
           </div>
           <div className="project-details-container row mx-0">
-            <div className="project-details col-12 mb-3 text-center">
+          <div className="project-details col-12 mb-3 text-center">
               <h1>{projectDetails.title}</h1>
             </div>
             <div className="project-details col-12 col-md-3 mb-3">
               <h4>Client:</h4>
               <p>{projectDetails.client}</p>
+              <h4>Location:</h4>
+              <p>{projectDetails.location}</p>
+              <h4>Types:</h4>
+              {projectDetails.type.map((type) => (
+                  <p className="mb-0">{type}</p>
+              ))}
+              <h4>Stages:</h4>
+              {projectDetails.stage.map((stage) => (
+                  <p className="mb-0">{stage}</p>
+              ))}
               <h4>Services provided:</h4>
               {projectDetails.services.map((service, index) => (
                 <Link to={`/services/${service.slug}`} key={index}>

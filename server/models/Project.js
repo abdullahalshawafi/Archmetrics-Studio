@@ -14,6 +14,10 @@ const projectSchema = new mongoose.Schema({
         unique: true,
         required: true
     },
+    location: {
+        type: String,
+        required: true
+    },
     description: {
         type: String,
         maxLength: 2000,
@@ -31,8 +35,16 @@ const projectSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    date: {
-        type: String,
+    year: {
+        type: Number,
+        required: true
+    },
+    type: {
+        type: [String],
+        required: true
+    },
+    stage: {
+        type: [String],
         required: true
     },
     services: [{
