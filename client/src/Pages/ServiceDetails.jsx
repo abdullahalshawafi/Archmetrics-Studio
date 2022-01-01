@@ -28,7 +28,7 @@ function ServiceDetails({ pathname, setPathname }) {
             </div>
           </div>
           <div className="service-details">
-            <h1>{serviceDetails.title}</h1>
+            <h1>Description</h1>
             <p>{serviceDetails.description}</p>
           </div>
           {serviceDetails.projects.length && (
