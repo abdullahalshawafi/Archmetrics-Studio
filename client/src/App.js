@@ -7,8 +7,8 @@ import Projects from "./pages/Projects";
 import ProjectDetails from "./pages/ProjectDetails";
 import Login from "./pages/admin/Login";
 import Dashboard from "./pages/admin/Dashboard";
-import AdminServices from "./pages/admin/AddService";
-import AdminProjects from "./pages/admin/AddProject";
+import AdminService from "./pages/admin/AdminService";
+import AdminProject from "./pages/admin/AdminProject";
 import "./App.css";
 
 function App() {
@@ -25,10 +25,10 @@ function App() {
         <Route path="/projects/:project" element={<ProjectDetails pathname={pathname} setPathname={setPathname} />} />
         <Route path="/admin/login" element={<Login />} />
         <Route path="/admin/dashboard" element={<Dashboard adminPage={adminPage} setAdminPage={setAdminPage} />} />
-        <Route path="/admin/add-service" element={<AdminServices adminPage={adminPage} setAdminPage={setAdminPage} />} />
-        <Route path="/admin/add-project" element={<AdminProjects adminPage={adminPage} setAdminPage={setAdminPage} />} />
-        <Route path="/admin/edit-service/:service" element={<AdminServices adminPage={adminPage} setAdminPage={setAdminPage} />} />
-        {/* <Route path="/admin/edit-project/:project" element={<AdminProjects adminPage={adminPage} setAdminPage={setAdminPage} />} /> */}
+        <Route path="/admin/add-service" element={<AdminService adminPage={adminPage} setAdminPage={setAdminPage} />} />
+        <Route path="/admin/add-project" element={<AdminProject adminPage={adminPage} setAdminPage={setAdminPage} />} />
+        <Route path="/admin/edit-service/:service" element={<AdminService adminPage={adminPage} setAdminPage={setAdminPage} />} />
+        {/* <Route path="/admin/edit-project/:project" element={<AdminProject adminPage={adminPage} setAdminPage={setAdminPage} />} /> */}
       </Routes>
     </Router>
   );

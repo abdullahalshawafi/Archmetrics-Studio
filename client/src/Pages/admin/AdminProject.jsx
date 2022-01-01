@@ -6,7 +6,7 @@ import { uploadCover } from "../../services";
 import { createProject } from "../../services/projects";
 import { getServices } from "../../services/services";
 
-function AdminServices({ adminPage, setAdminPage }) {
+function AdminService({ adminPage, setAdminPage }) {
   const [services, setServices] = useState(null);
   const [checkedServices, setCheckedServices] = useState(null);
   const [body, setBody] = useState({
@@ -96,11 +96,11 @@ function AdminServices({ adminPage, setAdminPage }) {
         location: "",
         client: "",
         description: "",
-        services: [],
+        type: "",
+        stages: "",
         cover: "",
+        services: [],
         images: [],
-        type: [],
-        stages: [],
       });
       alert("Project created successfully!");
       window.location.reload();
@@ -250,4 +250,4 @@ function AdminServices({ adminPage, setAdminPage }) {
   );
 }
 
-export default AdminServices;
+export default AdminService;
