@@ -1,9 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
+import { useParams } from "react-router-dom";
 import AdminLayout from "../../layouts/AdminLayout";
 import { uploadCover } from "../../services";
-import { createService } from "../../services/services";
+import { createService, getSingleService } from "../../services/services";
 
 function AdminServices({ adminPage, setAdminPage }) {
+  const { service } = useParams();
   const [body, setBody] = useState({
     title: "",
     summary: "",
@@ -17,6 +19,10 @@ function AdminServices({ adminPage, setAdminPage }) {
   useEffect(() => {
     setAdminPage("services");
   });
+
+  useEffect(() => {
+    getSingleService(service, setBody);
+  }, [service]);
 
   const removeImagePreview = () => {
     defaultText.current.setAttribute("style", "display: block;");

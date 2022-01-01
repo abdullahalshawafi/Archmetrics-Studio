@@ -65,7 +65,7 @@ function Dashboard({ adminPage, setAdminPage }) {
                     <td>{index + 1}</td>
                     <td>
                       <Link
-                        to={`/admin/edit-services/${service.slug}`}
+                        to={`/admin/edit-service/${service.slug}`}
                         className="text-light"
                       >
                         {service.title}
@@ -107,7 +107,7 @@ function Dashboard({ adminPage, setAdminPage }) {
                     <td>{index + 1}</td>
                     <td>
                       <Link
-                        to={`/admin/edit-projects/${project.slug}`}
+                        to={`/admin/edit-project/${project.slug}`}
                         className="text-light"
                       >
                         {project.title}

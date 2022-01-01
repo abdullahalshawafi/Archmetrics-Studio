@@ -129,8 +129,8 @@ function AdminServices({ adminPage, setAdminPage }) {
             />
           </div>
           <div className="row">
-          <div className="col-12 col-md-6 form-group mb-3">
-              <label htmlFor="date">year</label>
+            <div className="col-12 col-md-6 form-group mb-3">
+              <label htmlFor="date">Year</label>
               <input
                 className="form-control"
                 type="number"
@@ -156,7 +156,7 @@ function AdminServices({ adminPage, setAdminPage }) {
               />
             </div>
             <div className="col-12 col-md-6 form-group mb-3">
-              <label htmlFor="client">location</label>
+              <label htmlFor="location">Location</label>
               <input
                 className="form-control"
                 type="text"
