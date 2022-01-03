@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import moment from "moment";
 import ClientLayout from "../layouts/ClientLayout";
 import { getSingleProject } from "../services/projects";
 
@@ -35,13 +34,9 @@ function ProjectDetails({ pathname, setPathname }) {
               <h4>Location:</h4>
               <p>{projectDetails.location}</p>
               <h4>Type:</h4>
-              {projectDetails.type.map((type) => (
-                <p className="mb-0">{type}</p>
-              ))}
+              <p className="mb-0">{projectDetails.type}</p>
               <h4>Stage:</h4>
-              {projectDetails.stage.map((stage) => (
-                <p className="mb-0">{stage}</p>
-              ))}
+              <p className="mb-0">{projectDetails.stage}</p>
               <h4>Services provided:</h4>
               {projectDetails.services.map((service, index) => (
                 <Link to={`/services/${service.slug}`} key={index}>

@@ -1,11 +1,17 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, Navigate, useParams } from "react-router-dom";
 import AdminLayout from "../../layouts/AdminLayout";
 import { uploadCover } from "../../services";
-import { createService, getSingleService } from "../../services/services";
+import {
+  createService,
+  editService,
+  getSingleService,
+} from "../../services/services";
 
 function AdminService({ adminPage, setAdminPage }) {
   const { service } = useParams();
+  const [loading, setLoading] = useState(false);
+  const [redirect, setRedirect] = useState(false);
   const [body, setBody] = useState({
     title: "",
     summary: "",
@@ -21,8 +27,27 @@ function AdminService({ adminPage, setAdminPage }) {
   });
 
   useEffect(() => {
-    getSingleService(service, setBody);
+    if (service) {
+      getSingleService(service, setBody, setRedirect);
+    }
   }, [service]);
+
+  useEffect(() => {
+    service && body.cover.includes("https://") && showImagePreview(body.cover);
+  }, [service, body]);
+
+  if (redirect) {
+    return <Navigate to="/admin/dashboard" />;
+  }
+
+  const showImagePreview = (imgSrc) => {
+    defaultText.current.setAttribute("style", "display: none;");
+    imagePreview.current.setAttribute("src", imgSrc);
+    imagePreview.current.setAttribute(
+      "style",
+      "display: block; max-width: 100%; height: auto;"
+    );
+  };
 
   const removeImagePreview = () => {
     defaultText.current.setAttribute("style", "display: block;");
@@ -35,12 +60,7 @@ function AdminService({ adminPage, setAdminPage }) {
       const reader = new FileReader();
       reader.onload = async (e) => {
         setBody({ ...body, cover: await uploadCover(input.target.files[0]) });
-        defaultText.current.setAttribute("style", "display: none;");
-        imagePreview.current.setAttribute("src", e.target.result);
-        imagePreview.current.setAttribute(
-          "style",
-          "display: block; max-width: 100%; height: auto;"
-        );
+        showImagePreview(e.target.result);
       };
       reader.readAsDataURL(input.target.files[0]);
     } else {
@@ -53,18 +73,30 @@ function AdminService({ adminPage, setAdminPage }) {
   };
 
   const handleSubmit = async (e) => {
+    setLoading(true);
     e.preventDefault();
-
-    if ((await createService(body)) === 200) {
-      removeImagePreview();
-      setBody({
-        title: "",
-        summary: "",
-        description: "",
-        cover: "",
-      });
-      alert("Service created successfully!");
-      window.location.reload();
+    let status = 0;
+    if (!service) {
+      status = await createService(body);
+    } else {
+      status = await editService(service, body);
+    }
+    setLoading(false);
+    if (status === 200) {
+      if (!service) {
+        removeImagePreview();
+        setBody({
+          title: "",
+          summary: "",
+          description: "",
+          cover: "",
+        });
+        alert("Service created successfully!");
+        window.location.reload();
+      } else {
+        alert("Service modified successfully!");
+        setRedirect(true);
+      }
     } else {
       alert("An error occurred. Please try again.");
     }
@@ -73,7 +105,7 @@ function AdminService({ adminPage, setAdminPage }) {
   return (
     <AdminLayout adminPage={adminPage}>
       <div className="pt-5 m-5">
-        <h2 className="page-title">Add a service</h2>
+        <h2 className="page-title">{service ? "Edit" : "Add"} a service</h2>
         <form onSubmit={handleSubmit} encType="multipart/form-data">
           <div className="form-group mb-3">
             <label htmlFor="title">Title</label>
@@ -128,7 +160,6 @@ function AdminService({ adminPage, setAdminPage }) {
               title=""
               onChange={readURL}
               style={{ height: "fit-content" }}
-              required
             />
             <div className="bg-secondary">
               <div className="d-flex justify-content-center w-50 mx-auto my-3 py-3">
@@ -148,7 +179,14 @@ function AdminService({ adminPage, setAdminPage }) {
               </div>
             </div>
           </div>
-          <button className="btn btn-warning">Submit</button>
+          <button className="btn btn-warning" disabled={loading}>
+            Submit
+          </button>
+          {service && (
+            <Link to="/admin/dashboard" className="btn btn-secondary ms-3">
+              Cancel
+            </Link>
+          )}
         </form>
       </div>
     </AdminLayout>

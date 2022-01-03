@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Navigate, useParams } from "react-router-dom";
 import ClientLayout from "../layouts/ClientLayout";
 import InfoCard from "../components/InfoCard";
 import { getSingleService } from "../services/services";
 
 function ServiceDetails({ pathname, setPathname }) {
   let { service } = useParams();
+  const [redirect, setRedirect] = useState(false);
   const [serviceDetails, setServiceDetails] = useState(null);
 
   useEffect(() => {
@@ -14,8 +15,12 @@ function ServiceDetails({ pathname, setPathname }) {
   });
 
   useEffect(() => {
-    getSingleService(service, setServiceDetails);
+    getSingleService(service, setServiceDetails, setRedirect);
   }, [service]);
+
+  if (redirect) {
+    return <Navigate to="/admin/dashboard" />;
+  }
 
   return (
     <ClientLayout pathname={pathname}>

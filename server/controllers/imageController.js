@@ -36,7 +36,7 @@ module.exports = {
       await storage.bucket('archmetrics').file(name).delete();
       console.log(`gs://archmetrics/${name} deleted.`);
     } catch (error) {
-      console.log(error)
+      console.log(error.message);
     }
   }
 }

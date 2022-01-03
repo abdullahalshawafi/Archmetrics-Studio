@@ -19,8 +19,12 @@ module.exports = {
 
     getSingleService: async (req, res) => {
         try {
-            const service = await Service.findOne({ slug: req.params.slug }, "-_id -__v -summary").populate("projects", "-_id -__v -services", null, { sort: { date: 'desc' } });
-            res.status(200).json({ service });
+            const service = await Service.findOne({ slug: req.params.slug }, "-_id -__v").populate("projects", "-_id -__v -services", null, { sort: { date: 'desc' } });
+            if (service) {
+                res.status(200).json({ service });
+            } else {
+                res.sendStatus(404);
+            }
         }
         catch (err) {
             console.log(err);
@@ -66,15 +70,15 @@ module.exports = {
                 return res.status(400).json({ error: "This service already exists" });
             }
 
-            if (service.cover !== req.body.cover) {
-                deleteFile(service.cover)
+            if (service && service.cover !== 'https://storage.googleapis.com/archmetrics/' + req.body.cover) {
                 uploadToGCP(req.body.cover);
+                deleteFile(service.cover)
                 req.body.cover = 'https://storage.googleapis.com/archmetrics/' + req.body.cover;
             }
 
-            service = await Service.findOneAndUpdate({ slug: req.params.slug }, { ...req.body, slug }, { new: true });
+            await Service.findOneAndUpdate({ slug: req.params.slug }, { ...req.body, slug });
 
-            res.status(200);
+            res.sendStatus(200);
         }
         catch (err) {
             console.log(err);

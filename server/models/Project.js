@@ -40,11 +40,11 @@ const projectSchema = new mongoose.Schema({
         required: true
     },
     type: {
-        type: [String],
+        type: String,
         required: true
     },
     stage: {
-        type: [String],
+        type: String,
         required: true
     },
     services: [{

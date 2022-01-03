@@ -5,24 +5,45 @@ export const getServices = async (setter) => {
     setter(res.data.services);
 };
 
+export const getSingleService = async (service, setter, error) => {
+    try {
+        const res = await axios.get(`${process.env.REACT_APP_BASE_URL}/service/${service}`);
+        setter(res.data.service);
+    } catch (err) {
+        console.log(err.message);
+        error(true);
+    }
+};
+
 export const createService = async (body) => {
     const res = await axios.post(`${process.env.REACT_APP_BASE_URL}/service/create`, body, {
-        headers: { 'Content-Type': 'application/json' }
+        headers: {
+            'Content-Type': 'application/json',
+            [process.env.REACT_APP_HEADER]: localStorage.getItem('token')
+        }
     });
 
     return res.status;
 };
 
-export const getSingleService = async (service, setter) => {
-    const res = await axios.get(`${process.env.REACT_APP_BASE_URL}/service/${service}`);
-    if (res.data.service.projects.length > 3) {
-        res.data.service.projects = res.data.service.projects.slice(0, 3);
-    }
-    setter(res.data.service);
+export const editService = async (service, body) => {
+    const res = await axios.put(`${process.env.REACT_APP_BASE_URL}/service/edit/${service}`, body, {
+        headers: {
+            'Content-Type': 'application/json',
+            [process.env.REACT_APP_HEADER]: localStorage.getItem('token')
+        }
+    });
+
+    return res.status;
 };
 
 export const deleteService = async (services, service, setter) => {
-    const res = await axios.delete(`${process.env.REACT_APP_BASE_URL}/service/delete/${service}`);
+    const res = await axios.delete(`${process.env.REACT_APP_BASE_URL}/service/delete/${service}`, {
+        headers: {
+            'Content-Type': 'application/json',
+            [process.env.REACT_APP_HEADER]: localStorage.getItem('token')
+        }
+    });
     if (res.status === 200) {
         services = services.filter(x => x.slug !== service);
         setter(services);

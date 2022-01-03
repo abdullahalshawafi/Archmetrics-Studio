@@ -10,7 +10,7 @@ const isAuth = (req, res, next) => {
             const validToken = verify(accessToken, process.env.AccessToken);
 
             if (validToken) {
-                req.user = validToken;
+                req.user = validToken.username;
             }
 
             return next();
