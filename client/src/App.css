@@ -183,11 +183,6 @@ a {
   margin: 75px;
 }
 
-.projects a:first-child {
-  grid-column: 1 / 3;
-  grid-row: 1 / 3;
-}
-
 .info-details-container {
   height: 100%;
   position: relative;
@@ -221,14 +216,6 @@ a {
 
 .info-details-container:hover .img {
   opacity: 0.4;
-}
-
-.projects a:first-child .info-details-container .details h3 {
-  font-size: 4.5em;
-}
-
-.projects a:first-child .info-details-container .details h5 {
-  font-size: 2em;
 }
 
 .info-details-container .details h3 {

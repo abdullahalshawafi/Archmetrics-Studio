@@ -1,29 +1,46 @@
 import React, { useEffect, useRef, useState } from "react";
-// import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
-// import { CKEditor } from "@ckeditor/ckeditor5-react";
+import { Helmet } from "react-helmet";
+import { Link, Navigate, useParams } from "react-router-dom";
 import AdminLayout from "../../layouts/AdminLayout";
 import { uploadCover } from "../../services";
-import { createProject } from "../../services/projects";
+import { loggedIn } from "../../services/auth";
+import {
+  createProject,
+  editProject,
+  getSingleProject,
+} from "../../services/projects";
 import { getServices } from "../../services/services";
 
 function AdminService({ adminPage, setAdminPage }) {
-  const [services, setServices] = useState(null);
-  const [checkedServices, setCheckedServices] = useState(null);
+  const { project } = useParams();
+  const [loading, setLoading] = useState(false);
+  const [redirect, setRedirect] = useState(false);
+  const [services, setServices] = useState([]);
+  const [checkedServices, setCheckedServices] = useState([]);
   const [body, setBody] = useState({
     title: "",
     year: "",
     location: "",
     client: "",
+    type: "",
+    stage: "",
     description: "",
     services: [],
     cover: "",
     images: [],
-    type: [],
-    stages: [],
   });
 
   const imagePreview = useRef(null);
   const defaultText = useRef(null);
+
+  const showImagePreview = (imgSrc) => {
+    defaultText.current.setAttribute("style", "display: none;");
+    imagePreview.current.setAttribute("src", imgSrc);
+    imagePreview.current.setAttribute(
+      "style",
+      "display: block; max-width: 100%; height: auto;"
+    );
+  };
 
   const removeImagePreview = () => {
     defaultText.current.setAttribute("style", "display: block;");
@@ -32,7 +49,7 @@ function AdminService({ adminPage, setAdminPage }) {
   };
 
   useEffect(() => {
-    setAdminPage("projects");
+    !project && setAdminPage("projects");
   });
 
   useEffect(() => {
@@ -40,22 +57,61 @@ function AdminService({ adminPage, setAdminPage }) {
   }, []);
 
   useEffect(() => {
+    if (project) {
+      getSingleProject(project, setBody, setRedirect);
+    } else {
+      setBody({
+        title: "",
+        year: "",
+        location: "",
+        client: "",
+        type: "",
+        stage: "",
+        description: "",
+        services: [],
+        cover: "",
+        images: [],
+      });
+    }
+  }, [project]);
+
+  useEffect(() => {
+    project && body.cover.includes("https://") && showImagePreview(body.cover);
+  }, [project, body.cover]);
+
+  useEffect(() => {
+    if (project && services) {
+      const bodyServices = body.services.map((service) => service.slug);
+      const temp = checkedServices;
+      services.forEach((service, index) => {
+        if (bodyServices.includes(service.slug)) {
+          temp[index] = true;
+        }
+      });
+      setCheckedServices(temp);
+    }
+  }, [project, body, services, checkedServices]);
+
+  useEffect(() => {
     if (services) {
       setCheckedServices(new Array(services.length).fill(false));
     }
   }, [services]);
+
+  if (!loggedIn) {
+    return <Navigate to="/" />;
+  }
+
+  if (redirect) {
+    return <Navigate to="/admin/dashboard" />;
+  }
 
   const readURL = (input) => {
     if (input.target.files.length) {
       const reader = new FileReader();
       reader.onload = async (e) => {
         setBody({ ...body, cover: await uploadCover(input.target.files[0]) });
-        defaultText.current.setAttribute("style", "display: none;");
-        imagePreview.current.setAttribute("src", e.target.result);
-        imagePreview.current.setAttribute(
-          "style",
-          "display: block; max-width: 100%; height: auto;"
-        );
+        showImagePreview(e.target.result);
       };
       reader.readAsDataURL(input.target.files[0]);
     } else {
@@ -85,25 +141,38 @@ function AdminService({ adminPage, setAdminPage }) {
   };
 
   const handleSubmit = async (e) => {
+    setLoading(true);
     e.preventDefault();
     console.log(body);
-    if ((await createProject(body)) === 200) {
-      removeImagePreview();
-      setCheckedServices(new Array(services.length).fill(false));
-      setBody({
-        title: "",
-        year: "",
-        location: "",
-        client: "",
-        description: "",
-        type: "",
-        stages: "",
-        cover: "",
-        services: [],
-        images: [],
-      });
-      alert("Project created successfully!");
-      window.location.reload();
+    let status = 0;
+    if (!project) {
+      status = await createProject(body);
+    } else {
+      status = await editProject(project, body);
+    }
+    setLoading(false);
+    if (status === 200) {
+      if (!project) {
+        removeImagePreview();
+        setCheckedServices(new Array(services.length).fill(false));
+        setBody({
+          title: "",
+          year: "",
+          location: "",
+          client: "",
+          description: "",
+          type: "",
+          stages: "",
+          cover: "",
+          services: [],
+          images: [],
+        });
+        alert("Project created successfully!");
+        window.location.reload();
+      } else {
+        alert("Project modified successfully!");
+        setRedirect(true);
+      }
     } else {
       alert("An error occurred. Please try again.");
     }
@@ -111,35 +180,25 @@ function AdminService({ adminPage, setAdminPage }) {
 
   return (
     <AdminLayout adminPage={adminPage}>
+      <Helmet>
+        <title>Archmetrics | {project ? "Edit" : "Add"} Project</title>
+      </Helmet>
       <div className="pt-5 m-5">
-        <h2 className="page-title">Add a project</h2>
+        <h2 className="page-title">{project ? "Edit" : "Add"} a project</h2>
         <form onSubmit={handleSubmit} encType="multipart/form-data">
-          <div className="form-group mb-3">
-            <label htmlFor="title">Title</label>
-            <input
-              className="form-control"
-              type="text"
-              name="title"
-              id="title"
-              placeholder="Project title"
-              autoComplete="off"
-              onChange={handleChange}
-              value={body.title}
-              autoFocus
-            />
-          </div>
           <div className="row">
             <div className="col-12 col-md-6 form-group mb-3">
-              <label htmlFor="date">Year</label>
+              <label htmlFor="title">Title</label>
               <input
                 className="form-control"
-                type="number"
-                name="year"
-                id="date"
-                placeholder="Project year"
+                type="text"
+                name="title"
+                id="title"
+                placeholder="Project title"
                 autoComplete="off"
                 onChange={handleChange}
-                value={body.year}
+                value={body.title}
+                autoFocus
               />
             </div>
             <div className="col-12 col-md-6 form-group mb-3">
@@ -154,6 +213,58 @@ function AdminService({ adminPage, setAdminPage }) {
                 onChange={handleChange}
                 value={body.client}
               />
+            </div>
+            <div className="col-12 col-md-6 form-group mb-3">
+              <label htmlFor="type">Type</label>
+              <select
+                className="form-select"
+                name="type"
+                id="type"
+                onChange={handleChange}
+                value={body.type}
+                required
+              >
+                <option value="" disabled>
+                  Choose a type for the project
+                </option>
+                <option value="Residential">Residential</option>
+                <option value="Commercial">Commercial</option>
+                <option value="Educational">Educational</option>
+                <option value="Sports">Sports</option>
+                <option value="Hotels">Hotels</option>
+                <option value="General">General</option>
+              </select>
+            </div>
+            <div className="col-12 col-md-6 form-group mb-3">
+              <label htmlFor="date">Year</label>
+              <input
+                className="form-control"
+                type="number"
+                name="year"
+                id="date"
+                placeholder="Project year"
+                autoComplete="off"
+                onChange={handleChange}
+                value={body.year}
+              />
+            </div>
+            <div className="col-12 col-md-6 form-group mb-3">
+              <label htmlFor="stage">Stage</label>
+              <select
+                className="form-select"
+                name="stage"
+                id="stage"
+                onChange={handleChange}
+                value={body.stage}
+                required
+              >
+                <option value="" disabled>
+                  Choose a stage for the project
+                </option>
+                <option value="Design">Design</option>
+                <option value="Implementation">Implementation</option>
+                <option value="Supervision">Supervision</option>
+              </select>
             </div>
             <div className="col-12 col-md-6 form-group mb-3">
               <label htmlFor="location">Location</label>
@@ -181,24 +292,10 @@ function AdminService({ adminPage, setAdminPage }) {
               onChange={handleChange}
               value={body.description}
             ></textarea>
-            {/* <CKEditor
-              editor={ClassicEditor}
-              data=""
-              onChange={(event, editor) => {
-                const data = editor.getData();
-                console.log({ event, editor, data });
-              }}
-              onBlur={(event, editor) => {
-                console.log("Blur.", editor);
-              }}
-              onFocus={(event, editor) => {
-                console.log("Focus.", editor);
-              }}
-            /> */}
           </div>
           <p className="mb-0">Related Services</p>
           {checkedServices &&
-            services?.map((service, index) => (
+            services.map((service, index) => (
               <div key={index} className="form-check mb-1">
                 <input
                   type="checkbox"
@@ -243,7 +340,14 @@ function AdminService({ adminPage, setAdminPage }) {
               </div>
             </div>
           </div>
-          <button className="btn btn-warning">Submit</button>
+          <button className="btn btn-warning" disabled={loading}>
+            Submit
+          </button>
+          {project && (
+            <Link to="/admin/dashboard" className="btn btn-secondary ms-3">
+              Cancel
+            </Link>
+          )}
         </form>
       </div>
     </AdminLayout>

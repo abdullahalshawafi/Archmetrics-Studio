@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Helmet } from "react-helmet";
 import { Link, Navigate } from "react-router-dom";
 import { loggedIn, login } from "../../services/auth";
 
@@ -41,6 +42,9 @@ function Login() {
       className="d-flex justify-content-center align-items-center"
       style={{ minHeight: "100vh" }}
     >
+      <Helmet>
+        <title>Archmetrics | Admin Login</title>
+      </Helmet>
       <Link
         to="/"
         className="btn btn-secondary position-fixed top-0 start-0 m-2"

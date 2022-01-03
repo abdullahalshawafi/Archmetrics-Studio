@@ -4,6 +4,7 @@ import InfoCard from "../components/InfoCard";
 import cover from "../assets/main_Background.jpg";
 import { getServices } from "../services/services";
 import "../App.css";
+import { Helmet } from "react-helmet";
 
 export default function Services({ pathname, setPathname }) {
   const [services, setServices] = useState([]);
@@ -19,6 +20,9 @@ export default function Services({ pathname, setPathname }) {
 
   return (
     <ClientLayout pathname={pathname}>
+      <Helmet>
+        <title>Archmetrics | Services</title>
+      </Helmet>
       <div className="cover-container">
         <img src={cover} alt="Service cover" />
         <div className="cover-details">

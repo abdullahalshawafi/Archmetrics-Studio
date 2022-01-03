@@ -6,7 +6,7 @@ const { uploadToGCP, deleteFile } = require('./imageController')
 module.exports = {
     getAllProjects: async (req, res) => {
         try {
-            const projects = await Project.find({}, "-_id -__v -description -services").sort({year: -1});
+            const projects = await Project.find({}, "-_id -__v -description -services").sort({ year: -1 });
             res.status(200).json({ projects });
         }
         catch (err) {
@@ -43,15 +43,14 @@ module.exports = {
             const reqServices = req.body.services;
             delete req.body.services;
 
-            if (process.env.NODE_ENV === "production") {
-             // Upload project's cover image and gallery images to cloud storage
-                uploadToGCP(req.body.cover);
-                req.body.cover = 'https://storage.googleapis.com/archmetrics/' + req.body.cover;
-                req.body.images = req.body.images.map((img) => {
-                uploadToGCP(img)
-                return 'https://storage.googleapis.com/archmetrics/' + img
+            // Upload project's cover image and gallery images to cloud storage
+            uploadToGCP(req.body.cover);
+            req.body.cover = 'https://storage.googleapis.com/archmetrics/' + req.body.cover;
+            req.body.images = req.body.images.map((img) => {
+                uploadToGCP(img);
+                return 'https://storage.googleapis.com/archmetrics/' + img;
             });
-}
+
             // Create a new project
             const newProject = await Project.create({ ...req.body, slug });
 
@@ -90,6 +89,12 @@ module.exports = {
                 return res.status(400).json({ error: "This project already exists" });
             }
 
+            if (project && project.cover !== 'https://storage.googleapis.com/archmetrics/' + req.body.cover) {
+                uploadToGCP(req.body.cover);
+                deleteFile(project.cover)
+                req.body.cover = 'https://storage.googleapis.com/archmetrics/' + req.body.cover;
+            }
+
             let images = req.body.images
 
             const deleted_images = images.filter((image) => !project.images.includes(image));
@@ -109,6 +114,7 @@ module.exports = {
             delete req.body.services;
             delete req.body.images;
 
+            console.log({ ...req.body, images, slug });
             const updatedProject = await Project.findOneAndUpdate({ slug: req.params.slug }, { ...req.body, images, slug }, { new: true });
             updatedProject.services = [];
 

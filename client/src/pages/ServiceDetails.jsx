@@ -3,6 +3,7 @@ import { Navigate, useParams } from "react-router-dom";
 import ClientLayout from "../layouts/ClientLayout";
 import InfoCard from "../components/InfoCard";
 import { getSingleService } from "../services/services";
+import { Helmet } from "react-helmet";
 
 function ServiceDetails({ pathname, setPathname }) {
   let { service } = useParams();
@@ -26,6 +27,9 @@ function ServiceDetails({ pathname, setPathname }) {
     <ClientLayout pathname={pathname}>
       {serviceDetails && (
         <div>
+          <Helmet>
+            <title>Archmetrics | {serviceDetails.titel}</title>
+          </Helmet>
           <div className="cover-container">
             <img src={serviceDetails.cover} alt="Service cover" />
             <div className="cover-details">

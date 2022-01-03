@@ -21,6 +21,17 @@ export const createProject = async (body) => {
     return res.status;
 };
 
+export const editProject = async (project, body) => {
+    const res = await axios.put(`${process.env.REACT_APP_BASE_URL}/project/edit/${project}`, body, {
+        headers: {
+            'Content-Type': 'application/json',
+            [process.env.REACT_APP_HEADER]: localStorage.getItem('token')
+        }
+    });
+
+    return res.status;
+};
+
 export const deleteProject = async (projects, project, setter) => {
     const res = await axios.delete(`${process.env.REACT_APP_BASE_URL}/project/delete/${project}`, {
         headers: {

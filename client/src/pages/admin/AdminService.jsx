@@ -1,7 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
+import { Helmet } from "react-helmet";
 import { Link, Navigate, useParams } from "react-router-dom";
 import AdminLayout from "../../layouts/AdminLayout";
 import { uploadCover } from "../../services";
+import { loggedIn } from "../../services/auth";
 import {
   createService,
   editService,
@@ -23,18 +25,29 @@ function AdminService({ adminPage, setAdminPage }) {
   const imagePreview = useRef(null);
 
   useEffect(() => {
-    setAdminPage("services");
+    !service && setAdminPage("services");
   });
 
   useEffect(() => {
     if (service) {
       getSingleService(service, setBody, setRedirect);
+    } else {
+      setBody({
+        title: "",
+        summary: "",
+        description: "",
+        cover: "",
+      });
     }
   }, [service]);
 
   useEffect(() => {
     service && body.cover.includes("https://") && showImagePreview(body.cover);
   }, [service, body]);
+
+  if (!loggedIn) {
+    return <Navigate to="/" />;
+  }
 
   if (redirect) {
     return <Navigate to="/admin/dashboard" />;
@@ -104,6 +117,9 @@ function AdminService({ adminPage, setAdminPage }) {
 
   return (
     <AdminLayout adminPage={adminPage}>
+      <Helmet>
+        <title>Archmetrics | {service ? "Edit" : "Add"} Project</title>
+      </Helmet>
       <div className="pt-5 m-5">
         <h2 className="page-title">{service ? "Edit" : "Add"} a service</h2>
         <form onSubmit={handleSubmit} encType="multipart/form-data">

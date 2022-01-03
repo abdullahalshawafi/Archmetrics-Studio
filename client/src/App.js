@@ -28,7 +28,7 @@ function App() {
         <Route path="/admin/add-service" element={<AdminService adminPage={adminPage} setAdminPage={setAdminPage} />} />
         <Route path="/admin/add-project" element={<AdminProject adminPage={adminPage} setAdminPage={setAdminPage} />} />
         <Route path="/admin/edit-service/:service" element={<AdminService adminPage={adminPage} setAdminPage={setAdminPage} />} />
-        {/* <Route path="/admin/edit-project/:project" element={<AdminProject adminPage={adminPage} setAdminPage={setAdminPage} />} /> */}
+        <Route path="/admin/edit-project/:project" element={<AdminProject adminPage={adminPage} setAdminPage={setAdminPage} />} />
       </Routes>
     </Router>
   );

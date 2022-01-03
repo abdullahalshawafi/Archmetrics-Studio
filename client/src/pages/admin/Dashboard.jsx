@@ -6,6 +6,7 @@ import { Link, Navigate } from "react-router-dom";
 import { loggedIn } from "../../services/auth";
 import { getServices, deleteService } from "../../services/services";
 import { getProjects, deleteProject } from "../../services/projects";
+import { Helmet } from "react-helmet";
 
 function Dashboard({ adminPage, setAdminPage }) {
   const [services, setServices] = useState([]);
@@ -41,9 +42,12 @@ function Dashboard({ adminPage, setAdminPage }) {
   };
 
   return !loggedIn ? (
-    <Navigate to="/admin/login" />
+    <Navigate to="/" />
   ) : (
     <AdminLayout adminPage={adminPage}>
+      <Helmet>
+        <title>Archmetrics | Admin Dashboard</title>
+      </Helmet>
       <h1 className="mt-5 pt-5 text-center fw-bold">Dashboard</h1>
       <div className="row mx-0 p-5 pt-3">
         <div className="col-12 col-md-6">
