@@ -1,9 +1,7 @@
 import { Carousel } from "react-carousel-minimal";
 import "../App.css";
 
-function ImageGallery(props) {
-  const data = props.data;
-
+function ImageGallery({ data }) {
   const slideNumberStyle = {
     fontSize: "20px",
     fontWeight: "bold",
@@ -12,11 +10,7 @@ function ImageGallery(props) {
   return (
     <div className="Gallery">
       <div style={{ textAlign: "center" }}>
-        <div
-          style={{
-            padding: "0 20px",
-          }}
-        >
+        <div>
           <Carousel
             className="Gallery"
             data={data}
