@@ -38,7 +38,7 @@
 
 .active,
 .dot:hover {
-  background-color: none;
+  background: none !important;
 }
 
 body {

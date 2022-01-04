@@ -13,7 +13,8 @@ export default function Footer() {
     <div className="footer">
       <div>
         <label className="Copyright">
-          &copy; 2022 Archmetrics Studio All rights reserved
+          &copy; {new Date().getFullYear()} Archmetrics Studio All rights
+          reserved
         </label>
       </div>
       <div className="FooterIcons">
