@@ -10,11 +10,13 @@ export const getSingleProject = async (project, setter, setGalleryDetails) => {
     setter(res.data.project);
     let data = { image: "" }
     let gallery = []
-    res.data.project.images.forEach((img) => {
-        data.image = img
-        gallery.push({...data})
-    })
-    setGalleryDetails(gallery)
+    if(res.data.project.images.length !==0){
+        res.data.project.images.forEach((img) => {
+            data.image = img
+            gallery.push({...data})
+        })
+        setGalleryDetails(gallery)
+    }
 };
 
 export const createProject = async (body) => {
