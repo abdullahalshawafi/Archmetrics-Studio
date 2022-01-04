@@ -3,18 +3,20 @@ import { Helmet } from "react-helmet";
 import { Link, useParams } from "react-router-dom";
 import ClientLayout from "../layouts/ClientLayout";
 import { getSingleProject } from "../services/projects";
+import ImageGallery from "../components/ImageGallery";
 
 function ProjectDetails({ pathname, setPathname }) {
   let { project } = useParams();
   const [projectDetails, setProjectDetails] = useState(null);
-
+  const [GalleryDetails, setGalleryDetails] = useState([{image:""}]);
+  
   useEffect(() => {
     window.scrollTo(0, 0);
     setPathname("");
   });
-
+  
   useEffect(() => {
-    getSingleProject(project, setProjectDetails);
+    getSingleProject(project, setProjectDetails,setGalleryDetails);
   }, [project]);
 
   return (
@@ -52,6 +54,7 @@ function ProjectDetails({ pathname, setPathname }) {
             <div className="project-details col-12 col-md-8">
               <h4>Project Description:</h4>
               <p>{projectDetails.description}</p>
+              <ImageGallery data = {GalleryDetails}  />
             </div>
           </div>
         </div>

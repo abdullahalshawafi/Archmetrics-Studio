@@ -5,9 +5,16 @@ export const getProjects = async (setter) => {
     setter(res.data.projects);
 };
 
-export const getSingleProject = async (project, setter) => {
+export const getSingleProject = async (project, setter,setGalleryDetails) => {
     const res = await axios.get(`${process.env.REACT_APP_BASE_URL}/project/${project}`);
     setter(res.data.project);
+    let data = {image:""}
+    let gallery = []
+    res.data.project.images.forEach((img)=>{
+        data.image = img
+        gallery.push(data)
+    })
+    setGalleryDetails(gallery)
 };
 
 export const createProject = async (body) => {
