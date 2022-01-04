@@ -8,15 +8,15 @@ import ImageGallery from "../components/ImageGallery";
 function ProjectDetails({ pathname, setPathname }) {
   let { project } = useParams();
   const [projectDetails, setProjectDetails] = useState(null);
-  const [GalleryDetails, setGalleryDetails] = useState([{image:""}]);
-  
+  const [GalleryDetails, setGalleryDetails] = useState([{ image: "" }]);
+
   useEffect(() => {
     window.scrollTo(0, 0);
     setPathname("");
   });
-  
+
   useEffect(() => {
-    getSingleProject(project, setProjectDetails,setGalleryDetails);
+    getSingleProject(project, setProjectDetails, setGalleryDetails);
   }, [project]);
 
   return (
@@ -54,7 +54,7 @@ function ProjectDetails({ pathname, setPathname }) {
             <div className="project-details col-12 col-md-8">
               <h4>Project Description:</h4>
               <p>{projectDetails.description}</p>
-              <ImageGallery data = {GalleryDetails}  />
+              <ImageGallery data={GalleryDetails} />
             </div>
           </div>
         </div>

@@ -28,7 +28,7 @@ function ServiceDetails({ pathname, setPathname }) {
       {serviceDetails && (
         <div>
           <Helmet>
-            <title>Archmetrics | {serviceDetails.titel}</title>
+            <title>Archmetrics | {serviceDetails.title}</title>
           </Helmet>
           <div className="cover-container">
             <img src={serviceDetails.cover} alt="Service cover" />

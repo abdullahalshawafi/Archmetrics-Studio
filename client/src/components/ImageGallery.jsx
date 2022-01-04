@@ -1,22 +1,24 @@
-import { Carousel } from 'react-carousel-minimal';
+import { Carousel } from "react-carousel-minimal";
 import "../App.css";
 
 function ImageGallery(props) {
- 
-    const data = props.data;
-    
-  
+  const data = props.data;
+
   const slideNumberStyle = {
-    fontSize: '20px',
-    fontWeight: 'bold',
-  }
+    fontSize: "20px",
+    fontWeight: "bold",
+  };
+
   return (
     <div className="Gallery">
       <div style={{ textAlign: "center" }}>
-        <div style={{
-          padding: "0 20px",
-        }}>
-          <Carousel className="Gallery"
+        <div
+          style={{
+            padding: "0 20px",
+          }}
+        >
+          <Carousel
+            className="Gallery"
             data={data}
             time={2000}
             width="850px"

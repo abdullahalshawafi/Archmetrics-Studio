@@ -10,10 +10,10 @@
   --secondary-fm: 'Poppins', sans-serif;
 }
 
-.Gallery .thumbnails{
+.Gallery .thumbnails {
   overflow: hidden;
-
 }
+
 * {
   margin: 0;
   padding: 0;
@@ -34,6 +34,11 @@
 
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
+}
+
+.active,
+.dot:hover {
+  background-color: none;
 }
 
 body {
