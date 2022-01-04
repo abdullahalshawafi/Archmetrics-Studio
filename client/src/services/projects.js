@@ -12,7 +12,7 @@ export const getSingleProject = async (project, setter, setGalleryDetails) => {
     let gallery = []
     res.data.project.images.forEach((img) => {
         data.image = img
-        gallery.push(data)
+        gallery.push({...data})
     })
     setGalleryDetails(gallery)
 };
