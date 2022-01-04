@@ -6,15 +6,16 @@ const {
     editService,
     deleteService
 } = require("../controllers/serviceController");
+const { isAuth } = require("../middleware/authMiddleware");
 
 router.get('/', getAllServices);
 
 router.get('/:slug', getSingleService);
 
-router.post('/create', createService);
+router.post('/create', isAuth, createService);
 
-router.put('/edit/:slug', editService);
+router.put('/edit/:slug', isAuth, editService);
 
-router.delete('/delete/:slug', deleteService);
+router.delete('/delete/:slug', isAuth, deleteService);
 
 module.exports = router;

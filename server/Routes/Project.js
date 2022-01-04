@@ -6,15 +6,16 @@ const {
     editProject,
     deleteProject
 } = require("../controllers/projectController");
+const { isAuth } = require("../middleware/authMiddleware");
 
 router.get('/', getAllProjects);
 
 router.get('/:slug', getSingleProject);
 
-router.post('/create', createProject);
+router.post('/create', isAuth, createProject);
 
-router.put('/edit/:slug', editProject);
+router.put('/edit/:slug', isAuth, editProject);
 
-router.delete('/delete/:slug', deleteProject);
+router.delete('/delete/:slug', isAuth, deleteProject);
 
 module.exports = router;
