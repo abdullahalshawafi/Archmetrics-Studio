@@ -1,8 +1,8 @@
 import axios from "axios";
 
-export const uploadCover = async (cover) => {
+export const uploadImage = async (image) => {
     const data = new FormData();
-    data.append("image", cover);
+    data.append("image", image);
 
     const res = await axios.post(`${process.env.REACT_APP_BASE_URL}/image/upload`, data, {
         headers: {

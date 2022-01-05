@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { Helmet } from "react-helmet";
 import { Link, Navigate, useParams } from "react-router-dom";
 import AdminLayout from "../../layouts/AdminLayout";
-import { uploadCover } from "../../services";
+import { uploadImage } from "../../services";
 import { loggedIn } from "../../services/auth";
 import {
   createService,
@@ -72,7 +72,7 @@ function AdminService({ adminPage, setAdminPage }) {
     if (input.target.files.length) {
       const reader = new FileReader();
       reader.onload = async (e) => {
-        setBody({ ...body, cover: await uploadCover(input.target.files[0]) });
+        setBody({ ...body, cover: await uploadImage(input.target.files[0]) });
         showImagePreview(e.target.result);
       };
       reader.readAsDataURL(input.target.files[0]);

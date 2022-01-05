@@ -3,7 +3,7 @@ import { Helmet } from "react-helmet";
 import { Link, Navigate, useParams } from "react-router-dom";
 import GalleryUpload from "../../components/admin/GalleryUpload";
 import AdminLayout from "../../layouts/AdminLayout";
-import { uploadCover } from "../../services";
+import { uploadImage } from "../../services";
 import { loggedIn } from "../../services/auth";
 import {
   createProject,
@@ -111,7 +111,7 @@ function AdminService({ adminPage, setAdminPage }) {
     if (input.target.files.length) {
       const reader = new FileReader();
       reader.onload = async (e) => {
-        setBody({ ...body, cover: await uploadCover(input.target.files[0]) });
+        setBody({ ...body, cover: await uploadImage(input.target.files[0]) });
         showImagePreview(e.target.result);
       };
       reader.readAsDataURL(input.target.files[0]);
@@ -343,7 +343,7 @@ function AdminService({ adminPage, setAdminPage }) {
           </div>
           <div className="form-group my-3">
             <label>Gallery</label>
-            <GalleryUpload />
+            <GalleryUpload setBody={setBody} body={body} />
           </div>
           <button className="btn btn-warning" disabled={loading}>
             Submit

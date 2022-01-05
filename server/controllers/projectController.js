@@ -101,6 +101,7 @@ module.exports = {
             deleted_images.forEach((image) => {
                 deleteFile(image);
             });
+
             images = images.map((image) => {
                 if (!image.includes('https://storage.googleapis.com/archmetrics/')) {
                     uploadToGCP(image);

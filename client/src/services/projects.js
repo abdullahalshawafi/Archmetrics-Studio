@@ -30,6 +30,7 @@ export const createProject = async (body) => {
 export const editProject = async (project, body) => {
     try {
         body.services = body.services.map(service => service.slug);
+        body.images = body.images.map(image => image.image);
         const res = await axios.put(`${process.env.REACT_APP_BASE_URL}/project/edit/${project}`, body, {
             headers: {
                 'Content-Type': 'application/json',

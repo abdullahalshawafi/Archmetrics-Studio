@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useDropzone } from "react-dropzone";
+import { uploadImage } from "../../services";
 
 const baseStyle = {
   display: "flex",
@@ -27,19 +28,35 @@ const rejectStyle = {
   borderColor: "#ff1744",
 };
 
-function GalleryUpload(props) {
+function GalleryUpload({ setBody, body }) {
+  const [images, setImages] = useState([]);
   const [files, setFiles] = useState([]);
 
-  const onDrop = useCallback((acceptedFiles) => {
-    console.log(acceptedFiles);
-    setFiles(
-      acceptedFiles.map((file) =>
-        Object.assign(file, {
-          preview: URL.createObjectURL(file),
-        })
-      )
-    );
+  const readURL = useCallback((image) => {
+    const reader = new FileReader();
+    reader.onload = async () => {
+      const newImage = await uploadImage(image);
+      setImages((oldImages) => [...oldImages, newImage]);
+      // setBody({ ...body, images: images2 });
+    };
+    reader.readAsDataURL(image);
   }, []);
+
+  const onDrop = useCallback(
+    (acceptedFiles) => {
+      acceptedFiles.forEach((file) => {
+        readURL(file);
+      });
+      setFiles(
+        acceptedFiles.map((file) =>
+          Object.assign(file, {
+            preview: URL.createObjectURL(file),
+          })
+        )
+      );
+    },
+    [readURL]
+  );
 
   const {
     getRootProps,
@@ -84,12 +101,18 @@ function GalleryUpload(props) {
     [files]
   );
 
+  useEffect(() => {
+    setBody({ ...body, images });
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [images]);
+
   return (
     <section>
       <div {...getRootProps({ style })}>
         <input {...getInputProps()} />
         <div>Drag and drop your images here.</div>
-        <aside
+        <div
           style={{
             display: "flex",
             flexWrap: "wrap",
@@ -100,7 +123,7 @@ function GalleryUpload(props) {
           }}
         >
           {thumbs}
-        </aside>
+        </div>
       </div>
     </section>
   );
