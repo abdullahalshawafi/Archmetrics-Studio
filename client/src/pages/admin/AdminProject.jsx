@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Helmet } from "react-helmet";
 import { Link, Navigate, useParams } from "react-router-dom";
+import GalleryUpload from "../../components/admin/GalleryUpload";
 import AdminLayout from "../../layouts/AdminLayout";
 import { uploadCover } from "../../services";
 import { loggedIn } from "../../services/auth";
@@ -143,7 +144,6 @@ function AdminService({ adminPage, setAdminPage }) {
   const handleSubmit = async (e) => {
     setLoading(true);
     e.preventDefault();
-    console.log(body);
     let status = 0;
     if (!project) {
       status = await createProject(body);
@@ -175,6 +175,7 @@ function AdminService({ adminPage, setAdminPage }) {
       }
     } else {
       alert("An error occurred. Please try again.");
+      window.location.reload();
     }
   };
 
@@ -339,6 +340,10 @@ function AdminService({ adminPage, setAdminPage }) {
                 </span>
               </div>
             </div>
+          </div>
+          <div className="form-group my-3">
+            <label>Gallery</label>
+            <GalleryUpload />
           </div>
           <button className="btn btn-warning" disabled={loading}>
             Submit

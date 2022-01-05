@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
-import { Link, useParams } from "react-router-dom";
+import { Link, Navigate, useParams } from "react-router-dom";
 import ClientLayout from "../layouts/ClientLayout";
 import { getSingleProject } from "../services/projects";
 import ImageGallery from "../components/ImageGallery";
@@ -8,7 +8,7 @@ import ImageGallery from "../components/ImageGallery";
 function ProjectDetails({ pathname, setPathname }) {
   let { project } = useParams();
   const [projectDetails, setProjectDetails] = useState(null);
-  const [GalleryDetails, setGalleryDetails] = useState([{ image: "" }]);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -16,8 +16,12 @@ function ProjectDetails({ pathname, setPathname }) {
   });
 
   useEffect(() => {
-    getSingleProject(project, setProjectDetails, setGalleryDetails);
+    getSingleProject(project, setProjectDetails, setError);
   }, [project]);
+
+  if (error) {
+    <Navigate to="/projects" />;
+  }
 
   return (
     <ClientLayout pathname={pathname}>
@@ -54,8 +58,8 @@ function ProjectDetails({ pathname, setPathname }) {
             <div className="project-details col-12 col-md-8">
               <h4>Project Description:</h4>
               <p>{projectDetails.description}</p>
-              {GalleryDetails[0].image !== "" && (
-                <ImageGallery data={GalleryDetails} />
+              {projectDetails.images[0].image !== "" && (
+                <ImageGallery data={projectDetails.images} />
               )}
             </div>
           </div>

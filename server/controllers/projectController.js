@@ -89,7 +89,7 @@ module.exports = {
                 return res.status(400).json({ error: "This project already exists" });
             }
 
-            if (project && project.cover !== 'https://storage.googleapis.com/archmetrics/' + req.body.cover) {
+            if (project && project.cover !== req.body.cover) {
                 uploadToGCP(req.body.cover);
                 deleteFile(project.cover)
                 req.body.cover = 'https://storage.googleapis.com/archmetrics/' + req.body.cover;
@@ -114,17 +114,17 @@ module.exports = {
             delete req.body.services;
             delete req.body.images;
 
-            console.log({ ...req.body, images, slug });
             const updatedProject = await Project.findOneAndUpdate({ slug: req.params.slug }, { ...req.body, images, slug }, { new: true });
             updatedProject.services = [];
 
             const services = await Service.find({ slug: { "$in": reqServices } }).populate("projects", "_id");
+            console.log(services);
 
             services.forEach(async service => {
                 updatedProject.services.push(service._id);
+                console.log(service.projects.indexOf(updatedProject._id) == -1);
                 if (service.projects.indexOf(updatedProject._id) === -1) {
                     await Service.findByIdAndUpdate(service._id, { "$push": { projects: updatedProject._id } });
-                    console.log(service.projects.indexOf(updatedProject._id) == -1);
                 }
             });
 

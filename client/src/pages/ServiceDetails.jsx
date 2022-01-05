@@ -7,8 +7,8 @@ import { Helmet } from "react-helmet";
 
 function ServiceDetails({ pathname, setPathname }) {
   let { service } = useParams();
-  const [redirect, setRedirect] = useState(false);
   const [serviceDetails, setServiceDetails] = useState(null);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -16,11 +16,11 @@ function ServiceDetails({ pathname, setPathname }) {
   });
 
   useEffect(() => {
-    getSingleService(service, setServiceDetails, setRedirect);
+    getSingleService(service, setServiceDetails, setError);
   }, [service]);
 
-  if (redirect) {
-    return <Navigate to="/admin/dashboard" />;
+  if (error) {
+    return <Navigate to="/services" />;
   }
 
   return (

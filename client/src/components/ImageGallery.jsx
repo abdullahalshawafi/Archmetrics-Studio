@@ -20,7 +20,7 @@ function ImageGallery({ data }) {
             radius="10px"
             slideNumber={true}
             slideNumberStyle={slideNumberStyle}
-            automatic={true}
+            automatic={false}
             dots={true}
             pauseIconColor="white"
             pauseIconSize="40px"
