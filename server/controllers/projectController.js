@@ -124,6 +124,7 @@ module.exports = {
             services.forEach(async service => {
                 updatedProject.services.push(service._id);
                 console.log(service.projects.indexOf(updatedProject._id) == -1);
+                console.log(service.projects);
                 if (service.projects.indexOf(updatedProject._id) === -1) {
                     await Service.findByIdAndUpdate(service._id, { "$push": { projects: updatedProject._id } });
                 }
