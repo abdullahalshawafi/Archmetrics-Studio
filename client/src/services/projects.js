@@ -8,7 +8,7 @@ export const getProjects = async (setter) => {
 export const getSingleProject = async (project, setter, error) => {
     try {
         const res = await axios.get(`${process.env.REACT_APP_BASE_URL}/project/${project}`);
-        res.data.project.images = res.data.project.images.map(image => ({ image }));
+        res.data.project.images = res.data.project.images?.map(image => ({ image }));
         setter(res.data.project);
     } catch (err) {
         console.log(err.message);
