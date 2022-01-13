@@ -15,6 +15,7 @@ import { getServices } from "../../services/services";
 function AdminService({ adminPage, setAdminPage }) {
   const { project } = useParams();
   const [loading, setLoading] = useState(false);
+  const [loadingGallery, setLoadingGallery] = useState(false);
   const [redirect, setRedirect] = useState(false);
   const [services, setServices] = useState([]);
   const [checkedServices, setCheckedServices] = useState([]);
@@ -346,12 +347,15 @@ function AdminService({ adminPage, setAdminPage }) {
           <div className="form-group my-3">
             <label>Gallery</label>
             <GalleryUpload
-              setLoading={setLoading}
+              setLoading={setLoadingGallery}
               setBody={setBody}
               body={body}
             />
           </div>
-          <button className="btn btn-warning" disabled={loading}>
+          <button
+            className="btn btn-warning"
+            disabled={loading || loadingGallery}
+          >
             Submit
           </button>
           <Link to="/admin/dashboard" className="btn btn-secondary ms-3">

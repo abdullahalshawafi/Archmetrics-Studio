@@ -58,7 +58,7 @@ function ProjectDetails({ pathname, setPathname }) {
             <div className="project-details col-12 col-md-8">
               <h4>Project Description:</h4>
               <p>{projectDetails.description}</p>
-              {projectDetails.images[0].image !== "" && (
+              {projectDetails.images && (
                 <ImageGallery data={projectDetails.images} />
               )}
             </div>
