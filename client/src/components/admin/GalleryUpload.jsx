@@ -28,7 +28,7 @@ const rejectStyle = {
   borderColor: "#ff1744",
 };
 
-function GalleryUpload({ setBody, body }) {
+function GalleryUpload({ setLoading, setBody, body }) {
   const [images, setImages] = useState([]);
   const [files, setFiles] = useState([]);
 
@@ -37,13 +37,13 @@ function GalleryUpload({ setBody, body }) {
     reader.onload = async () => {
       const newImage = await uploadImage(image);
       setImages((oldImages) => [...oldImages, newImage]);
-      // setBody({ ...body, images: images2 });
     };
     reader.readAsDataURL(image);
   }, []);
 
   const onDrop = useCallback(
     (acceptedFiles) => {
+      setLoading(true);
       acceptedFiles.forEach((file) => {
         readURL(file);
       });
@@ -54,8 +54,9 @@ function GalleryUpload({ setBody, body }) {
           })
         )
       );
+      setLoading(false);
     },
-    [readURL]
+    [setLoading, readURL]
   );
 
   const {

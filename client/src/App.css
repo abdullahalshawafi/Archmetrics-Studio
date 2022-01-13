@@ -223,6 +223,23 @@ a {
   display: block;
 }
 
+.info-details-container .details.project {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  color: var(--white-color);
+}
+
+.info-details-container:hover .details.project {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
 .info-details-container:hover .img {
   opacity: 0.4;
 }
@@ -550,6 +567,7 @@ a {
 .nav-options.active {
   padding: 2rem 0;
   max-height: 300px;
+  background: var(--black-color) !important;
   transition: all 0.5s ease;
 }
 
@@ -818,6 +836,13 @@ a {
   .info-details-container .details {
     padding: 1rem;
     display: block;
+  }
+
+  .info-details-container .details.project {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
   }
 
   .info-details-container .details h3 {

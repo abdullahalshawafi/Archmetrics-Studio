@@ -72,8 +72,10 @@ function AdminService({ adminPage, setAdminPage }) {
     if (input.target.files.length) {
       const reader = new FileReader();
       reader.onload = async (e) => {
+        setLoading(true);
         setBody({ ...body, cover: await uploadImage(input.target.files[0]) });
         showImagePreview(e.target.result);
+        setLoading(false);
       };
       reader.readAsDataURL(input.target.files[0]);
     } else {

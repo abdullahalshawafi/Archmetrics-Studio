@@ -111,8 +111,10 @@ function AdminService({ adminPage, setAdminPage }) {
     if (input.target.files.length) {
       const reader = new FileReader();
       reader.onload = async (e) => {
+        setLoading(true);
         setBody({ ...body, cover: await uploadImage(input.target.files[0]) });
         showImagePreview(e.target.result);
+        setLoading(false);
       };
       reader.readAsDataURL(input.target.files[0]);
     } else {
@@ -343,7 +345,11 @@ function AdminService({ adminPage, setAdminPage }) {
           </div>
           <div className="form-group my-3">
             <label>Gallery</label>
-            <GalleryUpload setBody={setBody} body={body} />
+            <GalleryUpload
+              setLoading={setLoading}
+              setBody={setBody}
+              body={body}
+            />
           </div>
           <button className="btn btn-warning" disabled={loading}>
             Submit
