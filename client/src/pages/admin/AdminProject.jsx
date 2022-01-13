@@ -354,11 +354,9 @@ function AdminService({ adminPage, setAdminPage }) {
           <button className="btn btn-warning" disabled={loading}>
             Submit
           </button>
-          {project && (
-            <Link to="/admin/dashboard" className="btn btn-secondary ms-3">
-              Cancel
-            </Link>
-          )}
+          <Link to="/admin/dashboard" className="btn btn-secondary ms-3">
+            Cancel
+          </Link>
         </form>
       </div>
     </AdminLayout>

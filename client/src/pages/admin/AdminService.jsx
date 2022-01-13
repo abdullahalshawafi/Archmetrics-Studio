@@ -12,6 +12,7 @@ import {
 
 function AdminService({ adminPage, setAdminPage }) {
   const { service } = useParams();
+  const [summaryCount, setSummaryCount] = useState(0);
   const [loading, setLoading] = useState(false);
   const [redirect, setRedirect] = useState(false);
   const [body, setBody] = useState({
@@ -21,8 +22,11 @@ function AdminService({ adminPage, setAdminPage }) {
     cover: "",
   });
 
+  const summaryField = useRef(null);
   const defaultText = useRef(null);
   const imagePreview = useRef(null);
+
+  const summaryLimit = 100;
 
   useEffect(() => {
     !service && setAdminPage("services");
@@ -83,8 +87,14 @@ function AdminService({ adminPage, setAdminPage }) {
     }
   };
 
+  const handleKeyUp = () => {
+    setSummaryCount(summaryField.current.value.length);
+  };
+
   const handleChange = (e) => {
-    setBody({ ...body, [e.target.name]: e.target.value });
+    if (e.target.name === "summary" && summaryCount < summaryLimit) {
+      setBody({ ...body, [e.target.name]: e.target.value });
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -149,10 +159,15 @@ function AdminService({ adminPage, setAdminPage }) {
               cols="30"
               rows="10"
               placeholder="Service summary"
+              ref={summaryField}
               onChange={handleChange}
+              onKeyUp={handleKeyUp}
               value={body.summary}
               required
             ></textarea>
+            <div className="mt-1">
+              {summaryCount}/{summaryLimit}
+            </div>
           </div>
           <div className="form-group mb-3">
             <label htmlFor="description">Description</label>
@@ -200,11 +215,9 @@ function AdminService({ adminPage, setAdminPage }) {
           <button className="btn btn-warning" disabled={loading}>
             Submit
           </button>
-          {service && (
-            <Link to="/admin/dashboard" className="btn btn-secondary ms-3">
-              Cancel
-            </Link>
-          )}
+          <Link to="/admin/dashboard" className="btn btn-secondary ms-3">
+            Cancel
+          </Link>
         </form>
       </div>
     </AdminLayout>
