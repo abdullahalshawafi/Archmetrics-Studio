@@ -94,6 +94,8 @@ function AdminService({ adminPage, setAdminPage }) {
   const handleChange = (e) => {
     if (e.target.name === "summary" && summaryCount < summaryLimit) {
       setBody({ ...body, [e.target.name]: e.target.value });
+    } else if (e.target.name !== "summary") {
+      setBody({ ...body, [e.target.name]: e.target.value });
     }
   };
 
