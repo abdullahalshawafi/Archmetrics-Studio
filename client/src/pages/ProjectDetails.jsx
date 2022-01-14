@@ -43,6 +43,10 @@ function ProjectDetails({ pathname, setPathname }) {
               <p>{projectDetails.client}</p>
               <h4>Location:</h4>
               <p>{projectDetails.location}</p>
+              <h4>Area:</h4>
+              <p>
+                {projectDetails.area} m<sup>2</sup>
+              </p>
               <h4>Type:</h4>
               <p>{projectDetails.type}</p>
               <h4>Stage:</h4>

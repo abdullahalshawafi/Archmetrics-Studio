@@ -8,8 +8,13 @@ export default function InfoCard({ type, info }) {
         <img src={info.cover} className="img" alt="info" />
         <div className={`details ${type.slice(0, type.length - 1)}`}>
           <h3>{info.title}</h3>
-          <h5>{info.summary}</h5>
+          <h5>{info?.summary}</h5>
         </div>
+        {type === "projects" ? (
+          <div className="details year">
+            <h5 className="mb-0">{info.year}</h5>
+          </div>
+        ) : null}
       </div>
     </Link>
   );

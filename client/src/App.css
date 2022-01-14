@@ -224,13 +224,20 @@ a {
 }
 
 .info-details-container .details.project {
-  display: none;
-  position: absolute;
-  top: 0;
-  left: 0;
   width: 100%;
   height: 100%;
-  color: var(--white-color);
+  padding: 0;
+}
+
+.info-details-container .details.year {
+  bottom: 0;
+  left: 0;
+  padding: 0.75rem;
+}
+
+.info-details-container:hover .details.year {
+  display: flex;
+  align-items: flex-end;
 }
 
 .info-details-container:hover .details.project {

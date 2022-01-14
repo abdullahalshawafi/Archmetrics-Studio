@@ -39,6 +39,10 @@ const projectSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
+    area: {
+        type: Number,
+        required: true
+    },
     type: {
         type: String,
         required: true

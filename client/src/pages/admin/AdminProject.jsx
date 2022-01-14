@@ -22,6 +22,7 @@ function AdminService({ adminPage, setAdminPage }) {
   const [body, setBody] = useState({
     title: "",
     year: "",
+    area: "",
     location: "",
     client: "",
     type: "",
@@ -65,6 +66,7 @@ function AdminService({ adminPage, setAdminPage }) {
       setBody({
         title: "",
         year: "",
+        area: "",
         location: "",
         client: "",
         type: "",
@@ -161,6 +163,7 @@ function AdminService({ adminPage, setAdminPage }) {
         setBody({
           title: "",
           year: "",
+          area: "",
           location: "",
           client: "",
           description: "",
@@ -190,21 +193,21 @@ function AdminService({ adminPage, setAdminPage }) {
       <div className="pt-5 m-5">
         <h2 className="page-title">{project ? "Edit" : "Add"} a project</h2>
         <form onSubmit={handleSubmit} encType="multipart/form-data">
+          <div className="form-group mb-3">
+            <label htmlFor="title">Title</label>
+            <input
+              className="form-control"
+              type="text"
+              name="title"
+              id="title"
+              placeholder="Project title"
+              autoComplete="off"
+              onChange={handleChange}
+              value={body.title}
+              autoFocus
+            />
+          </div>
           <div className="row">
-            <div className="col-12 col-md-6 form-group mb-3">
-              <label htmlFor="title">Title</label>
-              <input
-                className="form-control"
-                type="text"
-                name="title"
-                id="title"
-                placeholder="Project title"
-                autoComplete="off"
-                onChange={handleChange}
-                value={body.title}
-                autoFocus
-              />
-            </div>
             <div className="col-12 col-md-6 form-group mb-3">
               <label htmlFor="client">Client</label>
               <input
@@ -216,6 +219,19 @@ function AdminService({ adminPage, setAdminPage }) {
                 autoComplete="off"
                 onChange={handleChange}
                 value={body.client}
+              />
+            </div>
+            <div className="col-12 col-md-6 form-group mb-3">
+              <label htmlFor="area">Area</label>
+              <input
+                className="form-control"
+                type="number"
+                name="area"
+                id="area"
+                placeholder="Project area"
+                autoComplete="off"
+                onChange={handleChange}
+                value={body.area}
               />
             </div>
             <div className="col-12 col-md-6 form-group mb-3">

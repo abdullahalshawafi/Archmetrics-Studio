@@ -37,9 +37,9 @@ function ServiceDetails({ pathname, setPathname }) {
             </div>
           </div>
           <div className="service-details">
-            <p>{serviceDetails.description}</p>
+            <p style={{ whiteSpace: "pre" }}>{serviceDetails.description}</p>
           </div>
-          {serviceDetails.projects.length && (
+          {serviceDetails.projects.length ? (
             <div className="recent-projects-container">
               <h1>Recent related projects</h1>
               <div className="recent-projects d-flex flex-md-row flex-column">
@@ -50,7 +50,7 @@ function ServiceDetails({ pathname, setPathname }) {
                 )}
               </div>
             </div>
-          )}
+          ) : null}
         </div>
       )}
     </ClientLayout>
