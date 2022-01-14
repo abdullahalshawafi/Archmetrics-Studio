@@ -760,15 +760,6 @@ a {
   margin-top: -50px !important;
 }
 
-.recent-projects-container .info-details-container .details {
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  padding: 0;
-  width: 100%;
-  text-align: center;
-}
-
 .recent-projects {
   gap: 1rem;
 }
