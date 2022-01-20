@@ -1,25 +1,26 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+
 import { CarouselProvider, Slide, Slider } from "pure-react-carousel";
-import first from "../assets/1.jpg";
-import second from "../assets/2.jpg";
-import third from "../assets/3.jpg";
-import fourth from "../assets/4.jpg";
-import fifth from "../assets/5.jpg";
 import { useMediaQuery } from "react-responsive";
 import "pure-react-carousel/dist/react-carousel.es.css";
+import {
+  getProjects
+} from "../services/projects";
 
 export default function TeamMembers() {
+  const[Projects,SetProject]=useState([])
+
+  useEffect(()=>{
+    getProjects(SetProject);
+  }, [])
+  if(Projects.length >= 5){
+    Projects.length = 5;
+  }
   const IsMobile = useMediaQuery({ query: "(max-width:480px)" });
-  return (
+  return (Projects.length === 5 ? (
     <div className="Team-Members-container">
       <div className="Team-Members-details">
-        <h1>Team Members</h1>
-        <hr />
-        <p>
-          Meet the Bad Monkeys behind all of those Dynamo and Grasshopper
-          plug-ins. We are here to listen to your needs and provide expert
-          advice.
-        </p>
+        <h1>Recent Projects</h1>
       </div>
       <div className="Members">
         <CarouselProvider
@@ -29,73 +30,23 @@ export default function TeamMembers() {
           totalSlides={5}
           visibleSlides={IsMobile ? 1 : 5}
         >
-          <Slider>
+          <Slider>{
+          Projects.map((project,index)=>(
             <Slide className="member-slide">
-              <img className="Member" src={first} alt="first" />
+              <img className="Member" src={project.cover} alt={index} />
               <div className="hiddenDiv">
-                <h3>Håvard Vasshaug</h3>
-                <h5>Design Technology Specialist</h5>
+                <h3>{project.title}</h3>
+                <h5>{project.slug}</h5>
                 <hr />
                 <p className="HiddenParagraph">
-                  Håvard's best known for his passion for knowledge sharing and
-                  epic on stage performances. He's a Structural Engineer with a
-                  knack for creative design solutions.
+                  {project.description}
                 </p>
               </div>
-            </Slide>
-            <Slide className="member-slide">
-              <img className="Member" src={second} alt="first" />
-              <div className="hiddenDiv">
-                <h3>Dimitar Venkov</h3>
-                <h5>Design Technology Specialist</h5>
-                <hr />
-                <p className="HiddenParagraph">
-                  Dimitar is a real Dynamo and Design Script guru. He roams the
-                  Dynamo forum in hopeless search for question that would stomp
-                  him.
-                </p>
-              </div>
-            </Slide>
-            <Slide className="member-slide">
-              <img className="Member" src={third} alt="first" />
-              <div className="hiddenDiv">
-                <h3>Julien Benoit</h3>
-                <h5>Design Technology Specialist</h5>
-                <hr />
-                <p className="HiddenParagraph">
-                  Julien's the calm and collected father figure that has "seen
-                  it all", and "done it before". He specializes is construction
-                  processes that need more than standard solutions.
-                </p>
-              </div>
-            </Slide>
-            <Slide className="member-slide">
-              <img className="Member" src={fourth} alt="first" />
-              <div className="hiddenDiv">
-                <h3>Konrad K Sobon</h3>
-                <h5>Design Technology Specialist</h5>
-                <hr />
-                <p className="HiddenParagraph">
-                  Konrad's main focus lies in practical automation of everyday
-                  tasks. He specializes in interoperability and UI design.
-                </p>
-              </div>
-            </Slide>
-            <Slide className="member-slide">
-              <img className="Member" src={fifth} alt="first" />
-              <div className="hiddenDiv">
-                <h3>Adam Sheather</h3>
-                <h5>Design Technology Specialist</h5>
-                <hr />
-                <p className="HiddenParagraph">
-                  Adam's specialty is web based applications and data
-                  visualization dashboards.
-                </p>
-              </div>
-            </Slide>
+            </Slide> 
+          ))}
           </Slider>
         </CarouselProvider>
       </div>
-    </div>
+    </div>):null
   );
 }
