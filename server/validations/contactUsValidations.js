@@ -4,7 +4,7 @@ module.exports = Joi.object({
     name: Joi.string()
         .min(3)
         .max(40)
-        .regex(/^[a-zA-Z\s\-]+$/)
+        .regex(/^[a-zA-Z\s]+$/)
         .required()
         .messages({
             'string.empty': "Name field is required!",
