@@ -9,6 +9,7 @@ import Login from "./pages/admin/Login";
 import Dashboard from "./pages/admin/Dashboard";
 import AdminService from "./pages/admin/AdminService";
 import AdminProject from "./pages/admin/AdminProject";
+import NotFound from "./pages/NotFound";
 import "./App.css";
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
         <Route path="/admin/add-project" element={<AdminProject adminPage={adminPage} setAdminPage={setAdminPage} />} />
         <Route path="/admin/edit-service/:service" element={<AdminService adminPage={adminPage} setAdminPage={setAdminPage} />} />
         <Route path="/admin/edit-project/:project" element={<AdminProject adminPage={adminPage} setAdminPage={setAdminPage} />} />
+        <Route path="/*" element={<NotFound />} />
       </Routes>
     </Router>
   );

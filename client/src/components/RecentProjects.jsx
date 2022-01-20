@@ -8,6 +8,8 @@ import { getProjects } from "../services/projects";
 export default function RecentProjects() {
   const [projects, SetProject] = useState([]);
 
+  const IsMobile = useMediaQuery({ query: "(max-width:480px)" });
+
   useEffect(() => {
     getProjects(SetProject);
   }, []);
@@ -16,29 +18,38 @@ export default function RecentProjects() {
     projects.length = 5;
   }
 
-  const IsMobile = useMediaQuery({ query: "(max-width:480px)" });
   return projects ? (
-    <div className="Team-Members-container">
-      <div className="Team-Members-details">
+    <div className="home-projects-container">
+      <div className="home-projects-details">
         <h1>Recent Projects</h1>
         <hr />
-        <p>Have a look at our recent projects.</p>
+        <p>
+          Have a look at our recent projects.{" "}
+          <Link to="/projects">See more</Link>
+        </p>
       </div>
-      <div className="Members">
+      <div className="home-projects-slider">
         <CarouselProvider
           className="img-slider"
           naturalSlideHeight={IsMobile ? 400 : 400}
           naturalSlideWidth={400}
           totalSlides={Math.min(5, projects.length)}
-          visibleSlides={IsMobile ? 1 : Math.min(5, projects.length)}
+          visibleSlides={IsMobile ? 1 : 5}
         >
           <Slider>
             {projects.map((project, index) => (
-              <Slide className="member-slide">
+              <Slide className="project-slide">
                 <Link to={`/projects/${project.slug}`}>
-                  <img className="Member" src={project.cover} alt={index} />
+                  <img
+                    className="project-img"
+                    src={project.cover}
+                    alt={index}
+                  />
                   <div className="hiddenDiv">
                     <h1>{project.title}</h1>
+                    <div className="project-year">
+                      <h5>{project.year}</h5>
+                    </div>
                   </div>
                 </Link>
               </Slide>

@@ -6,7 +6,7 @@ const { uploadToGCP, deleteFile } = require('./imageController')
 module.exports = {
     getAllProjects: async (req, res) => {
         try {
-            const projects = await Project.find({}, "-_id -__v -description -services").sort({ year: -1 });
+            const projects = await Project.find({}, "-_id -__v -description -services").sort({ year: -1, title: 1 });
             res.status(200).json({ projects });
         }
         catch (err) {
