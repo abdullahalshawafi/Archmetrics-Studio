@@ -611,16 +611,16 @@ a {
   color: var(--light-gray-color) !important;
 }
 
-.Team-Members-container {
+.home-projects-container {
   padding: 75px 0 0 0;
   text-align: center;
 }
 
-.Team-Members-details {
+.home-projects-details {
   margin: 0 12rem;
 }
 
-.Team-Members-details h1 {
+.home-projects-details h1 {
   text-transform: uppercase;
   font-family: var(--secondary-fm);
   font-size: 2.1rem;
@@ -629,7 +629,7 @@ a {
   color: var(--black-color);
 }
 
-.Team-Members-details hr {
+.home-projects-details hr {
   width: 5rem;
   margin: 1.5rem auto;
   background: var(--primary-color);
@@ -637,13 +637,13 @@ a {
   opacity: 1;
 }
 
-.Team-Members-details p {
+.home-projects-details p {
   color: var(--light-gray-color);
   letter-spacing: 0.5px;
   font-size: 1.15rem;
 }
 
-.Members {
+.home-projects-slider {
   width: 100%;
   margin-top: 80px;
   align-items: center;
@@ -653,12 +653,12 @@ a {
   background-color: var(--black-color);
 }
 
-.member-slide:hover .hiddenDiv {
+.project-slide:hover .hiddenDiv {
   display: flex;
   flex-direction: column;
 }
 
-.member-slide:hover .Member {
+.project-slide:hover .project-img {
   opacity: 0.2
 }
 
@@ -666,43 +666,39 @@ a {
   color: var(--white-color);
   display: none;
   align-items: center;
-  padding: 1.5rem 0;
+  justify-content: center;
+  padding: 0.8rem;
   position: relative;
   top: -100%;
   left: 0;
   right: 0;
-  cursor: default;
+  height: 100%;
 }
 
-.hiddenDiv h3 {
-  font-size: 1.17em;
+.hiddenDiv h1 {
+  font-size: 2rem;
+  text-transform: uppercase;
+  font-family: var(--secondary-fm);
   font-weight: 800;
 }
 
-.hiddenDiv h5 {
-  font-size: 0.83em;
-  font-weight: 800;
+.hiddenDiv .project-year {
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  text-align: left;
+  padding: 0 0.8rem;
 }
 
-.HiddenParagraph {
-  width: 80%;
-}
-
-.Member {
+.project-img {
   display: flex;
   align-items: center;
-  background-size:cover;
+  background-size: cover;
+  object-fit: cover;
   height: 100%;
   justify-content: center;
   transition: opacity .3s ease-in-out;
-}
-
-.Members hr {
-  width: 5rem;
-  margin: 0.5rem auto;
-  background: var(--white-color);
-  border: solid 1px var(--white-color);
-  opacity: 1;
 }
 
 .cover-container {
@@ -809,14 +805,14 @@ a {
 @media screen and (max-width: 960px) {
 
   .contact-us-container,
-  .Team-Members-container {
+  .home-projects-container {
     margin: 0;
     padding-left: 0;
     padding-right: 0;
   }
 
   .contact-us-details,
-  .Team-Members-details {
+  .home-projects-details {
     padding: 0 18px;
     margin: 0;
   }
@@ -834,7 +830,7 @@ a {
 
   .SecondSection,
   .info-container>div,
-  .Team-Members>div {
+  .home-projects>div {
     grid-template-columns: auto auto;
   }
 
@@ -935,7 +931,7 @@ a {
 
   .SecondSection,
   .info-container>div,
-  .Team-Members-container>div {
+  .home-projects-container>div {
     grid-template-columns: auto;
   }
 

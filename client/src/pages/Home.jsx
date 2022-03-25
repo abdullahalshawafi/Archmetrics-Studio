@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import Slider from "../components/Slider";
 import About from "../components/About";
 import Info from "../components/Info";
-import TeamMembers from "../components/TeamMembers";
+import RecentProjects from "../components/RecentProjects";
 import ContactUs from "../components/ContactUs";
 import ClientLayout from "../layouts/ClientLayout";
 
@@ -17,7 +17,7 @@ function Home({ pathname, setPathname }) {
       <Slider />
       <About />
       <Info />
-      <TeamMembers />
+      <RecentProjects />
       <ContactUs />
     </ClientLayout>
   );

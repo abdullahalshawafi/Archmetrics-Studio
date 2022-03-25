@@ -31,6 +31,7 @@ function ContactUs() {
       if ("errorMessages" in res.data) {
         setErrorMessages(res.data.errorMessages);
       } else {
+        setErrorMessages({});
         setBody({
           name: "",
           email: "",
