@@ -41,7 +41,7 @@ function ProjectDetails({ pathname, setPathname }) {
               <h4>Project Description:</h4>
               <p>{projectDetails.description}</p>
           </div>
-          <div className="project-details-container row">
+          <div className="project-details-container row" style={{width: "100%"}}>
             <div className="project-details col-sm-4">
               <h4>Client:</h4>
               <p>{projectDetails.client}</p>
