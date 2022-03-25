@@ -12,18 +12,18 @@
 
 
 .carousel-slider{
-  height: 500px;
+  height: 600px;
+}
+
+.slide.selected.previous {
+  height: 800px;
 }
 
 
-
-.slide.selected.previous {
+.slide.selected.previous img {
   height: 700px;
 }
 
-.slide.selected.previous img {
-  height: 600px;
-}
 .Gallery .thumbnails {
   overflow: hidden;
 }
@@ -824,6 +824,11 @@ a {
   .recent-projects-container {
     margin-top: -50px;
   }
+  
+  .project-details.col-sm-4{
+    width: 100% !important;
+  }
+  
 }
 
 @media screen and (max-width: 720px) {
