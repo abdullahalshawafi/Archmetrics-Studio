@@ -15,15 +15,6 @@
   height: 600px;
 }
 
-.slide.selected.previous {
-  height: 800px;
-}
-
-
-.slide.selected.previous img {
-  height: 700px;
-}
-
 .Gallery .thumbnails {
   overflow: hidden;
 }
