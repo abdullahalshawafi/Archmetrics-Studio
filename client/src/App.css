@@ -10,6 +10,20 @@
   --secondary-fm: 'Poppins', sans-serif;
 }
 
+
+.carousel-slider{
+  height: 500px;
+}
+
+
+
+.slide.selected.previous {
+  height: 700px;
+}
+
+.slide.selected.previous img {
+  height: 600px;
+}
 .Gallery .thumbnails {
   overflow: hidden;
 }
