@@ -37,29 +37,32 @@ function ProjectDetails({ pathname, setPathname }) {
               <h4>{projectDetails.year}</h4>
             </div>
           </div>
-          <div className="project-details" style={{margin: "5rem"}}>
-              <h4>Project Description:</h4>
-              <p>{projectDetails.description}</p>
+          <div className="project-details" style={{ margin: "5rem" }}>
+            <h4>Project Description:</h4>
+            <p>{projectDetails.description}</p>
           </div>
-          <div className="project-details-container row" style={{width: "100%"}}>
+          <div
+            className="project-details-container row"
+            style={{ width: "100%" }}
+          >
             <div className="project-details col-sm-4">
               <h4>Client:</h4>
               <p>{projectDetails.client}</p>
-              <br/>
+              <br />
               <h4>Location:</h4>
               <p>{projectDetails.location}</p>
-              <br/>
+              <br />
               <h4>Area:</h4>
               <p>
                 {projectDetails.area} m<sup>2</sup>
               </p>
-              <br/>
+              <br />
               <h4>Type:</h4>
               <p>{projectDetails.type}</p>
-              <br/>
+              <br />
               <h4>Stage:</h4>
               <p>{projectDetails.stage}</p>
-              <br/>
+              <br />
               <h4>Services provided:</h4>
               {projectDetails.services.map((service, index) => (
                 <Link to={`/services/${service.slug}`} key={index}>
@@ -67,13 +70,13 @@ function ProjectDetails({ pathname, setPathname }) {
                 </Link>
               ))}
             </div>
-            <div className="project-details col-sm-4" style={{width:"60%"}}>
+            <div className="project-details col-sm-4" style={{ width: "60%" }}>
               {projectDetails.images && (
                 <ImageGallery data={projectDetails.images} />
               )}
-              </div>
             </div>
           </div>
+        </div>
       )}
     </ClientLayout>
   );

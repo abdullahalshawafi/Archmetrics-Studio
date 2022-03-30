@@ -37,7 +37,9 @@ function ServiceDetails({ pathname, setPathname }) {
             </div>
           </div>
           <div className="service-details">
-            <p style={{ whiteSpace: "pre" }}>{serviceDetails.description}</p>
+            <p style={{ whiteSpace: "pre-line" }}>
+              {serviceDetails.description}
+            </p>
           </div>
           {serviceDetails.projects.length ? (
             <div className="recent-projects-container">
