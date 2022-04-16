@@ -225,7 +225,7 @@ function AdminService({ adminPage, setAdminPage }) {
               <label htmlFor="area">Area</label>
               <input
                 className="form-control"
-                type="number"
+                type="text"
                 name="area"
                 id="area"
                 placeholder="Project area"
@@ -282,8 +282,10 @@ function AdminService({ adminPage, setAdminPage }) {
                   Choose a stage for the project
                 </option>
                 <option value="Design">Design</option>
-                <option value="Implementation">Implementation</option>
-                <option value="Supervision">Supervision</option>
+                <option value="Construction">Construction</option>
+                <option value="Design & Construction">
+                  Design & Construction
+                </option>
               </select>
             </div>
             <div className="col-12 col-md-6 form-group mb-3">

@@ -11,7 +11,7 @@
 }
 
 
-.carousel-slider{
+.carousel-slider {
   height: 600px;
 }
 
@@ -748,13 +748,13 @@ a {
 }
 
 .project-details h4 {
-  font-size: 1.4rem;
+  font-size: 1.2rem;
   font-weight: 600;
 }
 
 .service-details p,
 .project-details p {
-  font-size: 1.16rem;
+  font-size: 1rem;
   text-align: justify;
 }
 
@@ -815,11 +815,11 @@ a {
   .recent-projects-container {
     margin-top: -50px;
   }
-  
-  .project-details.col-sm-4{
+
+  .project-details.col-sm-4 {
     width: 100% !important;
   }
-  
+
 }
 
 @media screen and (max-width: 720px) {

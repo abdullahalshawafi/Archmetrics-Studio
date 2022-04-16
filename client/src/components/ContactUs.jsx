@@ -50,8 +50,9 @@ function ContactUs() {
         <h1>Contact Us</h1>
         <hr />
         <p>
-          We thrive when coming up with innovative ideas also understand that a
-          smart concept should should be supported with measurable results.
+          To meet or sending quotations besides we thrive when coming up with
+          innovative ideas also understand that a smart concept should should be
+          supported with measurable results.
         </p>
       </div>
       <form onSubmit={handleSubmit} className="contact-us-form">

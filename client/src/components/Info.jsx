@@ -14,12 +14,12 @@ function Info() {
     {
       icon: faOsi,
       title: "Open Source",
-      desc: "We believe in the power of Open Source community. Bad Monkeys have built and contributed to a number of Open Source tools, that we hope others find useful.",
+      desc: "We believe in the power of Open Source community. Archmetrics have built and contributed to a number of Open Source tools, that we hope others find useful.",
     },
     {
       icon: faUsers,
       title: "Community Based",
-      desc: "Bad Monkeys are a very active members of various communities. We believe that great things come from collaboration and knowledge sharing.",
+      desc: "Archmetrics have a very active members of various communities. We believe that great things come from collaboration and knowledge sharing.",
     },
     {
       icon: faChartLine,
@@ -34,12 +34,12 @@ function Info() {
     {
       icon: faGlobe,
       title: "Global",
-      desc: "Our team members are located in Europe, US, Asian and Australia. Our diversity of locations, knowledge and background allows us to find common language with anyone and anywhere. Collaboration at its finest!",
+      desc: "Our team members are located in Egypt. Our diversity of locations, knowledge and background allows us to find common language with anyone and anywhere. Collaboration at its finest!",
     },
     {
       icon: faBeer,
       title: "Fun",
-      desc: "We know that building the world around us is hard work. That's why Bad Monkeys like to work hard and have fun while doing it. We enjoy the occasional drinks with friends and time with our families.",
+      desc: "We know that building the world around us is hard work. That's why Archmetrics like to work hard and have fun while doing it. We enjoy the occasional drinks with friends and time with our families.",
     },
   ];
   return (

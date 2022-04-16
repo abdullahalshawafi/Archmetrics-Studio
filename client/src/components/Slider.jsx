@@ -22,8 +22,8 @@ function Slider() {
           </p>
         </div>
         <div className="text-container">
-          <h1>Strategic planning and execution.</h1>
-          <p>We will help you decide what not to do.</p>
+          <h1>We are a BIM Specialist Team.</h1>
+          <p>All of our services are based on BIM.</p>
         </div>
         <div className="text-container">
           <h1>Software customization is the name of the game.</h1>

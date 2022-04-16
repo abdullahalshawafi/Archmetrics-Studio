@@ -21,11 +21,11 @@ export default function RecentProjects() {
   return projects ? (
     <div className="home-projects-container">
       <div className="home-projects-details">
-        <h1>Recent Projects</h1>
+        <h1>Top Projects</h1>
         <hr />
         <p>
-          Have a look at our recent projects.{" "}
-          <Link to="/projects">See more</Link>
+          Have a look at our top projects.{" "}
+          <Link to="/projects">See all projects</Link>
         </p>
       </div>
       <div className="home-projects-slider">
@@ -38,7 +38,7 @@ export default function RecentProjects() {
         >
           <Slider>
             {projects.map((project, index) => (
-              <Slide className="project-slide">
+              <Slide className="project-slide" key={index}>
                 <Link to={`/projects/${project.slug}`}>
                   <img
                     className="project-img"

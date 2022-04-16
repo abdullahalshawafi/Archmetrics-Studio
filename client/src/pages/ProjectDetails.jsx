@@ -45,24 +45,19 @@ function ProjectDetails({ pathname, setPathname }) {
             className="project-details-container row"
             style={{ width: "100%" }}
           >
-            <div className="project-details col-sm-4">
+            <div className="project-details col-sm-3">
               <h4>Client:</h4>
               <p>{projectDetails.client}</p>
-              <br />
               <h4>Location:</h4>
               <p>{projectDetails.location}</p>
-              <br />
               <h4>Area:</h4>
               <p>
-                {projectDetails.area} m<sup>2</sup>
+                {projectDetails.area?.toLocaleString()} m<sup>2</sup>
               </p>
-              <br />
               <h4>Type:</h4>
               <p>{projectDetails.type}</p>
-              <br />
               <h4>Stage:</h4>
               <p>{projectDetails.stage}</p>
-              <br />
               <h4>Services provided:</h4>
               {projectDetails.services.map((service, index) => (
                 <Link to={`/services/${service.slug}`} key={index}>
@@ -70,7 +65,7 @@ function ProjectDetails({ pathname, setPathname }) {
                 </Link>
               ))}
             </div>
-            <div className="project-details col-sm-4" style={{ width: "60%" }}>
+            <div className="project-details col-sm-6" style={{ width: "75%" }}>
               {projectDetails.images && (
                 <ImageGallery data={projectDetails.images} />
               )}
