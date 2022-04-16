@@ -2,8 +2,9 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { CarouselProvider, Slide, Slider } from "pure-react-carousel";
 import { useMediaQuery } from "react-responsive";
-import "pure-react-carousel/dist/react-carousel.es.css";
 import { getProjects } from "../services/projects";
+
+import "pure-react-carousel/dist/react-carousel.es.css";
 
 export default function RecentProjects() {
   const [projects, SetProject] = useState([]);

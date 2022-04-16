@@ -5,7 +5,8 @@
   "scripts": {
     "start": "cd client && npm run build && cd ../server && npm start",
     "dev": "concurrently \"cd server && npm run dev\" \"cd client && npm start\"",
-    "install-all": "npm install && cd server && npm install && cd ../client && npm install"
+    "install-all": "npm install && cd server && npm install && cd ../client && npm install",
+    "build-client": "cd client && npm run build"
   },
   "repository": {
     "type": "git",

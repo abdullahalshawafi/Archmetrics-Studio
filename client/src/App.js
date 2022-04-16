@@ -1,16 +1,21 @@
-import { useState } from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Home from "./pages/Home";
-import Services from "./pages/Services";
-import ServiceDetails from "./pages/ServiceDetails";
-import Projects from "./pages/Projects";
-import ProjectDetails from "./pages/ProjectDetails";
-import Login from "./pages/admin/Login";
-import Dashboard from "./pages/admin/Dashboard";
-import AdminService from "./pages/admin/AdminService";
-import AdminProject from "./pages/admin/AdminProject";
-import NotFound from "./pages/NotFound";
+import React, { useState, Suspense, lazy } from "react";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 import "./App.css";
+
+const Home = lazy(() => import("./pages/Home"));
+const Services = lazy(() => import("./pages/Services"));
+const ServiceDetails = lazy(() => import("./pages/ServiceDetails"));
+const Projects = lazy(() => import("./pages/Projects"));
+const ProjectDetails = lazy(() => import("./pages/ProjectDetails"));
+const Login = lazy(() => import("./pages/admin/Login"));
+const Dashboard = lazy(() => import("./pages/admin/Dashboard"));
+const AdminService = lazy(() => import("./pages/admin/AdminService"));
+const AdminProject = lazy(() => import("./pages/admin/AdminProject"));
 
 function App() {
   const [pathname, setPathname] = useState("");
@@ -18,20 +23,66 @@ function App() {
 
   return (
     <Router>
-      <Routes>
-        <Route path="/" element={<Home pathname={pathname} setPathname={setPathname} />} />
-        <Route path="/services" element={<Services pathname={pathname} setPathname={setPathname} />} />
-        <Route path="/services/:service" element={<ServiceDetails pathname={pathname} setPathname={setPathname} />} />
-        <Route path="/projects" element={<Projects pathname={pathname} setPathname={setPathname} />} />
-        <Route path="/projects/:project" element={<ProjectDetails pathname={pathname} setPathname={setPathname} />} />
-        <Route path="/admin/login" element={<Login />} />
-        <Route path="/admin/dashboard" element={<Dashboard adminPage={adminPage} setAdminPage={setAdminPage} />} />
-        <Route path="/admin/add-service" element={<AdminService adminPage={adminPage} setAdminPage={setAdminPage} />} />
-        <Route path="/admin/add-project" element={<AdminProject adminPage={adminPage} setAdminPage={setAdminPage} />} />
-        <Route path="/admin/edit-service/:service" element={<AdminService adminPage={adminPage} setAdminPage={setAdminPage} />} />
-        <Route path="/admin/edit-project/:project" element={<AdminProject adminPage={adminPage} setAdminPage={setAdminPage} />} />
-        <Route path="/*" element={<NotFound />} />
-      </Routes>
+      <Suspense fallback={<div></div>}>
+        <Routes>
+          <Route
+            path="/"
+            element={<Home pathname={pathname} setPathname={setPathname} />}
+          />
+          <Route
+            path="/services"
+            element={<Services pathname={pathname} setPathname={setPathname} />}
+          />
+          <Route
+            path="/services/:service"
+            element={
+              <ServiceDetails pathname={pathname} setPathname={setPathname} />
+            }
+          />
+          <Route
+            path="/projects"
+            element={<Projects pathname={pathname} setPathname={setPathname} />}
+          />
+          <Route
+            path="/projects/:project"
+            element={
+              <ProjectDetails pathname={pathname} setPathname={setPathname} />
+            }
+          />
+          <Route path="/admin/login" element={<Login />} />
+          <Route
+            path="/admin/dashboard"
+            element={
+              <Dashboard adminPage={adminPage} setAdminPage={setAdminPage} />
+            }
+          />
+          <Route
+            path="/admin/add-service"
+            element={
+              <AdminService adminPage={adminPage} setAdminPage={setAdminPage} />
+            }
+          />
+          <Route
+            path="/admin/add-project"
+            element={
+              <AdminProject adminPage={adminPage} setAdminPage={setAdminPage} />
+            }
+          />
+          <Route
+            path="/admin/edit-service/:service"
+            element={
+              <AdminService adminPage={adminPage} setAdminPage={setAdminPage} />
+            }
+          />
+          <Route
+            path="/admin/edit-project/:project"
+            element={
+              <AdminProject adminPage={adminPage} setAdminPage={setAdminPage} />
+            }
+          />
+          <Route path="/*" element={<Navigate to="/" />} />
+        </Routes>
+      </Suspense>
     </Router>
   );
 }
