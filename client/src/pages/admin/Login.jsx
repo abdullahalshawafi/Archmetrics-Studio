@@ -71,6 +71,7 @@ function Login() {
             value={body.username}
             placeholder="Username"
             required
+            autoFocus
           />
         </div>
         <div className="mb-3">
