@@ -20,7 +20,7 @@ function ProjectDetails({ pathname, setPathname }) {
   }, [project]);
 
   if (error) {
-    <Navigate to="/projects" />;
+    return <Navigate to="/projects" />;
   }
 
   return (
@@ -39,10 +39,12 @@ function ProjectDetails({ pathname, setPathname }) {
           </div>
           <div className="project-details" style={{ margin: "5rem" }}>
             <h4>Project Description:</h4>
-            <p>{projectDetails.description}</p>
+            <p style={{ whiteSpace: "pre-line" }}>
+              {projectDetails.description}
+            </p>
           </div>
           <div
-            className="project-details-container row"
+            className="project-details-container row justify-content-between"
             style={{ width: "100%" }}
           >
             <div className="project-details col-sm-3">
@@ -51,9 +53,7 @@ function ProjectDetails({ pathname, setPathname }) {
               <h4>Location:</h4>
               <p>{projectDetails.location}</p>
               <h4>Area:</h4>
-              <p>
-                {projectDetails.area?.toLocaleString()} m<sup>2</sup>
-              </p>
+              <p>{projectDetails.area}</p>
               <h4>Type:</h4>
               <p>{projectDetails.type}</p>
               <h4>Stage:</h4>
@@ -65,7 +65,7 @@ function ProjectDetails({ pathname, setPathname }) {
                 </Link>
               ))}
             </div>
-            <div className="project-details col-sm-6" style={{ width: "75%" }}>
+            <div className="project-details col-sm-6" style={{ width: "70%" }}>
               {projectDetails.images && (
                 <ImageGallery data={projectDetails.images} />
               )}
