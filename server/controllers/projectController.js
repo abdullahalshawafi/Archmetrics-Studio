@@ -40,6 +40,17 @@ module.exports = {
     try {
       trimInputFields(req.body);
 
+      // Sort body images alphabetically (excluding the date part in the image name)
+      req.body.images.sort((a, b) => {
+        if (a.slice(25) < b.slice(25)) {
+          return -1;
+        }
+        if (a.slice(25) > b.slice(25)) {
+          return 1;
+        }
+        return 0;
+      });
+
       // Generate a slug for the project
       const slug = req.body.title.toLowerCase().split(" ").join("-");
 
@@ -98,7 +109,10 @@ module.exports = {
 
       const slug = req.body.title.toLowerCase().split(" ").join("-");
 
-      let project = await Project.findOne({ slug });
+      let project = await Project.findOne({ slug }).populate(
+        "images",
+        "-_id -__v"
+      );
 
       if (project && req.params.slug !== slug) {
         return res.status(400).json({ error: "This project already exists" });
@@ -111,24 +125,32 @@ module.exports = {
       }
 
       if (!project) {
-        project = await Project.findOne({ slug: req.params.slug });
+        project = await Project.findOne({ slug: req.params.slug }).populate(
+          "images",
+          "-_id -__v"
+        );
       }
 
       let images = req.body.images;
 
-      const deleted_images = images.filter(
-        (image) => !project.images.includes(image)
-      );
-      deleted_images.forEach((image) => {
+      project.images.forEach((image) => {
         deleteFile(image);
       });
 
-      images = images.map((image) => {
-        if (!image.includes(process.env.CLOUD_STORAGE_PATH)) {
-          uploadToGCP(image);
-          return process.env.CLOUD_STORAGE_PATH + image;
+      // Sort images alphabetically (excluding the date part in the image name)
+      images.sort((a, b) => {
+        if (a.slice(25) < b.slice(25)) {
+          return -1;
         }
-        return image;
+        if (a.slice(25) > b.slice(25)) {
+          return 1;
+        }
+        return 0;
+      });
+
+      images = images.map((image) => {
+        uploadToGCP(image);
+        return process.env.CLOUD_STORAGE_PATH + image;
       });
 
       const reqServices = req.body.services;
