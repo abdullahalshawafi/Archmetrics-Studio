@@ -17,8 +17,12 @@ function ImageGallery({ data }) {
         <div>
           <Carousel interval="5000" transitionTime="1000">
             {images.map((img, index) => (
-              <div key={index}>
-                <img src={img.image} alt={index + 1} />
+              <div key={index} style={{ display: "flex", height: "100%" }}>
+                <img
+                  src={img.image}
+                  alt={index + 1}
+                  style={{ objectFit: "cover" }}
+                />
               </div>
             ))}
           </Carousel>
