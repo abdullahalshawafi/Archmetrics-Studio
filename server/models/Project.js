@@ -52,6 +52,11 @@ const projectSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    isTop: {
+      type: Boolean,
+      required: true,
+      default: false,
+    },
     services: [
       {
         type: mongoose.Schema.Types.ObjectId,
