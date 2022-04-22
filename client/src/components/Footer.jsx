@@ -6,7 +6,6 @@ import {
 } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "../App.css";
-import { Link } from "react-router-dom";
 
 export default function Footer() {
   return (
@@ -18,15 +17,23 @@ export default function Footer() {
         </label>
       </div>
       <div className="FooterIcons">
-        <Link to="https://www.facebook.com/">
+        <a
+          href="https://www.facebook.com/AMC.Archmetrics.Studio"
+          target="_blank"
+          rel="noreferrer"
+        >
           <FontAwesomeIcon className="Icon" icon={faFacebook} />
-        </Link>
-        <Link to="https://www.twitter.com/">
+        </a>
+        <a href="https://www.twitter.com/" target="_blank" rel="noreferrer">
           <FontAwesomeIcon className="Icon" icon={faTwitter} />
-        </Link>
-        <Link to="https://www.linkedin.com/">
+        </a>
+        <a
+          href="https://www.linkedin.com/company/archmetrics-amc/"
+          target="_blank"
+          rel="noreferrer"
+        >
           <FontAwesomeIcon className="Icon" icon={faLinkedin} />
-        </Link>
+        </a>
       </div>
     </div>
   );
