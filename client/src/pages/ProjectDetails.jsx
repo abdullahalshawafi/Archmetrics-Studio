@@ -37,17 +37,14 @@ function ProjectDetails({ pathname, setPathname }) {
               <h4>{projectDetails.year}</h4>
             </div>
           </div>
-          <div className="project-details" style={{ margin: "5rem" }}>
+          <div className="project-details project-description">
             <h4>Project Description:</h4>
-            <p style={{ whiteSpace: "pre-line" }}>
+            <p style={{ whiteSpace: "pre-line", margin: 0 }}>
               {projectDetails.description}
             </p>
           </div>
-          <div
-            className="project-details-container row justify-content-between"
-            style={{ width: "100%" }}
-          >
-            <div className="project-details col-sm-3">
+          <div className="project-details-container row justify-content-between w-100 m-0">
+            <div className="project-details col-sm-3 p-0">
               <h4>Client:</h4>
               <p>{projectDetails.client}</p>
               <h4>Location:</h4>
@@ -65,7 +62,8 @@ function ProjectDetails({ pathname, setPathname }) {
                 </Link>
               ))}
             </div>
-            <div className="project-details col-sm-6" style={{ width: "70%" }}>
+            <div className="col-12 mb-4 col-sm-1"></div>
+            <div className="project-details col-sm-8 p-0">
               {projectDetails.images && (
                 <ImageGallery data={projectDetails.images} />
               )}

@@ -26,7 +26,7 @@ module.exports = {
         { slug: req.params.slug },
         "-_id -__v"
       ).populate("projects", "-_id -__v -services", null, {
-        sort: { date: "desc" },
+        sort: { year: "desc", title: "asc" },
       });
       if (service) {
         res.status(200).json({ service });

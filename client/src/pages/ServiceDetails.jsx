@@ -41,7 +41,7 @@ function ServiceDetails({ pathname, setPathname }) {
             <p style={{ whiteSpace: "pre-line" }}>
               {serviceDetails.description}
             </p>
-            <div className="w-75 mx-auto mt-5">
+            <div className="service-gallery mx-auto mt-5">
               {serviceDetails.images && (
                 <ImageGallery data={serviceDetails.images} />
               )}
@@ -50,10 +50,12 @@ function ServiceDetails({ pathname, setPathname }) {
           {serviceDetails.projects.length ? (
             <div className="recent-projects-container">
               <h1>Recent related projects</h1>
-              <div className="recent-projects d-flex flex-md-row flex-column">
+              <div className="recent-projects row">
                 {serviceDetails.projects.map(
                   ({ summary, ...project }, index) => (
-                    <InfoCard key={index} type="projects" info={project} />
+                    <div className="col-12 col-md-6 col-lg-4 p-3">
+                      <InfoCard key={index} type="projects" info={project} />
+                    </div>
                   )
                 )}
               </div>
