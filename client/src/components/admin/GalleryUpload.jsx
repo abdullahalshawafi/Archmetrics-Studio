@@ -94,6 +94,20 @@ function GalleryUpload({ setLoading, setBody, body }) {
     </div>
   ));
 
+  const prevImages = body.images.map((image, index) => (
+    <div key={index} style={{ width: "200px", height: "200px" }}>
+      <img
+        src={image.image ? image.image : image}
+        alt={index + 1}
+        style={{
+          maxWidth: "100%",
+          height: "100%",
+          objectFit: "cover",
+        }}
+      />
+    </div>
+  ));
+
   // clean up
   useEffect(
     () => () => {
@@ -123,7 +137,7 @@ function GalleryUpload({ setLoading, setBody, body }) {
             justifyContent: "center",
           }}
         >
-          {thumbs}
+          {thumbs.length ? thumbs : prevImages}
         </div>
       </div>
     </section>
