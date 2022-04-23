@@ -45,10 +45,14 @@ export const createProject = async (body) => {
 
 export const editProject = async (project, body) => {
   try {
-    body.services = body.services.map((service) => service.slug);
+    if (body.services[0].slug) {
+      body.services = body.services.map((service) => service.slug);
+    }
+
     if (body.images[0].image) {
       body.images = body.images.map((image) => image.image);
     }
+
     const res = await axios.put(
       `${process.env.REACT_APP_BASE_URL}/project/edit/${project}`,
       body,
