@@ -6,7 +6,7 @@ import { getProjects } from "../services/projects";
 
 import "pure-react-carousel/dist/react-carousel.es.css";
 
-export default function RecentProjects() {
+export default function TopProjects() {
   const [projects, SetProject] = useState([]);
 
   const IsMobile = useMediaQuery({ query: "(max-width:480px)" });
@@ -19,7 +19,7 @@ export default function RecentProjects() {
     projects.length = 5;
   }
 
-  return projects ? (
+  return projects.length ? (
     <div className="home-projects-container">
       <div className="home-projects-details">
         <h1>Top Projects</h1>
