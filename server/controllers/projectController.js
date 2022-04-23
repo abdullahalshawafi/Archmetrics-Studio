@@ -109,10 +109,7 @@ module.exports = {
 
       const slug = req.body.title.toLowerCase().split(" ").join("-");
 
-      let project = await Project.findOne({ slug }).populate(
-        "images",
-        "-_id -__v"
-      );
+      let project = await Project.findOne({ slug });
 
       if (project && req.params.slug !== slug) {
         return res.status(400).json({ error: "This project already exists" });
@@ -125,16 +122,13 @@ module.exports = {
       }
 
       if (!project) {
-        project = await Project.findOne({ slug: req.params.slug }).populate(
-          "images",
-          "-_id -__v"
-        );
+        project = await Project.findOne({ slug: req.params.slug });
       }
 
       let images = req.body.images;
 
       project.images.forEach((image) => {
-        deleteFile(image);
+        !images.includes(image) && deleteFile(image);
       });
 
       // Sort images alphabetically (excluding the date part in the image name)
@@ -149,6 +143,9 @@ module.exports = {
       });
 
       images = images.map((image) => {
+        if (image.includes(process.env.CLOUD_STORAGE_PATH)) {
+          return image;
+        }
         uploadToGCP(image);
         return process.env.CLOUD_STORAGE_PATH + image;
       });
