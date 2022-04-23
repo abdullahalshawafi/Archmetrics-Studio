@@ -4,6 +4,7 @@ import ClientLayout from "../layouts/ClientLayout";
 import InfoCard from "../components/InfoCard";
 import { getSingleService } from "../services/services";
 import { Helmet } from "react-helmet";
+import ImageGallery from "../components/ImageGallery";
 
 function ServiceDetails({ pathname, setPathname }) {
   let { service } = useParams();
@@ -40,6 +41,11 @@ function ServiceDetails({ pathname, setPathname }) {
             <p style={{ whiteSpace: "pre-line" }}>
               {serviceDetails.description}
             </p>
+            <div className="w-75 mx-auto mt-5">
+              {serviceDetails.images && (
+                <ImageGallery data={serviceDetails.images} />
+              )}
+            </div>
           </div>
           {serviceDetails.projects.length ? (
             <div className="recent-projects-container">

@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Helmet } from "react-helmet";
 import { Link, Navigate, useParams } from "react-router-dom";
+import GalleryUpload from "../../components/admin/GalleryUpload";
 import AdminLayout from "../../layouts/AdminLayout";
 import { uploadImage } from "../../services";
 import { loggedIn } from "../../services/auth";
@@ -14,12 +15,14 @@ function AdminService({ adminPage, setAdminPage }) {
   const { service } = useParams();
   const [summaryCount, setSummaryCount] = useState(0);
   const [loading, setLoading] = useState(false);
+  const [loadingGallery, setLoadingGallery] = useState(false);
   const [redirect, setRedirect] = useState(false);
   const [body, setBody] = useState({
     title: "",
     summary: "",
     description: "",
     cover: "",
+    images: [],
   });
 
   const summaryField = useRef(null);
@@ -41,12 +44,14 @@ function AdminService({ adminPage, setAdminPage }) {
         summary: "",
         description: "",
         cover: "",
+        images: [],
       });
     }
   }, [service]);
 
   useEffect(() => {
     service && body.cover.includes("https://") && showImagePreview(body.cover);
+    service && setSummaryCount(body.summary.length);
   }, [service, body]);
 
   if (!loggedIn) {
@@ -87,13 +92,11 @@ function AdminService({ adminPage, setAdminPage }) {
     }
   };
 
-  const handleKeyUp = () => {
-    setSummaryCount(summaryField.current.value.length);
-  };
-
   const handleChange = (e) => {
-    if (e.target.name === "summary" && summaryCount < summaryLimit) {
+    const count = summaryField.current.value.length;
+    if (e.target.name === "summary" && count <= summaryLimit) {
       setBody({ ...body, [e.target.name]: e.target.value });
+      setSummaryCount(count);
     } else if (e.target.name !== "summary") {
       setBody({ ...body, [e.target.name]: e.target.value });
     }
@@ -117,6 +120,7 @@ function AdminService({ adminPage, setAdminPage }) {
           summary: "",
           description: "",
           cover: "",
+          images: [],
         });
         alert("Service created successfully!");
         window.location.reload();
@@ -132,7 +136,7 @@ function AdminService({ adminPage, setAdminPage }) {
   return (
     <AdminLayout adminPage={adminPage}>
       <Helmet>
-        <title>Archmetrics | {service ? "Edit" : "Add"} Project</title>
+        <title>Archmetrics | {service ? "Edit" : "Add"} Service</title>
       </Helmet>
       <div className="pt-5 m-5">
         <h2 className="page-title">{service ? "Edit" : "Add"} a service</h2>
@@ -163,7 +167,6 @@ function AdminService({ adminPage, setAdminPage }) {
               placeholder="Service summary"
               ref={summaryField}
               onChange={handleChange}
-              onKeyUp={handleKeyUp}
               value={body.summary}
               required
             ></textarea>
@@ -214,7 +217,18 @@ function AdminService({ adminPage, setAdminPage }) {
               </div>
             </div>
           </div>
-          <button className="btn btn-warning" disabled={loading}>
+          <div className="form-group my-3">
+            <label>Gallery</label>
+            <GalleryUpload
+              setLoading={setLoadingGallery}
+              setBody={setBody}
+              body={body}
+            />
+          </div>
+          <button
+            className="btn btn-warning"
+            disabled={loading || loadingGallery}
+          >
             Submit
           </button>
           <Link to="/admin/dashboard" className="btn btn-secondary ms-3">

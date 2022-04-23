@@ -45,6 +45,17 @@ module.exports = {
     try {
       trimInputFields(req.body);
 
+      // Sort body images alphabetically (excluding the date part in the image name)
+      req.body.images.sort((a, b) => {
+        if (a.slice(25) < b.slice(25)) {
+          return -1;
+        }
+        if (a.slice(25) > b.slice(25)) {
+          return 1;
+        }
+        return 0;
+      });
+
       const slug = req.body.title.toLowerCase().split(" ").join("-");
 
       const service = await Service.findOne({ slug });
@@ -53,9 +64,13 @@ module.exports = {
         return res.status(400).json({ error: "This service already exists" });
       }
 
-      // Upload cover image to cloud storage
+      // Upload service's cover image and gallery images to cloud storage
       uploadToGCP(req.body.cover);
       req.body.cover = process.env.CLOUD_STORAGE_PATH + req.body.cover;
+      req.body.images = req.body.images.map((img) => {
+        uploadToGCP(img);
+        return process.env.CLOUD_STORAGE_PATH + img;
+      });
 
       await Service.create({ ...req.body, slug });
 
@@ -89,9 +104,40 @@ module.exports = {
         req.body.cover = process.env.CLOUD_STORAGE_PATH + req.body.cover;
       }
 
+      if (!service) {
+        service = await Service.findOne({ slug: req.params.slug });
+      }
+
+      let images = req.body.images;
+
+      service.images.forEach((image) => {
+        !images.includes(image) && deleteFile(image);
+      });
+
+      // Sort images alphabetically (excluding the date part in the image name)
+      images.sort((a, b) => {
+        if (a.slice(25) < b.slice(25)) {
+          return -1;
+        }
+        if (a.slice(25) > b.slice(25)) {
+          return 1;
+        }
+        return 0;
+      });
+
+      images = images.map((image) => {
+        if (image.includes(process.env.CLOUD_STORAGE_PATH)) {
+          return image;
+        }
+        uploadToGCP(image);
+        return process.env.CLOUD_STORAGE_PATH + image;
+      });
+
+      delete req.body.projects;
+
       await Service.findOneAndUpdate(
         { slug: req.params.slug },
-        { ...req.body, slug }
+        { ...req.body, images, slug }
       );
 
       res.sendStatus(200);

@@ -19,7 +19,7 @@ function ImageGallery({ data }) {
             {images.map((img, index) => (
               <div key={index} style={{ display: "flex", height: "100%" }}>
                 <img
-                  src={img.image}
+                  src={img.image ? img.image : img}
                   alt={index + 1}
                   style={{ objectFit: "cover" }}
                 />
