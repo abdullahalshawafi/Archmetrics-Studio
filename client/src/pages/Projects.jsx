@@ -23,9 +23,11 @@ export default function Projects({ pathname, setPathname }) {
       <Helmet>
         <title>Archmetrics | Projects</title>
       </Helmet>
-      <div className="cover-container">
-        <img src={cover} alt="Service cover" />
-        <div className="cover-details">
+      <div
+        className="slider-container cover-details"
+        style={{ backgroundImage: `url(${cover})` }}
+      >
+        <div style={{ paddingTop: "67px" }}>
           <h1>These are our projects</h1>
         </div>
       </div>

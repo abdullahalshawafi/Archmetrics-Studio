@@ -1,6 +1,8 @@
 import React from "react";
 import { Carousel } from "react-responsive-carousel";
 
+import backgroundImage from "../assets/main_Background.jpg";
+
 function Slider() {
   const sliderContent = [
     {
@@ -18,7 +20,10 @@ function Slider() {
   ];
 
   return (
-    <div className="slider-container">
+    <div
+      className="slider-container"
+      style={{ backgroundImage: `url(${backgroundImage})` }}
+    >
       <Carousel
         autoPlay
         emulateTouch

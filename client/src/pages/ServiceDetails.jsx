@@ -31,9 +31,11 @@ function ServiceDetails({ pathname, setPathname }) {
           <Helmet>
             <title>Archmetrics | {serviceDetails.title}</title>
           </Helmet>
-          <div className="cover-container">
-            <img src={serviceDetails.cover} alt="Service cover" />
-            <div className="cover-details">
+          <div
+            className="slider-container cover-details"
+            style={{ backgroundImage: `url('${serviceDetails.cover}')` }}
+          >
+            <div style={{ paddingTop: "67px" }}>
               <h1>{serviceDetails.title}</h1>
             </div>
           </div>
@@ -53,7 +55,10 @@ function ServiceDetails({ pathname, setPathname }) {
               <div className="recent-projects row">
                 {serviceDetails.projects.map(
                   ({ summary, ...project }, index) => (
-                    <div className="col-12 col-md-6 col-lg-4 p-3">
+                    <div
+                      key={project.slug}
+                      className="col-12 col-md-6 col-lg-4 p-3"
+                    >
                       <InfoCard key={index} type="projects" info={project} />
                     </div>
                   )

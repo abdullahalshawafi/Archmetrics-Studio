@@ -271,7 +271,6 @@ a {
 }
 
 .slider-container {
-  background-image: url("./assets/main_Background.jpg");
   background-size: cover;
   background-attachment: fixed;
   background-repeat: no-repeat;
@@ -706,43 +705,21 @@ a {
   transition: opacity .3s ease-in-out;
 }
 
-.cover-container {
-  position: relative;
-  width: 100%;
-  height: 32rem;
+.cover-details {
   font-family: var(--secondary-fm);
-  background-color: rgba(0, 0, 0, 0.4);
-  background-blend-mode: multiply;
-  overflow: hidden;
-}
-
-.cover-container img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  position: absolute;
-  z-index: -1;
-}
-
-.cover-container .cover-details {
-  position: absolute;
   color: var(--white-color);
-  z-index: 2;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -10%);
   text-transform: uppercase;
   text-align: center;
-  width: fit-content;
+  width: 100%;
 }
 
-.cover-container .cover-details h1 {
+.cover-details h1 {
   font-weight: 800;
   font-size: 50px;
   margin: 0 2rem;
 }
 
-.cover-container .cover-details h4 {
+.cover-details h4 {
   font-weight: 600;
 }
 
@@ -943,7 +920,7 @@ a {
   }
 
   .slider-container .text-container h1,
-  .cover-container .cover-details h1 {
+  .slider-container.cover-details h1 {
     font-size: 30px;
   }
 

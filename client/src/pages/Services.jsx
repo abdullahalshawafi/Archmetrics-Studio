@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import ClientLayout from "../layouts/ClientLayout";
 import InfoCard from "../components/InfoCard";
+import { Helmet } from "react-helmet";
 import cover from "../assets/main_Background.jpg";
 import { getServices } from "../services/services";
 import "../App.css";
-import { Helmet } from "react-helmet";
 
 export default function Services({ pathname, setPathname }) {
   const [services, setServices] = useState([]);
@@ -23,9 +23,11 @@ export default function Services({ pathname, setPathname }) {
       <Helmet>
         <title>Archmetrics | Services</title>
       </Helmet>
-      <div className="cover-container">
-        <img src={cover} alt="Service cover" />
-        <div className="cover-details">
+      <div
+        className="slider-container cover-details"
+        style={{ backgroundImage: `url(${cover})` }}
+      >
+        <div style={{ paddingTop: "67px" }}>
           <h1>This is what we do</h1>
         </div>
       </div>

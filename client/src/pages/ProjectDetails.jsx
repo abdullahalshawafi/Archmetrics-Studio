@@ -30,9 +30,11 @@ function ProjectDetails({ pathname, setPathname }) {
           <Helmet>
             <title>Archmetrics | {projectDetails.title}</title>
           </Helmet>
-          <div className="cover-container">
-            <img src={projectDetails.cover} alt="Project cover" />
-            <div className="cover-details">
+          <div
+            className="slider-container cover-details"
+            style={{ backgroundImage: `url('${projectDetails.cover}')` }}
+          >
+            <div style={{ paddingTop: "67px" }}>
               <h1>{projectDetails.title}</h1>
               <h4>{projectDetails.year}</h4>
             </div>
