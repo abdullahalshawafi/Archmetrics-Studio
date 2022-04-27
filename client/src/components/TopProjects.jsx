@@ -15,8 +15,8 @@ export default function TopProjects() {
     getProjects(SetProject);
   }, []);
 
-  if (projects.length >= 5) {
-    projects.length = 5;
+  if (projects.length >= 4) {
+    projects.length = 4;
   }
 
   return projects.length ? (
@@ -32,10 +32,10 @@ export default function TopProjects() {
       <div className="home-projects-slider">
         <CarouselProvider
           className="img-slider"
-          naturalSlideHeight={IsMobile ? 400 : 400}
-          naturalSlideWidth={400}
-          totalSlides={Math.min(5, projects.length)}
-          visibleSlides={IsMobile ? 1 : 5}
+          naturalSlideHeight={IsMobile ? 400 : 600}
+          naturalSlideWidth={1100}
+          totalSlides={Math.min(4, projects.length)}
+          visibleSlides={IsMobile ? 1 : 4}
         >
           <Slider>
             {projects.map((project, index) => (
