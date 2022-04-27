@@ -327,7 +327,8 @@ a {
   align-items: center;
   text-align: center;
   padding: 75px 36px;
-  margin: 0 36px;
+  max-width: 1120px;
+  margin: 0 auto;
 }
 
 .about-container>div {
@@ -413,7 +414,8 @@ a {
 
 .contact-us-container {
   padding: 75px 36px;
-  margin: 0 36px;
+  max-width: 1120px;
+  margin: 0 auto;
   text-align: center;
 }
 
