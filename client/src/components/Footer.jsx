@@ -35,7 +35,11 @@ export default function Footer() {
         >
           <FontAwesomeIcon className="Icon" icon={faLinkedin} />
         </a>
-        <a href="https://www.youtube.com/" target="_blank" rel="noreferrer">
+        <a
+          href="https://youtube.com/channel/UCXb5GBTyDfSX8NN5c83FjEw"
+          target="_blank"
+          rel="noreferrer"
+        >
           <FontAwesomeIcon className="Icon" icon={faYoutube} />
         </a>
       </div>
