@@ -8,6 +8,7 @@ import Footer from "../components/Footer";
 
 function ClientLayout({ pathname, children }) {
   const [showButton, setShowButton] = useState(false);
+  const [isNavHidden, setIsNavHidden] = useState(false);
 
   const scrollToTop = () => {
     window.scrollTo({
@@ -17,18 +18,20 @@ function ClientLayout({ pathname, children }) {
   };
 
   useEffect(() => {
-    // let prevScrollPos = window.pageYOffset;
+    let prevScrollPos = window.pageYOffset;
 
     const handleWindowScroll = () => {
-      // const currentScrollPos = window.pageYOffset;
+      const currentScrollPos = window.pageYOffset;
 
-      // if (prevScrollPos > currentScrollPos) {
-      //   document.getElementById("navbar").style.top = "0";
-      // } else {
-      //   document.getElementById("navbar").style.top = "-100%";
-      // }
+      if (prevScrollPos > currentScrollPos) {
+        setIsNavHidden(false);
+        // document.getElementById("navbar").style.transform = "translateY(0)";
+      } else {
+        setIsNavHidden(true);
+        // document.getElementById("navbar").style.transform = "translateY(-100%)";
+      }
 
-      // prevScrollPos = currentScrollPos;
+      prevScrollPos = currentScrollPos;
 
       setShowButton(window.pageYOffset > 300 ? true : false);
     };
@@ -45,9 +48,9 @@ function ClientLayout({ pathname, children }) {
   return (
     <div>
       {isMobile ? (
-        <NavbarMobile pathname={pathname} />
+        <NavbarMobile pathname={pathname} isNavHidden={isNavHidden} />
       ) : (
-        <Navbar pathname={pathname} />
+        <Navbar pathname={pathname} isNavHidden={isNavHidden} />
       )}
       {children}
       <Footer />

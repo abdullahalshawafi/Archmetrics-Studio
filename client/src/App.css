@@ -136,12 +136,13 @@ a {
   top: 0;
   left: 0;
   z-index: 1000;
+  transform: translateY(0);
   padding: 0 4rem;
   background-color: var(--white-color);
   border-bottom: #eaeaea80 solid 1px;
   box-shadow: 0 4px 10px -10px rgb(0 0 0 / 60%);
   transition: background-color 0.2s ease-out,
-    top 1s ease-in-out;
+    transform 0.3s ease-in-out;
 }
 
 .navbar-transparent {
@@ -151,6 +152,10 @@ a {
 
 .navbar-transparent .nav-link a {
   color: var(--white-color);
+}
+
+.navbar-hidden {
+  transform: translateY(-100%);
 }
 
 .nav-link.active a,
@@ -758,7 +763,7 @@ a {
 }
 
 .service-details .service-gallery {
-  width: 75%;
+  width: 80%;
   height: auto;
 }
 
@@ -902,6 +907,11 @@ a {
     padding: 75px 35px;
   }
 
+  .service-details .service-gallery {
+    width: 100%;
+    height: auto;
+  }
+
   .project-details-container {
     padding: 0 35px 15px 35px;
   }
@@ -965,11 +975,6 @@ a {
 
   .info-details-container .details h5 {
     font-size: 0.85rem;
-  }
-
-  .service-details .service-gallery {
-    width: 100%;
-    height: auto;
   }
 
   .recent-projects .details h3 {
