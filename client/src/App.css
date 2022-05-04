@@ -143,6 +143,8 @@ a {
   box-shadow: 0 4px 10px -10px rgb(0 0 0 / 60%);
   transition: background-color 0.2s ease-out,
     transform 0.3s ease-in-out;
+  -webkit-transition: transform 0.3s ease-in-out;
+  -webkit-transition: -webkit-transform 0.3s ease-in-out;
 }
 
 .navbar-transparent {
@@ -156,6 +158,7 @@ a {
 
 .navbar-hidden {
   transform: translateY(-100%);
+  -webkit-transform: translateY(-100%);
 }
 
 .nav-link.active a,
