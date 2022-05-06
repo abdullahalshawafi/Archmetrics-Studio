@@ -93,8 +93,7 @@ a {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 1.3rem 1.3rem 1.3rem 0;
-  width: 8.2rem;
+  width: 11.2rem;
 }
 
 .logoImg {
@@ -140,7 +139,7 @@ a {
   padding: 0 4rem;
   background-color: var(--white-color);
   border-bottom: #eaeaea80 solid 1px;
-  box-shadow: 0 4px 10px -10px rgb(0 0 0 / 60%);
+  box-shadow: 0 4px 10px -10px rgb(0 0 0);
   transition: background-color 0.2s ease-out,
     transform 0.3s ease-in-out;
   -webkit-transition: transform 0.3s ease-in-out;
@@ -542,7 +541,7 @@ a {
 
 .NavbarMobile {
   width: 100%;
-  padding: 20px;
+  padding-left: 20px;
   position: fixed;
   top: 0;
   left: 0;
@@ -559,7 +558,7 @@ a {
 }
 
 .LogoMobile {
-  width: 5rem;
+  width: 8rem;
 }
 
 .logoImgMobile {
