@@ -551,7 +551,11 @@ a {
   justify-content: space-between;
   align-items: center;
   background-color: var(--white-color);
-  transition: top 1s ease-in-out;
+  transition: top 1s ease-in-out,
+    background-color 0.2s ease-out,
+    transform 0.3s ease-in-out;
+  -webkit-transition: transform 0.3s ease-in-out;
+  -webkit-transition: -webkit-transform 0.3s ease-in-out;
 }
 
 .LogoMobile {
