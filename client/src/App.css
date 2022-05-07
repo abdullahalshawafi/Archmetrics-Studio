@@ -65,7 +65,7 @@ a {
   width: 2rem;
   height: 2rem;
   font-size: 1.2rem;
-  opacity: 1;
+  opacity: 0;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -74,11 +74,29 @@ a {
   border: var(--dark-gray-color) solid 1px;
   border-radius: 2px;
   cursor: pointer;
-  transition: opacity 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
+  animation: swipeIn 0.5s cubic-bezier(0, 0, 0.2, 1) forwards;
 }
 
 .back-top-container:hover {
   opacity: 0.8;
+}
+
+@keyframes swipeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(100px);
+  }
+
+  50% {
+    opacity: 1;
+    transform: translateY(-20px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .nav-links {
@@ -184,8 +202,11 @@ a {
   color: var(--white-color);
 }
 
-.Icon {
+.FooterIcons a {
   margin: 0 15px;
+}
+
+.Icon {
   color: var(--white-color);
   transition: all 0.2s ease-in-out;
 }
