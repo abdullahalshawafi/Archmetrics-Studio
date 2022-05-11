@@ -16,7 +16,7 @@ pipeline {
                     sh """
                         ls
                         touch server/.env
-                        cd ~/
+                        cd home/user/
                         ls
                         cp ../Server.txt server/.env
                         touch client/src/.env
