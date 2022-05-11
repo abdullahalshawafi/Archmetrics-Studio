@@ -14,22 +14,42 @@ pipeline {
                 echo "========Fetch github========"
                 git branch: "main", url: "https://${Cred_User}:${Cred_Token}@github.com/abdullahalshawafi/Archmetrics-Studio.git"
             }
-            post{
-                success{
-                    sh """
-                        ls
-                        touch server/.env
-                        echo header = ${Header_env} > server/.env
-                        echo AccessToken = ${AccessToken} >> server/.env
-                        echo CLOUD_STORAGE_PATH = ${CLOUD_STORAGE_PATH} >> server/.env
-                    """
-                }
-            }
         }
+        
+    stage('build back env') {
+        steps {
+            sh """
+                    touch server/.env
+                    echo header = ${Header_env} > server/.env
+                    echo AccessToken = ${AccessToken} >> server/.env
+                    echo CLOUD_STORAGE_PATH = ${CLOUD_STORAGE_PATH} >> server/.env
+                    echo Port = 80 >> server/.env
+            """
+        }
+    }
 
+
+    stage('build front env') {
+        steps {
+             sh """
+                        ls
+                        touch client/.env
+                        echo REACT_APP_BASE_URL=www.archmetrics.org/api > client/.env
+                 """
+        }
+    }
+    
+    
     stage('build') {
         steps {
-            sh 'cat server/.env'
+            sh 'npm run install-all'
         }
-    }}
+    }
+    
+    stage('run') {
+        steps {
+            sh 'sudo npm start'
+        }
+    }
+    }
 }
