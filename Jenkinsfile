@@ -26,25 +26,11 @@ pipeline {
                     """
                 }
             }
-            post{
-                success{
-                    sh """
-                        echo server/.env
-                    """
-                }
-            }
         }
 
     stage('build') {
         steps {
-            sh 'npm run install-all'
+            sh 'echo server/.env'
         }
-    }
-    
-    stage('run') {
-        steps {
-            sh 'sudo npm start'
-        }
-    }
-    }
+    }}
 }
