@@ -12,7 +12,6 @@ pipeline {
         stage("fetch"){
             steps{
                 echo "========Fetch github========"
-                sh """ pwd """
                 git branch: "main", url: "https://${Cred_User}:${Cred_Token}@github.com/abdullahalshawafi/Archmetrics-Studio.git"
             }
             post{
@@ -30,7 +29,7 @@ pipeline {
 
     stage('build') {
         steps {
-            sh 'echo server/.env'
+            sh 'cat server/.env'
         }
     }}
 }
