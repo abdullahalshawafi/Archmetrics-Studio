@@ -19,10 +19,10 @@ pipeline {
                 success{
                     sh """
                         ls
-                        cat server/.env
-                        header = ${Header_env}
-                        AccessToken = ${AccessToken}
-                        CLOUD_STORAGE_PATH = ${CLOUD_STORAGE_PATH}
+                        touch server/.env
+                        echo header = ${Header_env} > server/.env
+                        echo AccessToken = ${AccessToken} >> server/.env
+                        echo CLOUD_STORAGE_PATH = ${CLOUD_STORAGE_PATH} >> server/.env
                     """
                 }
             }
