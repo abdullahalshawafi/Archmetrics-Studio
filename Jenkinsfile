@@ -15,7 +15,7 @@ pipeline {
         }
         stage('run') {
             steps {
-                ssh -t remotehost "sudo npm start"
+                sh 'sudo npm start'
             }
         }
     }
