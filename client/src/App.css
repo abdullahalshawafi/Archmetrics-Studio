@@ -65,7 +65,7 @@ a {
   width: 2rem;
   height: 2rem;
   font-size: 1.2rem;
-  opacity: 1;
+  opacity: 0;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -74,11 +74,29 @@ a {
   border: var(--dark-gray-color) solid 1px;
   border-radius: 2px;
   cursor: pointer;
-  transition: opacity 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
+  animation: swipeIn 0.5s cubic-bezier(0, 0, 0.2, 1) forwards;
 }
 
 .back-top-container:hover {
   opacity: 0.8;
+}
+
+@keyframes swipeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(100px);
+  }
+
+  50% {
+    opacity: 1;
+    transform: translateY(-20px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .nav-links {
@@ -93,8 +111,7 @@ a {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 1.3rem 1.3rem 1.3rem 0;
-  width: 8.2rem;
+  width: 11.2rem;
 }
 
 .logoImg {
@@ -136,12 +153,15 @@ a {
   top: 0;
   left: 0;
   z-index: 1000;
+  transform: translateY(0);
   padding: 0 4rem;
   background-color: var(--white-color);
   border-bottom: #eaeaea80 solid 1px;
-  box-shadow: 0 4px 10px -10px rgb(0 0 0 / 60%);
+  box-shadow: 0 4px 10px -10px rgb(0 0 0);
   transition: background-color 0.2s ease-out,
-    top 1s ease-in-out;
+    transform 0.3s ease-in-out;
+  -webkit-transition: transform 0.3s ease-in-out;
+  -webkit-transition: -webkit-transform 0.3s ease-in-out;
 }
 
 .navbar-transparent {
@@ -151,6 +171,11 @@ a {
 
 .navbar-transparent .nav-link a {
   color: var(--white-color);
+}
+
+.navbar-hidden {
+  transform: translateY(-100%);
+  -webkit-transform: translateY(-100%);
 }
 
 .nav-link.active a,
@@ -177,8 +202,11 @@ a {
   color: var(--white-color);
 }
 
-.Icon {
+.FooterIcons a {
   margin: 0 15px;
+}
+
+.Icon {
   color: var(--white-color);
   transition: all 0.2s ease-in-out;
 }
@@ -327,7 +355,8 @@ a {
   align-items: center;
   text-align: center;
   padding: 75px 36px;
-  margin: 0 36px;
+  max-width: 1120px;
+  margin: 0 auto;
 }
 
 .about-container>div {
@@ -413,7 +442,8 @@ a {
 
 .contact-us-container {
   padding: 75px 36px;
-  margin: 0 36px;
+  max-width: 1120px;
+  margin: 0 auto;
   text-align: center;
 }
 
@@ -532,7 +562,7 @@ a {
 
 .NavbarMobile {
   width: 100%;
-  padding: 20px;
+  padding: 0 20px;
   position: fixed;
   top: 0;
   left: 0;
@@ -541,11 +571,15 @@ a {
   justify-content: space-between;
   align-items: center;
   background-color: var(--white-color);
-  transition: top 1s ease-in-out;
+  transition: top 1s ease-in-out,
+    background-color 0.2s ease-out,
+    transform 0.3s ease-in-out;
+  -webkit-transition: transform 0.3s ease-in-out;
+  -webkit-transition: -webkit-transform 0.3s ease-in-out;
 }
 
 .LogoMobile {
-  width: 5rem;
+  width: 10.625rem;
 }
 
 .logoImgMobile {
@@ -756,7 +790,7 @@ a {
 }
 
 .service-details .service-gallery {
-  width: 75%;
+  width: 80%;
   height: auto;
 }
 
@@ -900,6 +934,11 @@ a {
     padding: 75px 35px;
   }
 
+  .service-details .service-gallery {
+    width: 100%;
+    height: auto;
+  }
+
   .project-details-container {
     padding: 0 35px 15px 35px;
   }
@@ -963,11 +1002,6 @@ a {
 
   .info-details-container .details h5 {
     font-size: 0.85rem;
-  }
-
-  .service-details .service-gallery {
-    width: 100%;
-    height: auto;
   }
 
   .recent-projects .details h3 {

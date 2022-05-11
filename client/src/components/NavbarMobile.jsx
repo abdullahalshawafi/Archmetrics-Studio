@@ -9,13 +9,16 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import logoBlack from "../assets/logo-black.png";
 import "../App.css";
 
-export default function NavbarMobile({ pathname }) {
+export default function NavbarMobile({ pathname, isNavHidden }) {
   const [click, setClick] = useState(false);
   const handleClick = () => setClick(!click);
   const closeMobileMenu = () => setClick(false);
 
   return (
-    <div className="NavbarMobile" id="navbar">
+    <div
+      className={`NavbarMobile ${isNavHidden ? "navbar-hidden" : ""}`}
+      id="navbar"
+    >
       <div className="LogoMobile">
         <Link to="/">
           <img className="logoImgMobile" src={logoBlack} alt="Logo" />

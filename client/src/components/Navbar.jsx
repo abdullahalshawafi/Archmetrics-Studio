@@ -4,12 +4,12 @@ import logoWhite from "../assets/logo-white.png";
 import logoBlack from "../assets/logo-black.png";
 import "../App.css";
 
-export default function Navbar({ pathname }) {
+export default function Navbar({ pathname, isNavHidden }) {
   const [isNavTop, setIsNavTop] = useState(true);
 
   useEffect(() => {
     const handleWindowScroll = () => {
-      setIsNavTop(window.pageYOffset > 80 ? false : true);
+      setIsNavTop(window.pageYOffset > 150 ? false : true);
     };
 
     window.addEventListener("scroll", handleWindowScroll);
@@ -22,7 +22,9 @@ export default function Navbar({ pathname }) {
   return (
     <div
       id="navbar"
-      className={`navbar ${isNavTop ? "navbar-transparent" : ""}`}
+      className={`navbar ${isNavTop ? "navbar-transparent" : ""} ${
+        isNavHidden ? "navbar-hidden" : ""
+      }`}
     >
       <div className="logo">
         <Link to="/">

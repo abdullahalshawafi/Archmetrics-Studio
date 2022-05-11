@@ -15,7 +15,15 @@ function ImageGallery({ data }) {
     <div className="Gallery">
       <div style={{ textAlign: "center" }}>
         <div>
-          <Carousel interval="5000" transitionTime="1000">
+          <Carousel
+            interval="5000"
+            transitionTime="1000"
+            autoFocus
+            swipeable
+            emulateTouch
+            useKeyboardArrows
+            infiniteLoop
+          >
             {images.map((img, index) => (
               <div key={index} style={{ display: "flex", height: "100%" }}>
                 <img
