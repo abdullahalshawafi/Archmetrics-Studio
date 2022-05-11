@@ -1,14 +1,15 @@
 pipeline {
     agent any
     environment {
-        githubSecret = credentials("714a2807-4f4f-4d9f-8fba-72347597b7be")
+        Cred_User = credentials("Cred_User")
+        Cred_Token = credentials("Cred_Token")        
     }
     stages {
         stage("fetch"){
             steps{
                 echo "========Fetch github========"
                 sh """ pwd """
-                git branch: "main", url: "https://${githubSecret}@github.com/abdullahalshawafi/Archmetrics-Studio.git"
+                git branch: "main", url: "https://${Cred_User}:${Cred_Token}@github.com/abdullahalshawafi/Archmetrics-Studio.git"
             }
             post{
                 success{
