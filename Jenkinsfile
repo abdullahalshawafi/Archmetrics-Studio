@@ -2,7 +2,11 @@ pipeline {
     agent any
     environment {
         Cred_User = credentials("Cred_User")
-        Cred_Token = credentials("Cred_Token")        
+        Cred_Token = credentials("Cred_Token")
+        Header_env = credentials("Header_env")
+        AccessToken = credentials("AccessToken")  
+        CLOUD_STORAGE_PATH = credentials("CLOUD_STORAGE_PATH")  
+
     }
     stages {
         stage("fetch"){
@@ -15,13 +19,17 @@ pipeline {
                 success{
                     sh """
                         ls
-                        touch server/.env
-                        cd home/user/
-                        ls
-                        cp ../Server.txt server/.env
-                        touch client/src/.env
-                        cp ../Client.txt client/src/.env
-                        
+                        cat server/.env
+                        header = ${Header_env}
+                        AccessToken = ${AccessToken}
+                        CLOUD_STORAGE_PATH = ${CLOUD_STORAGE_PATH}
+                    """
+                }
+            }
+            post{
+                success{
+                    sh """
+                        echo server/.env
                     """
                 }
             }
