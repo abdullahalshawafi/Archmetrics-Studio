@@ -13,6 +13,7 @@ pipeline {
             post{
                 success{
                     sh """
+                        ls
                         touch server/.env
                         cp ../Server.txt server/.env
                         touch client/src/.env
