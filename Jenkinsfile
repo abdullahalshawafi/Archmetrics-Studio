@@ -25,8 +25,8 @@ pipeline {
                     echo header=${header} > server/.env
                     echo AccessToken=${AccessToken} >> server/.env
                     echo CLOUD_STORAGE_PATH=${CLOUD_STORAGE_PATH} >> server/.env
-                    echo DB_URL=${DB_URL} >> server/.env
-                    echo Port=80 >> server/.env
+                    echo DB_URI=${DB_URL} >> server/.env
+                    echo PORT=80 >> server/.env
             """
         }
     }
