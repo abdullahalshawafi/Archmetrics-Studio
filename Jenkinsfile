@@ -18,12 +18,6 @@ pipeline {
             }
         }
 
-        stage('Remove Previous node'){
-            steps{
-               sh 'sudo pkill node'
-            }
-        }
-    
         stage('build back env') {
             steps {
                 sh """
