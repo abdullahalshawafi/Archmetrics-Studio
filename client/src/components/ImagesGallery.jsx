@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from "react";
 import ImageGallery from "react-image-gallery";
-// import { Carousel } from "react-responsive-carousel";
 import "../App.css";
 import "react-image-gallery/styles/css/image-gallery.css";
-// import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 
 function ImagesGallery({ data }) {
   const [images, setImages] = useState([""]);
