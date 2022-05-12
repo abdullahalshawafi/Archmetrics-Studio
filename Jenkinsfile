@@ -64,7 +64,7 @@ pipeline {
         
         stage('run') {
             steps {
-                sh 'sudo pm2 start server/app.js '
+                sh 'sudo BUILD_ID=dontKillMe pm2 start server/app.js '
             }
         }
     }
