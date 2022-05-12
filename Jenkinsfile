@@ -12,8 +12,8 @@ pipeline {
     stages {
         stage("fetch"){
             steps{
-                echo "========Fetch github========"
-                git branch: "main", url: "https://${Cred_User}:${Cred_Token}@github.com/abdullahalshawafi/Archmetrics-Studio.git"
+                echo "========pull github========"
+                sh "git pull https://${Cred_User}:${Cred_Token}@github.com/abdullahalshawafi/Archmetrics-Studio.git"
             }
         }
         
