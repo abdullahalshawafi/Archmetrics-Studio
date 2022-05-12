@@ -24,8 +24,8 @@ pipeline {
          stage('Remove Previous node'){
             steps{
                sh """
-                    sudo env PATH=$PATH pm2 stop server/app.js 
-                    sudo env PATH=$PATH pm2 delete server/app.js 
+                    sudo pm2 stop server/app.js 
+                    sudo pm2 delete server/app.js 
                 """
             }
         }
