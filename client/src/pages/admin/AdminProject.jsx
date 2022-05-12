@@ -27,6 +27,7 @@ function AdminService({ adminPage, setAdminPage }) {
     client: "",
     type: "",
     stage: "",
+    isTop: false,
     description: "",
     services: [],
     cover: "",
@@ -63,6 +64,8 @@ function AdminService({ adminPage, setAdminPage }) {
     if (project) {
       getSingleProject(project, setBody, setRedirect);
     } else {
+      removeImagePreview();
+      setCheckedServices([]);
       setBody({
         title: "",
         year: "",
@@ -71,6 +74,7 @@ function AdminService({ adminPage, setAdminPage }) {
         client: "",
         type: "",
         stage: "",
+        isTop: false,
         description: "",
         services: [],
         cover: "",
@@ -86,7 +90,7 @@ function AdminService({ adminPage, setAdminPage }) {
   useEffect(() => {
     if (project && services) {
       const bodyServices = body.services.map((service) => service.slug);
-      const temp = checkedServices;
+      const temp = new Array(services.length).fill(false);
       services.forEach((service, index) => {
         if (bodyServices.includes(service.slug)) {
           temp[index] = true;
@@ -94,13 +98,7 @@ function AdminService({ adminPage, setAdminPage }) {
       });
       setCheckedServices(temp);
     }
-  }, [project, body, services, checkedServices]);
-
-  useEffect(() => {
-    if (services) {
-      setCheckedServices(new Array(services.length).fill(false));
-    }
-  }, [services]);
+  }, [project, body, services]);
 
   if (!loggedIn) {
     return <Navigate to="/" />;
@@ -126,7 +124,11 @@ function AdminService({ adminPage, setAdminPage }) {
   };
 
   const handleChange = (e) => {
-    setBody({ ...body, [e.target.name]: e.target.value });
+    if (e.target.name === "isTop") {
+      setBody({ ...body, [e.target.name]: e.target.checked });
+    } else {
+      setBody({ ...body, [e.target.name]: e.target.value });
+    }
   };
 
   const handleCheckboxChange = (position) => {
@@ -166,6 +168,7 @@ function AdminService({ adminPage, setAdminPage }) {
           area: "",
           location: "",
           client: "",
+          isTop: false,
           description: "",
           type: "",
           stages: "",
@@ -193,19 +196,35 @@ function AdminService({ adminPage, setAdminPage }) {
       <div className="pt-5 m-5">
         <h2 className="page-title">{project ? "Edit" : "Add"} a project</h2>
         <form onSubmit={handleSubmit} encType="multipart/form-data">
-          <div className="form-group mb-3">
-            <label htmlFor="title">Title</label>
-            <input
-              className="form-control"
-              type="text"
-              name="title"
-              id="title"
-              placeholder="Project title"
-              autoComplete="off"
-              onChange={handleChange}
-              value={body.title}
-              autoFocus
-            />
+          <div className="row align-items-end">
+            <div className="col-12 col-md-6 form-group mb-3">
+              <label htmlFor="title">Title</label>
+              <input
+                className="form-control"
+                type="text"
+                name="title"
+                id="title"
+                placeholder="Project title"
+                autoComplete="off"
+                onChange={handleChange}
+                value={body.title}
+                autoFocus
+              />
+            </div>
+            <div className="col-12 col-md-6 form-group mb-3">
+              <input
+                className="form-check-input mb-3 me-2"
+                type="checkbox"
+                name="isTop"
+                id="isTop"
+                placeholder="Project isTop"
+                onChange={handleChange}
+                checked={body.isTop}
+              />
+              <label htmlFor="isTop" className="form-check-label">
+                Top Project
+              </label>
+            </div>
           </div>
           <div className="row">
             <div className="col-12 col-md-6 form-group mb-3">
