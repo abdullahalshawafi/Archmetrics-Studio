@@ -8,7 +8,7 @@ const db = require('./configs/mongo');
 
 const app = express();
 
-let PORT = process.env.PORT || 80; 
+let PORT = process.env.PORT || 8080; 
 
 dotenv.config();
 
