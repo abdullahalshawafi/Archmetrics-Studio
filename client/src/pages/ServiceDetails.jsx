@@ -4,7 +4,7 @@ import ClientLayout from "../layouts/ClientLayout";
 import InfoCard from "../components/InfoCard";
 import { getSingleService } from "../services/services";
 import { Helmet } from "react-helmet";
-import ImageGallery from "../components/ImageGallery";
+import ImageGallery from "../components/ImagesGallery";
 
 function ServiceDetails({ pathname, setPathname }) {
   let { service } = useParams();

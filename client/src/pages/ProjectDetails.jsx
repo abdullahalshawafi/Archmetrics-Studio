@@ -3,7 +3,7 @@ import { Helmet } from "react-helmet";
 import { Link, Navigate, useParams } from "react-router-dom";
 import ClientLayout from "../layouts/ClientLayout";
 import { getSingleProject } from "../services/projects";
-import ImageGallery from "../components/ImageGallery";
+import ImageGallery from "../components/ImagesGallery";
 
 function ProjectDetails({ pathname, setPathname }) {
   let { project } = useParams();
@@ -67,7 +67,9 @@ function ProjectDetails({ pathname, setPathname }) {
             <div className="col-12 mb-4 col-sm-1"></div>
             <div className="project-details col-sm-8 p-0">
               {projectDetails.images && (
-                <ImageGallery data={projectDetails.images} />
+                <ImageGallery
+                  data={projectDetails.images.map((image) => image.image)}
+                />
               )}
             </div>
           </div>
