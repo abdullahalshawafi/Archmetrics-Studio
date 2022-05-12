@@ -3,16 +3,17 @@ pipeline {
     environment {
         Cred_User = credentials("Cred_User")
         Cred_Token = credentials("Cred_Token")
-        Header_env = credentials("Header_env")
+        header = credentials("Header_env")
         AccessToken = credentials("AccessToken")  
-        CLOUD_STORAGE_PATH = credentials("CLOUD_STORAGE_PATH")  
+        CLOUD_STORAGE_PATH = credentials("CLOUD_STORAGE_PATH")
+        DB_URL = credentials("DB_URL")
 
     }
     stages {
         stage("fetch"){
             steps{
-                echo "========Fetch github========"
-                git branch: "main", url: "https://${Cred_User}:${Cred_Token}@github.com/abdullahalshawafi/Archmetrics-Studio.git"
+                echo "========pull github========"
+                sh "git pull https://${Cred_User}:${Cred_Token}@github.com/abdullahalshawafi/Archmetrics-Studio.git"
             }
         }
         
@@ -20,9 +21,10 @@ pipeline {
         steps {
             sh """
                     touch server/.env
-                    echo header = ${Header_env} > server/.env
+                    echo header = ${header} > server/.env
                     echo AccessToken = ${AccessToken} >> server/.env
                     echo CLOUD_STORAGE_PATH = ${CLOUD_STORAGE_PATH} >> server/.env
+                    echo DB_URL = ${DB_URL} >> server/.env
                     echo Port = 80 >> server/.env
             """
         }
