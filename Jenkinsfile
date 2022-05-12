@@ -64,7 +64,10 @@ pipeline {
         
         stage('run') {
             steps {
-                sh 'sudo BUILD_ID=dontKillMe pm2 start server/app.js '
+                sh """    
+                    sudo BUILD_ID=dontKillMe pm2 start server/app.js 
+                    sudo pm2 save --force
+                """
             }
         }
     }
