@@ -17,10 +17,10 @@ pipeline {
                 sh "git pull https://${Cred_User}:${Cred_Token}@github.com/abdullahalshawafi/Archmetrics-Studio.git"
             }
         }
-        
-        stage("Remove Previous node"){
+
+        stage('Remove Previous node'){
             steps{
-                sh "sudo pkill node"
+               sh 'sudo pkill node'
             }
         }
     
