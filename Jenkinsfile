@@ -9,6 +9,9 @@ pipeline {
         DB_URL = credentials("DB_URL")
 
     }
+    triggers {
+        githubPush()
+    }
     stages {
         stage("fetch"){
             steps{
@@ -17,6 +20,16 @@ pipeline {
                 sh "git pull https://${Cred_User}:${Cred_Token}@github.com/abdullahalshawafi/Archmetrics-Studio.git"
             }
         }
+
+         stage('Remove Previous node'){
+            steps{
+               sh """
+                    sudo env PATH=$PATH pm2 stop server/app.js 
+                    sudo env PATH=$PATH pm2 delete server/app.js 
+                """
+            }
+        }
+    
 
         stage('build back env') {
             steps {
@@ -50,7 +63,7 @@ pipeline {
         
         stage('run') {
             steps {
-                sh 'sudo npm start'
+                sh 'sudo env PATH=$PATH pm2 start server/app.js '
             }
         }
     }
