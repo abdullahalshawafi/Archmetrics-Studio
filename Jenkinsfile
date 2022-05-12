@@ -26,6 +26,7 @@ pipeline {
                sh """
                     sudo pm2 stop server/app.js 
                     sudo pm2 delete server/app.js 
+                    sudo pm2 save --force
                 """
             }
         }
@@ -63,7 +64,7 @@ pipeline {
         
         stage('run') {
             steps {
-                sh 'sudo env PATH=$PATH pm2 start server/app.js '
+                sh 'sudo pm2 start server/app.js '
             }
         }
     }
