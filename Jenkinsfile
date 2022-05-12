@@ -18,42 +18,46 @@ pipeline {
             }
         }
         
-    stage('build back env') {
-        steps {
-            sh """
-                    touch server/.env
-                    echo header=${header} > server/.env
-                    echo AccessToken=${AccessToken} >> server/.env
-                    echo CLOUD_STORAGE_PATH=${CLOUD_STORAGE_PATH} >> server/.env
-                    echo DB_URI=${DB_URL} >> server/.env
-                    echo PORT=80 >> server/.env
-                    echo NODE_ENV="production" >> server/.env
-            """
+        stage("Remove Previous node"){
+            steps{
+                sh "sudo pkill node"
+            }
         }
-    }
+    
+        stage('build back env') {
+            steps {
+                sh """
+                        touch server/.env
+                        echo header=${header} > server/.env
+                        echo AccessToken=${AccessToken} >> server/.env
+                        echo CLOUD_STORAGE_PATH=${CLOUD_STORAGE_PATH} >> server/.env
+                        echo DB_URI=${DB_URL} >> server/.env
+                        echo PORT=80 >> server/.env
+                        echo NODE_ENV="production" >> server/.env
+                """
+            }
+        }
 
-
-    stage('build front env') {
-        steps {
-             sh """
-                        ls
-                        touch client/.env
-                        echo REACT_APP_BASE_URL=www.archmetrics.org/api > client/.env
-                 """
+        stage('build front env') {
+            steps {
+                sh """
+                            ls
+                            touch client/.env
+                            echo REACT_APP_BASE_URL=www.archmetrics.org/api > client/.env
+                    """
+            }
         }
-    }
-    
-    
-    stage('build') {
-        steps {
-            sh 'sudo npm run install-all'
+        
+        stage('build') {
+            steps {
+                sh 'sudo npm run install-all'
+            }
         }
-    }
-    
-    stage('run') {
-        steps {
-            sh 'sudo npm start'
+        
+        stage('run') {
+            steps {
+                sh 'sudo npm start'
+            }
         }
-    }
     }
 }
