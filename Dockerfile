@@ -9,4 +9,4 @@ RUN npm run install-all
 COPY . .
 
 EXPOSE 80
-CMD [ "node", "start" ]
+CMD [ "node", "server/app.js" ]
