@@ -5,7 +5,8 @@ pipeline {
         Cred_Token = credentials("Cred_Token")
         Header_env = credentials("Header_env")
         AccessToken = credentials("AccessToken")  
-        CLOUD_STORAGE_PATH = credentials("CLOUD_STORAGE_PATH")  
+        CLOUD_STORAGE_PATH = credentials("CLOUD_STORAGE_PATH")
+        DB_URL = credentials("DB_URL")
 
     }
     stages {
@@ -23,6 +24,7 @@ pipeline {
                     echo header = ${Header_env} > server/.env
                     echo AccessToken = ${AccessToken} >> server/.env
                     echo CLOUD_STORAGE_PATH = ${CLOUD_STORAGE_PATH} >> server/.env
+                    echo DB_URL = ${DB_URL} >> server/.env
                     echo Port = 80 >> server/.env
             """
         }
