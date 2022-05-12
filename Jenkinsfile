@@ -37,7 +37,7 @@ pipeline {
                 sh """
                             ls
                             touch client/.env
-                            echo REACT_APP_BASE_URL=www.archmetrics.org/api > client/.env
+                            echo REACT_APP_BASE_URL=http://www.archmetrics.org/api > client/.env
                     """
             }
         }
