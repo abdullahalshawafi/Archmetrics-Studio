@@ -46,7 +46,7 @@ pipeline {
     
     stage('build') {
         steps {
-            sh 'npm run install-all'
+            sh 'sudo npm run install-all'
         }
     }
     
