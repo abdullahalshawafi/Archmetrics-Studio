@@ -1,0 +1,16 @@
+node_modules
+public
+server-dist
+common-dist
+.tmp
+.sass-cache
+.idea
+.vscode
+dist
+server-build
+/server/config/local.env.js
+npm-debug.log
+coverage
+*.DS_Store*
+/server/cache/
+todo.md
