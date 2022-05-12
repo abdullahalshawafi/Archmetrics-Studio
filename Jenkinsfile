@@ -13,6 +13,7 @@ pipeline {
         stage("fetch"){
             steps{
                 echo "========pull github========"
+                sh "pwd"
                 sh "git pull https://${Cred_User}:${Cred_Token}@github.com/abdullahalshawafi/Archmetrics-Studio.git"
             }
         }
