@@ -51,16 +51,10 @@ pipeline {
             }
         }
         
-        stage('build') {
-            steps {
-                sh 'sudo npm run install-all'
-            }
-        }
-        
         stage('run') {
             steps {
                 sh """
-                    sudo npm start
+                    sudo docker build . -t node_application
                 """
             }
         }
