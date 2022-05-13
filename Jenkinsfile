@@ -22,7 +22,9 @@ pipeline {
         }
        
         stage('Stop Containers'){
-            sh "sudo docker stop node_application"
+            steps{
+                sh "sudo docker stop node_application"
+            }
         }
 
         stage('build back env') {
