@@ -21,9 +21,6 @@ pipeline {
             }
         }
 
-        
-    
-
         stage('build back env') {
             steps {
                 sh """
@@ -57,9 +54,7 @@ pipeline {
         stage('run') {
             steps {
                 sh """
-                    export BUILD_ID=dontKillMePlease
-                    sudo pm2 restart server/app.js 
-                    sudo pm2 save --force
+                    docker build . -t node_application
                 """
             }
         }
