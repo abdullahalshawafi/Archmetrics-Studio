@@ -65,9 +65,8 @@ pipeline {
         stage('run') {
             steps {
                 sh """
-                    sudo pm2 startup
-                    sudo env PATH=$PATH:/home/mohamed_magdy/.nvm/versions/node/v14.18.2/bin /home/mohamed_magdy/.nvm/versions/node/v14.18.2/lib/node_modules/pm2/bin/pm2 startup systemd -u mohamed_magdy --hp /home/mohamed_magdy  
-                    sudo BUILD_ID=dontKillMe pm2 start server/app.js 
+                    export BUILD_ID=dontKillMePlease
+                    sudo pm2 restart server/app.js 
                     sudo pm2 save --force
                 """
             }
