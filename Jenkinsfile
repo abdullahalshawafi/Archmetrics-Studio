@@ -21,6 +21,10 @@ pipeline {
             }
         }
        
+        stage('Stop Containers'){
+            sh "sudo docker stop node_application"
+        }
+
         stage('build back env') {
             steps {
                 sh """
@@ -48,8 +52,8 @@ pipeline {
         stage('run') {
             steps {
                 sh """
-                    sudo docker build --no-cache . -t node_application
-                    sudo docker run -p 80:80 -d node_application
+                    sudo docker build --no-cache . -t Archmetrics
+                    sudo docker run --network host -d Archmetrics
                 """
             }
         }
