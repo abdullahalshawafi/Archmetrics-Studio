@@ -21,15 +21,7 @@ pipeline {
             }
         }
 
-         stage('Remove Previous node'){
-            steps{
-               sh """
-                    sudo pm2 stop server/app.js 
-                    sudo pm2 delete server/app.js 
-                    sudo pm2 save --force
-                """
-            }
-        }
+        
     
 
         stage('build back env') {
@@ -66,7 +58,7 @@ pipeline {
             steps {
                 sh """
                     export BUILD_ID=dontKillMePlease
-                    sudo pm2 restart server/app.js 
+                    sudo pm2 start server/app.js 
                     sudo pm2 save --force
                 """
             }
