@@ -45,10 +45,17 @@ pipeline {
             }
         }
         
-        stage('run') {
+        stage('build image') {
             steps {
                 sh """
                     sudo docker build --no-cache . -t archmetrics
+                """
+            }
+        }
+
+        stage('run image') {
+            steps {
+                sh """
                     sudo docker run -p 80:80 -d archmetrics
                 """
             }
