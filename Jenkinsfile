@@ -49,7 +49,6 @@ pipeline {
             steps {
                 sh """
                     sudo docker build --no-cache . -t archmetrics
-                    sudo docker run -p 80:80 -d archmetrics
                     sudo docker run --network host -d archmetrics
                 """
             }
