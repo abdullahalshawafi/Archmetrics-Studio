@@ -48,8 +48,8 @@ pipeline {
         stage('run') {
             steps {
                 sh """
-                    sudo docker build --no-cache . -t Archmetrics
-                    sudo docker run --network host -d Archmetrics
+                    sudo docker build --no-cache . -t archmetrics
+                    sudo docker run --network host -d archmetrics
                 """
             }
         }
