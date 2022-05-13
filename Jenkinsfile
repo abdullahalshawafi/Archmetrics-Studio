@@ -20,13 +20,7 @@ pipeline {
                 sh "git pull https://${Cred_User}:${Cred_Token}@github.com/abdullahalshawafi/Archmetrics-Studio.git"
             }
         }
-        
-        stage('Remove Previous node'){
-            steps{
-               sh 'sudo pkill node'
-            }
-        }
-
+       
         stage('build back env') {
             steps {
                 sh """
@@ -55,6 +49,7 @@ pipeline {
             steps {
                 sh """
                     sudo docker build . -t node_application
+                    sudo docker run -d node_application
                 """
             }
         }
