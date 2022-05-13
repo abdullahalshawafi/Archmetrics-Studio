@@ -48,8 +48,8 @@ pipeline {
         stage('run') {
             steps {
                 sh """
-                    sudo docker build . -t node_application
-                    sudo docker run -d node_application
+                    sudo docker build --no-cache . -t node_application
+                    sudo docker run -p 80:80 -d node_application
                 """
             }
         }
