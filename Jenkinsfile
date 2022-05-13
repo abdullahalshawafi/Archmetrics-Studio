@@ -64,7 +64,8 @@ pipeline {
         
         stage('run') {
             steps {
-                sh """    
+                sh """
+                    sudo pm2 startup  
                     sudo BUILD_ID=dontKillMe pm2 start server/app.js 
                     sudo pm2 save --force
                 """
