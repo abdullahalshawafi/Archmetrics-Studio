@@ -10,4 +10,4 @@ COPY . .
 RUN npm run install-all
 
 EXPOSE 80
-CMD [ "npm", "start" ]
+CMD [ "npm", "start","--bind",":80" ]
