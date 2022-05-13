@@ -23,7 +23,7 @@ pipeline {
        
         stage('Stop Containers'){
             steps{
-                sh "sudo docker stop node_application"
+                sh "sudo docker rm $( sudo docker stop $( sudo docker ps -a -q --filter ancestor=Archmetrics --format="{{.ID}}"))"
             }
         }
 
