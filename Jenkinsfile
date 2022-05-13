@@ -20,6 +20,7 @@ pipeline {
                 sh "git pull https://${Cred_User}:${Cred_Token}@github.com/abdullahalshawafi/Archmetrics-Studio.git"
             }
         }
+        
        
         stage('build back env') {
             steps {
@@ -45,26 +46,16 @@ pipeline {
             }
         }
         
-        stage('build image') {
+        stage('build') {
             steps {
-                sh """
-                    sudo docker build --no-cache . -t archmetrics
-                """
+                sh 'sudo npm run install-all'
             }
         }
-
-        stage('run image') {
+        
+        stage('run') {
             steps {
                 sh """
-                    sudo docker run -p 80:80 -d archmetrics
-                """
-            }
-        }
-
-        stage('ensure network host') {
-            steps {
-                sh """
-                    sudo docker run --network host -d archmetrics
+                    sudo npm start
                 """
             }
         }
