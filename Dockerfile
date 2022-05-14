@@ -4,9 +4,10 @@ WORKDIR /usr/src/app
 
 COPY package*.json ./
 
-RUN npm run install-all
-
 COPY . .
 
+
+RUN npm run install-all
+
 EXPOSE 80
-CMD [ "node", "start" ]
+CMD [ "npm", "start" ]

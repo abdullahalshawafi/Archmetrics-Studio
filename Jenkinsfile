@@ -23,7 +23,7 @@ pipeline {
         
         stage('Remove Previous node'){
             steps{
-               sh 'sudo pkill node'
+               sh 'sudo pkill -f node'
             }
         }
 
