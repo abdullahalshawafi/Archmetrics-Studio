@@ -1,14 +1,18 @@
 import React, { useEffect, useState } from "react";
+import AOS from "aos";
 import { useMediaQuery } from "react-responsive";
 import Navbar from "../components/Navbar";
 import NavbarMobile from "../components/NavbarMobile";
 import Footer from "../components/Footer";
 import BackToTop from "../components/BackToTop";
 
+import "aos/dist/aos.css";
+
 function ClientLayout({ pathname, children }) {
   const [isNavHidden, setIsNavHidden] = useState(false);
 
   useEffect(() => {
+    AOS.init();
     let prevScrollPos = window.pageYOffset;
 
     const handleWindowScroll = () => {
@@ -16,10 +20,8 @@ function ClientLayout({ pathname, children }) {
 
       if (prevScrollPos > currentScrollPos) {
         setIsNavHidden(false);
-        // document.getElementById("navbar").style.transform = "translateY(0)";
       } else {
         setIsNavHidden(true);
-        // document.getElementById("navbar").style.transform = "translateY(-100%)";
       }
 
       prevScrollPos = currentScrollPos;

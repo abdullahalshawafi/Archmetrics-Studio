@@ -12,7 +12,11 @@ export default function About() {
         </p>
       </div>
       <div className="about-content">
-        <div className="about-content-text">
+        <div
+          data-aos="fade-up"
+          data-aos-duration="1000"
+          className="about-content-text"
+        >
           <p>
             "Archmetrics is a modern engineering service providers which aim to
             use the latest technologies and softwares to serve all engineering
@@ -23,7 +27,12 @@ export default function About() {
           </p>
           <p style={{ alignSelf: "flex-end" }}>Archmetrics - AMC</p>
         </div>
-        <div className="about-content-video">
+        <div
+          data-aos="fade-up"
+          data-aos-duration="1000"
+          data-aos-delay="200"
+          className="about-content-video"
+        >
           <video src={aboutVideo} controls></video>
         </div>
       </div>

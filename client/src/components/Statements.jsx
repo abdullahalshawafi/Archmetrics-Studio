@@ -40,7 +40,7 @@ function Statements() {
           </p>
         </div>
       </div>
-      <p>{statements[selectedStatement]}</p>
+      <p data-aos="zoom-in">{statements[selectedStatement]}</p>
     </div>
   );
 }

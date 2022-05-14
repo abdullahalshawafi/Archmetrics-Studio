@@ -49,7 +49,7 @@ function ContactUs() {
       <div className="contact-us-details">
         <h1>Contact Us</h1>
         <hr />
-        <p>
+        <p data-aos="zoom-in">
           To meet or sending quotations besides we thrive when coming up with
           innovative ideas also understand that a smart concept should should be
           supported with measurable results.
