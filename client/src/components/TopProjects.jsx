@@ -25,8 +25,8 @@ export default function TopProjects() {
         <h1>Top Projects</h1>
         <hr />
         <p>
-          Have a look at our top projects.{" "}
-          <Link to="/projects">See all projects</Link>
+          Have a look at our top projects. Or you can all of our{" "}
+          <Link to="/projects">projects</Link>
         </p>
       </div>
       <div className="home-projects-slider">

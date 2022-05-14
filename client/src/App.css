@@ -82,6 +82,11 @@ a {
   opacity: 0.8;
 }
 
+.back-top-container.hidden {
+  display: none;
+  animation: swipeIn 0.5s cubic-bezier(0.4, 0, 1, 1) backwards;
+}
+
 @keyframes swipeIn {
   0% {
     opacity: 0;
@@ -302,8 +307,8 @@ a {
   background-size: cover;
   background-attachment: fixed;
   background-repeat: no-repeat;
-  background-position: center -8rem;
-  background-color: #00000066;
+  background-position: center;
+  background-color: #0000005f;
   background-blend-mode: multiply;
   height: 32rem;
   display: flex;
@@ -339,7 +344,7 @@ a {
 
 .slider-container .text-container {
   text-align: center;
-  padding-top: 115px;
+  padding-top: 100px;
   color: var(--white-color);
   font-family: var(--secondary-fm);
 }
@@ -349,7 +354,7 @@ a {
   font-weight: 700;
 }
 
-.about-container {
+.statements-container {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -359,7 +364,7 @@ a {
   margin: 0 auto;
 }
 
-.about-container>div {
+.statements-container>div {
   display: flex;
   justify-content: center;
   width: 100%;
@@ -367,13 +372,13 @@ a {
   border-bottom: var(--gray-border-color) 1px solid;
 }
 
-.about-container .headers-container {
+.statements-container .headers-container {
   display: flex;
   font-size: 12px;
   color: var(--black-color);
 }
 
-.about-container .headers-container p {
+.statements-container .headers-container p {
   padding: 0 1.1rem 1.1rem 1.1rem;
   margin: 0;
   font-weight: 600;
@@ -383,21 +388,21 @@ a {
   cursor: default;
 }
 
-.about-container .headers-container p.active {
+.statements-container .headers-container p.active {
   color: var(--primary-color);
   border-bottom: var(--primary-color) 2px solid;
 }
 
-.about-container .headers-container p:not(.active) {
+.statements-container .headers-container p:not(.active) {
   cursor: pointer;
   transition: color 0.2s ease-in-out;
 }
 
-.about-container .headers-container p:not(.active):hover {
+.statements-container .headers-container p:not(.active):hover {
   color: var(--primary-color);
 }
 
-.about-container>p {
+.statements-container>p {
   color: var(--light-gray-color);
   line-height: 1.75;
   font-size: 1.12rem;
@@ -640,24 +645,29 @@ a {
   color: var(--light-gray-color) !important;
 }
 
+.about-container,
 .home-projects-container {
   padding: 75px 0 0 0;
   text-align: center;
 }
 
+.about-details,
 .home-projects-details {
   margin: 0 12rem;
 }
 
+.about-details a,
 .home-projects-details a {
   color: var(--primary-color);
   transition: opacity 0.2s ease-in-out;
 }
 
+.about-details a:hover,
 .home-projects-details a:hover {
   opacity: 0.4;
 }
 
+.about-details h1,
 .home-projects-details h1 {
   text-transform: uppercase;
   font-family: var(--secondary-fm);
@@ -667,6 +677,7 @@ a {
   color: var(--black-color);
 }
 
+.about-details hr,
 .home-projects-details hr {
   width: 5rem;
   margin: 1.5rem auto;
@@ -675,10 +686,42 @@ a {
   opacity: 1;
 }
 
+.about-details p,
 .home-projects-details p {
   color: var(--light-gray-color);
   letter-spacing: 0.5px;
   font-size: 1.15rem;
+}
+
+.about-content {
+  margin: 50px 5rem;
+  margin-bottom: 0;
+  display: flex;
+  justify-content: center;
+}
+
+.about-content-text {
+  width: 50%;
+  margin-right: 4rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.about-content-text * {
+  font-family: var(--secondary-fm);
+}
+
+.about-content-video {
+  width: 50%;
+}
+
+.about-content-video video {
+  width: 100%;
+  max-width: 800px;
+  outline: none;
+  box-shadow: 0px 1px 12px 1px rgb(0 0 0 / 37%);
 }
 
 .home-projects-slider {
@@ -823,6 +866,7 @@ a {
 
 @media screen and (max-width: 960px) {
 
+  .about-container,
   .contact-us-container,
   .home-projects-container {
     margin: 0;
@@ -830,6 +874,7 @@ a {
     padding-right: 0;
   }
 
+  .about-details,
   .contact-us-details,
   .home-projects-details {
     padding: 0 18px;
@@ -916,6 +961,27 @@ a {
     font-size: 0.65rem;
   }
 
+  .about-content {
+    margin: 30px 1rem;
+    margin-bottom: 0;
+    flex-direction: column-reverse;
+    align-items: center;
+  }
+
+  .about-content-text {
+    width: 100%;
+    margin-right: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .about-content-video {
+    width: 100%;
+    margin-bottom: 1rem;
+  }
+
   .service-details h1,
   .project-details h1,
   .recent-projects-container h1 {
@@ -967,11 +1033,6 @@ a {
   .info-container>div,
   .home-projects-container>div {
     grid-template-columns: auto;
-  }
-
-  .about-container {
-    padding: 75px 18px;
-    margin: 0;
   }
 
   .info-container>div {
