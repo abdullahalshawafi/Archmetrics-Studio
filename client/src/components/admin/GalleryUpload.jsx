@@ -32,20 +32,26 @@ function GalleryUpload({ setLoading, setBody, body }) {
   const [images, setImages] = useState([]);
   const [files, setFiles] = useState([]);
 
-  const readURL = useCallback((image) => {
-    const reader = new FileReader();
-    reader.onload = async () => {
-      const newImage = await uploadImage(image);
-      setImages((oldImages) => [...oldImages, newImage]);
-    };
-    reader.readAsDataURL(image);
-  }, []);
+  const readURL = useCallback(
+    (image, index, acceptedFilesLength) => {
+      const reader = new FileReader();
+      setLoading(true);
+      reader.onload = async () => {
+        const newImage = await uploadImage(image);
+        setImages((oldImages) => [...oldImages, newImage]);
+        if (index === acceptedFilesLength - 1) {
+          setLoading(false);
+        }
+      };
+      reader.readAsDataURL(image);
+    },
+    [setLoading]
+  );
 
   const onDrop = useCallback(
     (acceptedFiles) => {
-      setLoading(true);
-      acceptedFiles.forEach((file) => {
-        readURL(file);
+      acceptedFiles.forEach((file, index) => {
+        readURL(file, index, acceptedFiles.length);
       });
       setFiles(
         acceptedFiles.map((file) =>
@@ -54,9 +60,8 @@ function GalleryUpload({ setLoading, setBody, body }) {
           })
         )
       );
-      setLoading(false);
     },
-    [setLoading, readURL]
+    [readURL]
   );
 
   const {
