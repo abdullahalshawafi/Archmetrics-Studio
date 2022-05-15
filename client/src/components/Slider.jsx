@@ -35,12 +35,7 @@ function Slider() {
         className="custom-carousel"
       >
         {sliderContent.map((item, index) => (
-          <div
-            data-aos="fade-down"
-            data-aos-delay="500"
-            key={index}
-            className="text-container"
-          >
+          <div key={index} className="text-container">
             <h1>{item.header}</h1>
             <p>{item.text}</p>
           </div>
