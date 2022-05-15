@@ -25,7 +25,7 @@ export default function TopProjects() {
         <h1>Top Projects</h1>
         <hr />
         <p data-aos="zoom-in">
-          Have a look at our top projects. Or you can all of our{" "}
+          Have a look at our top projects. Or see all of our{" "}
           <Link to="/projects">projects</Link>
         </p>
       </div>

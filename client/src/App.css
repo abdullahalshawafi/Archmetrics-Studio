@@ -715,6 +715,15 @@ a {
   font-family: var(--secondary-fm);
 }
 
+.about-content-text p:first-child {
+  align-self: flex-start;
+  text-align: left;
+}
+
+.about-content-text p:nth-child(3) {
+  align-self: flex-end;
+}
+
 .about-content-video {
   width: 50%;
 }
@@ -977,6 +986,15 @@ a {
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
+  }
+
+  .about-content-text p:first-child {
+    align-self: center;
+    text-align: center;
+  }
+
+  .about-content-text p:nth-child(3) {
+    align-self: center;
   }
 
   .about-content-video {

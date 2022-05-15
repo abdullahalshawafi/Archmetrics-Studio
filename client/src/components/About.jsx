@@ -25,7 +25,7 @@ export default function About() {
           <p style={{ fontSize: "1.3rem", fontWeight: "800" }}>
             "Engineering of art"
           </p>
-          <p style={{ alignSelf: "flex-end" }}>Archmetrics - AMC</p>
+          <p>Archmetrics - AMC</p>
         </div>
         <div
           data-aos="fade-up"
