@@ -1,51 +1,41 @@
-import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import aboutVideo from "../assets/Archmetrics Video.mp4";
 
-function About() {
-  const [selectedAbout, setSelectedAbout] = useState("mission");
-
-  const aboutText = {
-    mission:
-      "The mission of AMC Engineering, Inc. is to provide engineering and technical solutions that are responsive to our clients' needs in an innovative, cost effective, professional, quality service manner. We will accomplish this by utilizing our common values and in achieving our business objective of having you as a satisfied client.",
-    vision:
-      "The Company continues to move forward in become the leading multi-discipline engineering company providing project engineering, project management, engineering studies, construction and maintenance works in Egypt, by consistently delivering projects that meet international standards.",
-    values:
-      "Integrity - We behave ethically and are respectful, open, and honest in our business and personal lives. Quality Engineering - We provide high-quality engineering to meet client needs. Client Satisfaction - We engage our clients and the communities we serve so that they know us, trust, and value our services. Technical Innovation - We develop better engineering solutions through research and development. Employee Loyalty - We make every effort to attract and retain excellent, motivated employees, who are the source of our success.",
-  };
-
-  const handleClick = (e) => {
-    setSelectedAbout(e.target.innerHTML);
-  };
-
+export default function About() {
   return (
-    <div className="about-container">
-      <div>
-        <div className="headers-container">
-          <p
-            className={selectedAbout === "mission" ? "active" : ""}
-            onClick={handleClick}
-          >
-            mission
+    <section className="about-container">
+      <div className="about-details">
+        <h1>About Us</h1>
+        <hr />
+        <p>
+          Learn more <Link to="/about">about us</Link>.
+        </p>
+      </div>
+      <div className="about-content">
+        <div
+          data-aos="fade-up"
+          data-aos-duration="1000"
+          className="about-content-text"
+        >
+          <p>
+            "Archmetrics is a modern engineering service providers which aim to
+            use the latest technologies and softwares to serve all engineering
+            community."
           </p>
-          <p
-            className={selectedAbout === "vision" ? "active" : ""}
-            onClick={handleClick}
-          >
-            vision
+          <p style={{ fontSize: "1.3rem", fontWeight: "800" }}>
+            "Engineering of art"
           </p>
-          <p
-            className={selectedAbout === "values" ? "active" : ""}
-            onClick={handleClick}
-          >
-            values
-          </p>
+          <p style={{ alignSelf: "flex-end" }}>Archmetrics - AMC</p>
+        </div>
+        <div
+          data-aos="fade-up"
+          data-aos-duration="1000"
+          data-aos-delay="200"
+          className="about-content-video"
+        >
+          <video src={aboutVideo} controls></video>
         </div>
       </div>
-      <p
-        className="about-text"
-        dangerouslySetInnerHTML={{ __html: aboutText[selectedAbout] }}
-      ></p>
-    </div>
+    </section>
   );
 }
-
-export default About;

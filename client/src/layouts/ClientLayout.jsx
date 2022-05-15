@@ -1,23 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { faAngleUp } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import AOS from "aos";
 import { useMediaQuery } from "react-responsive";
 import Navbar from "../components/Navbar";
 import NavbarMobile from "../components/NavbarMobile";
 import Footer from "../components/Footer";
+import BackToTop from "../components/BackToTop";
+
+import "aos/dist/aos.css";
 
 function ClientLayout({ pathname, children }) {
-  const [showButton, setShowButton] = useState(false);
   const [isNavHidden, setIsNavHidden] = useState(false);
 
-  const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
-  };
-
   useEffect(() => {
+    AOS.init();
     let prevScrollPos = window.pageYOffset;
 
     const handleWindowScroll = () => {
@@ -25,15 +20,11 @@ function ClientLayout({ pathname, children }) {
 
       if (prevScrollPos > currentScrollPos) {
         setIsNavHidden(false);
-        // document.getElementById("navbar").style.transform = "translateY(0)";
       } else {
         setIsNavHidden(true);
-        // document.getElementById("navbar").style.transform = "translateY(-100%)";
       }
 
       prevScrollPos = currentScrollPos;
-
-      setShowButton(window.pageYOffset > 300 ? true : false);
     };
 
     window.addEventListener("scroll", handleWindowScroll);
@@ -55,11 +46,7 @@ function ClientLayout({ pathname, children }) {
       {children}
       <Footer />
 
-      {showButton && (
-        <div className="back-top-container" onClick={scrollToTop}>
-          <FontAwesomeIcon icon={faAngleUp} />
-        </div>
-      )}
+      <BackToTop />
     </div>
   );
 }

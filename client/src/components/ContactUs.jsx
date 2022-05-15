@@ -49,14 +49,18 @@ function ContactUs() {
       <div className="contact-us-details">
         <h1>Contact Us</h1>
         <hr />
-        <p>
+        <p data-aos="zoom-in">
           To meet or sending quotations besides we thrive when coming up with
           innovative ideas also understand that a smart concept should should be
           supported with measurable results.
         </p>
       </div>
       <form onSubmit={handleSubmit} className="contact-us-form">
-        <div className="input-field name">
+        <div
+          data-aos="fade-up"
+          data-aos-duration="700"
+          className="input-field name"
+        >
           <input
             type="text"
             name="name"
@@ -68,7 +72,11 @@ function ContactUs() {
             <small>{handleErrorMessages("name")}</small>
           )}
         </div>
-        <div className="input-field email">
+        <div
+          data-aos="fade-up"
+          data-aos-duration="700"
+          className="input-field email"
+        >
           <input
             type="email"
             name="email"
@@ -80,7 +88,11 @@ function ContactUs() {
             <small>{handleErrorMessages("email")}</small>
           )}
         </div>
-        <div className="input-field message">
+        <div
+          data-aos="fade-up"
+          data-aos-duration="700"
+          className="input-field message"
+        >
           <textarea
             name="message"
             rows="6"
@@ -92,7 +104,12 @@ function ContactUs() {
             <small>{handleErrorMessages("message")}</small>
           )}
         </div>
-        <button type="submit" disabled={loading}>
+        <button
+          data-aos="fade"
+          data-aos-duration="700"
+          type="submit"
+          disabled={loading}
+        >
           Send your message
         </button>
       </form>

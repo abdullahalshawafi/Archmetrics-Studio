@@ -47,7 +47,15 @@ function Info() {
       <div>
         {infoCards.map((card, index) => {
           return (
-            <div key={index} className="info-card">
+            <div
+              key={index}
+              data-aos="fade-up"
+              data-aos-duration="1000"
+              data-aos-delay={`${
+                (index % Math.floor(infoCards.length / 2)) * 150
+              }`}
+              className="info-card"
+            >
               <div className="icon-container">
                 <FontAwesomeIcon icon={card.icon} />
               </div>
