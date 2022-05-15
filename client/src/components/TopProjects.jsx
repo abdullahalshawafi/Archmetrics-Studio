@@ -24,12 +24,12 @@ export default function TopProjects() {
       <div className="home-projects-details">
         <h1>Top Projects</h1>
         <hr />
-        <p>
+        <p data-aos="zoom-in">
           Have a look at our top projects. Or you can all of our{" "}
           <Link to="/projects">projects</Link>
         </p>
       </div>
-      <div className="home-projects-slider">
+      <div data-aos="fade" className="home-projects-slider">
         <CarouselProvider
           className="img-slider"
           naturalSlideHeight={IsMobile ? 400 : 600}
@@ -39,7 +39,13 @@ export default function TopProjects() {
         >
           <Slider>
             {projects.map((project, index) => (
-              <Slide className="project-slide" key={index}>
+              <Slide
+                data-aos="fade-down"
+                data-aos-duration="700"
+                data-aos-delay={index * 100}
+                className="project-slide"
+                key={index}
+              >
                 <Link to={`/projects/${project.slug}`}>
                   <img
                     className="project-img"
