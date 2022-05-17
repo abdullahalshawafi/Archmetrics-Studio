@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { faEnvelope, faPhone } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 function ContactUs() {
   const [loading, setLoading] = useState(false);
@@ -49,18 +51,30 @@ function ContactUs() {
       <div className="contact-us-details">
         <h1>Contact Us</h1>
         <hr />
-        <p data-aos="zoom-in">
+        <p>
           To meet or sending quotations besides we thrive when coming up with
           innovative ideas also understand that a smart concept should should be
           supported with measurable results.
         </p>
+        <div className="row">
+          <p className="col-12 col-md-6 fs-6">
+            <a href="tel:+20-100-898-5801">
+              <FontAwesomeIcon
+                icon={faPhone}
+                style={{ transform: "rotate(90deg)" }}
+              />{" "}
+              +20 100 898 5801
+            </a>
+          </p>
+          <p className="col-12 col-md-6 fs-6">
+            <a href="mailto:info@archmetrics.org">
+              <FontAwesomeIcon icon={faEnvelope} /> info@archmetrics.org
+            </a>
+          </p>
+        </div>
       </div>
       <form onSubmit={handleSubmit} className="contact-us-form">
-        <div
-          data-aos="fade-up"
-          data-aos-duration="700"
-          className="input-field name"
-        >
+        <div className="input-field name">
           <input
             type="text"
             name="name"
@@ -72,11 +86,7 @@ function ContactUs() {
             <small>{handleErrorMessages("name")}</small>
           )}
         </div>
-        <div
-          data-aos="fade-up"
-          data-aos-duration="700"
-          className="input-field email"
-        >
+        <div className="input-field email">
           <input
             type="email"
             name="email"
@@ -88,11 +98,7 @@ function ContactUs() {
             <small>{handleErrorMessages("email")}</small>
           )}
         </div>
-        <div
-          data-aos="fade-up"
-          data-aos-duration="700"
-          className="input-field message"
-        >
+        <div className="input-field message">
           <textarea
             name="message"
             rows="6"
@@ -104,12 +110,7 @@ function ContactUs() {
             <small>{handleErrorMessages("message")}</small>
           )}
         </div>
-        <button
-          data-aos="fade"
-          data-aos-duration="700"
-          type="submit"
-          disabled={loading}
-        >
+        <button type="submit" disabled={loading}>
           Send your message
         </button>
       </form>

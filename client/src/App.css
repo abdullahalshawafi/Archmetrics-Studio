@@ -479,6 +479,16 @@ a {
   font-size: 1.2rem;
 }
 
+.contact-us-details a {
+  color: var(--light-gray-color);
+  transition: color 0.2s ease-in-out;
+}
+
+.contact-us-details a:focus,
+.contact-us-details a:hover {
+  color: var(--primary-color);
+}
+
 .contact-us-form {
   margin: 4.5rem 6.5rem 0 6.5rem;
   display: grid;
