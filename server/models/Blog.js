@@ -13,6 +13,14 @@ const blogSchema = new mongoose.Schema({
     },
     images:{
         type:[String]
+    },
+    comments:{
+        type:[{
+            name:String,
+            email:String,
+            comment:String,
+            date:String
+        }]
     }
 }, { timestamps: true });
 

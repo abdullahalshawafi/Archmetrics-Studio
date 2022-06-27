@@ -5,7 +5,8 @@ const {
     getSingleBlog,
     createBlog,
     editBlog,
-    deleteBlog
+    deleteBlog,
+    addComment
 } = require("../controllers/blogController");
 
 const { isAuth } = require("../middleware/authMiddleware");
@@ -13,6 +14,8 @@ const { isAuth } = require("../middleware/authMiddleware");
 router.get('/', getAllBlogs);
 
 router.get('/:id',isAuth, getSingleBlog);
+
+router.post("/:id/addcomment", addComment);
 
 router.post('/create', isAuth, createBlog);
 
