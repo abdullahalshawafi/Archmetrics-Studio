@@ -1,0 +1,97 @@
+const Blog = require("../models/Blog");
+const trimInputFields = require("../helpers/trimInputFields");
+const { uploadToGCP, deleteFile } = require("./imageController");
+const { ObjectId } = require('mongodb');
+module.exports = {
+  getAllBlogs: async (req, res) => {
+    try {
+      const blogs = await Blog.find({});
+      res.status(200).json({ blogs });
+    } catch (err) {
+      console.log(err);
+      return res
+        .status(500)
+        .json({ error: "An error has occurred please try again" });
+    }
+  },
+
+  getSingleBlog: async (req, res) => {
+    try {
+      const blog = await Blog.findOne({ "_id": ObjectId(req.params['id']) });
+      res.status(200).json({ blog });
+    } catch (err) {
+      console.log(err);
+      return res
+        .status(500)
+        .json({ error: "An error has occurred please try again" });
+    }
+  },
+
+  createBlog: async (req, res) => {
+    try {
+      trimInputFields(req.body);
+      if(req.body.images){
+        req.body.images = req.body.images.map((img) => {
+          uploadToGCP(img);
+          return process.env.CLOUD_STORAGE_PATH + img;
+        });
+      }
+      let blog = await Blog.create(req.body);
+      return res.status(200).json({ message: "Blog created successfully" , blog: blog});
+    } catch (err) {
+      console.log(err);
+      await req.body.images.forEach((image) => {
+        image.includes(process.env.CLOUD_STORAGE_PATH) && deleteFile(image);
+      });
+      return res
+        .status(500)
+        .json({ error: "An error has occurred please try again" });
+    }
+  },
+
+  editBlog: async (req, res) => {
+    try {
+      trimInputFields(req.body);
+      const blog = await Blog.findOne({ "_id": ObjectId(req.params['id']) });
+      if (blog) {
+        let images = req.body.images;
+        blog.images.forEach((image) => {
+          !images.includes(image) && deleteFile(image);
+        });
+        images = images.map((image) => {
+          if (image.includes(process.env.CLOUD_STORAGE_PATH)) {
+            return image;
+          }
+          uploadToGCP(image);
+          return process.env.CLOUD_STORAGE_PATH + image;
+        });
+        req.body.images = images;
+        let new_blog = await Blog.findOneAndUpdate({ title: req.body.title }, req.body);
+        return res.status(200).json({ message: "Blog updated successfully" , blog: new_blog});
+      }
+    } catch (err) {
+      console.log(err);
+      return res
+        .status(500)
+        .json({ error: "An error has occurred please try again" });
+    }
+  },
+
+  deleteBlog: async (req, res) => {
+    try {
+      const blog = await Blog.findOne({ "_id": ObjectId(req.params['id']) });
+      if (blog) {
+        blog.images.forEach((image) => {
+          deleteFile(image);
+        });
+        await Blog.findOneAndDelete({ title: req.body.title });
+        return res.status(200).json({ message: "Blog deleted successfully" });
+      }
+    } catch (err) {
+      console.log(err);
+      return res
+        .status(500)
+        .json({ error: "An error has occurred please try again" });
+    }
+  },
+};

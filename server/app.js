@@ -23,6 +23,7 @@ app.use(express.static(path.join(__dirname, '../client/build')));
 app.use("/api/contact-us", require("./routes/contactUs"));
 app.use("/api/service", require("./routes/service"));
 app.use("/api/project", require("./routes/project"));
+app.use("/api/blog", require("./routes/blog"));
 app.use("/api/user", require("./routes/user"));
 app.use("/api/image", require("./routes/image"));
 
