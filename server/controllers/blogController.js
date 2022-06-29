@@ -6,7 +6,7 @@ const { uploadToGCP, deleteFile } = require('./imageController');
 module.exports = {
   getAllBlogs: async (req, res) => {
     try {
-      const blogs = await Blog.find({});
+      const blogs = await Blog.find({}, '-__v').sort({ createdAt: 'desc' });
       res.status(200).json({ blogs });
     } catch (err) {
       console.log(err);
@@ -18,7 +18,7 @@ module.exports = {
 
   getSingleBlog: async (req, res) => {
     try {
-      const blog = await Blog.findById(req.params.id);
+      const blog = await Blog.findById(req.params.id, '-__v');
       res.status(200).json({ blog });
     } catch (err) {
       console.log(err);

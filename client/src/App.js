@@ -9,6 +9,7 @@ import {
 import './App.css';
 
 const Home = lazy(() => import('./pages/Home'));
+const Blogs = lazy(() => import('./pages/Blogs'));
 const Services = lazy(() => import('./pages/Services'));
 const ServiceDetails = lazy(() => import('./pages/ServiceDetails'));
 const Projects = lazy(() => import('./pages/Projects'));
@@ -26,6 +27,7 @@ function App() {
         <Suspense fallback={<div></div>}>
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/blogs" element={<Blogs />} />
             <Route path="/services" element={<Services />} />
             <Route path="/services/:service" element={<ServiceDetails />} />
             <Route path="/projects" element={<Projects />} />
@@ -35,8 +37,14 @@ function App() {
             <Route path="/admin/add-service" element={<AdminService />} />
             <Route path="/admin/add-project" element={<AdminProject />} />
             <Route path="/admin/add-blog" element={<AdminBlog />} />
-            <Route path="/admin/edit-service/:service" element={<AdminService />} />
-            <Route path="/admin/edit-project/:project" element={<AdminProject />} />
+            <Route
+              path="/admin/edit-service/:service"
+              element={<AdminService />}
+            />
+            <Route
+              path="/admin/edit-project/:project"
+              element={<AdminProject />}
+            />
             <Route path="/admin/edit-blog/:blogId" element={<AdminBlog />} />
             <Route path="/*" element={<Navigate to="/" />} />
           </Routes>

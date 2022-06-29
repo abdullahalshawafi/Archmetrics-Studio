@@ -1,23 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import ClientLayout from '../layouts/ClientLayout';
-import InfoCard from '../components/InfoCard';
 import { Helmet } from 'react-helmet';
+import ImagesGallery from '../components/ImagesGallery';
 import cover from '../assets/main_Background.jpg';
-import { getServices } from '../services/services';
+import { getBlogs } from '../services/blogs';
 import { useMainContext } from '../contexts/MainContext';
 import '../App.css';
 
 export default function Services() {
-  const [services, setServices] = useState([]);
-  const { pathname, setPathname } = useMainContext();
+  const [blogs, setBlogs] = useState([]);
+  const { setPathname } = useMainContext();
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    setPathname('services');
+    setPathname('blogs');
   });
 
   useEffect(() => {
-    getServices(setServices);
+    getBlogs(setBlogs);
   }, []);
 
   return (
@@ -30,13 +30,23 @@ export default function Services() {
         style={{ backgroundImage: `url(${cover})` }}
       >
         <div style={{ paddingTop: '67px' }}>
-          <h1>This is what we do</h1>
+          <h1>Check out our blogs!</h1>
         </div>
       </div>
-      <div className="services">
-        {services.map((service, index) => (
-          <InfoCard key={index} type={pathname} info={service} />
-        ))}
+      <div className="blogs">
+        {blogs.length === 0 ? (
+          <h1>There are no blogs at the moment :(</h1>
+        ) : (
+          blogs.map((blog) => (
+            <div key={blog._id} className="blog">
+              <h4>{blog.author}</h4>
+              <p>{blog.content}</p>
+              {!!blog.images.length && (
+                <ImagesGallery showThumbnails={false} data={blog.images} />
+              )}
+            </div>
+          ))
+        )}
       </div>
     </ClientLayout>
   );

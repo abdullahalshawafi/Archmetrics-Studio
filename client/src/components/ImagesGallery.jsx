@@ -1,24 +1,23 @@
-import React, { useState, useEffect } from "react";
-import ImageGallery from "react-image-gallery";
-import "../App.css";
-import "react-image-gallery/styles/css/image-gallery.css";
+import React, { useState, useEffect } from 'react';
+import ImageGallery from 'react-image-gallery';
+import '../App.css';
+import 'react-image-gallery/styles/css/image-gallery.css';
 
-function ImagesGallery({ data }) {
-  const [images, setImages] = useState([""]);
+function ImagesGallery({ data, showThumbnails }) {
+  const [images, setImages] = useState(['']);
 
   useEffect(() => {
     const galleryImages = data.map((image) => ({
       original: image,
-      thumbnail: image,
-      loading: "lazy",
+      thumbnail: showThumbnails ? image : null,
+      loading: 'lazy',
     }));
-    console.log(galleryImages);
     setImages(galleryImages);
-  }, [data]);
+  }, [data, showThumbnails]);
 
   return (
     <div className="Gallery">
-      <div style={{ textAlign: "center" }}>
+      <div style={{ textAlign: 'center' }}>
         <ImageGallery
           items={images}
           lazyLoad

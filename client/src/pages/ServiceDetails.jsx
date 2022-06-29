@@ -4,7 +4,7 @@ import ClientLayout from '../layouts/ClientLayout';
 import InfoCard from '../components/InfoCard';
 import { getSingleService } from '../services/services';
 import { Helmet } from 'react-helmet';
-import ImageGallery from '../components/ImagesGallery';
+import ImagesGallery from '../components/ImagesGallery';
 import { useMainContext } from '../contexts/MainContext';
 
 function ServiceDetails() {
@@ -47,7 +47,10 @@ function ServiceDetails() {
             </p>
             <div className="service-gallery mx-auto mt-5">
               {serviceDetails.images && (
-                <ImageGallery data={serviceDetails.images} />
+                <ImagesGallery
+                  showThumbnails={true}
+                  data={serviceDetails.images}
+                />
               )}
             </div>
           </div>

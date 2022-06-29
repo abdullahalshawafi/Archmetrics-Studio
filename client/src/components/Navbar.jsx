@@ -40,6 +40,9 @@ export default function Navbar({ isNavHidden }) {
         <div className={`nav-link ${pathname === 'home' ? 'active' : ''}`}>
           <Link to="/">Home</Link>
         </div>
+        <div className={`nav-link ${pathname === 'blogs' ? 'active' : ''}`}>
+          <Link to="/blogs">Blogs</Link>
+        </div>
         <div className={`nav-link ${pathname === 'services' ? 'active' : ''}`}>
           <Link to="/services">Services</Link>
         </div>

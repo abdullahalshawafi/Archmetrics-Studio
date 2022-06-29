@@ -234,6 +234,22 @@ a {
   margin: 75px;
 }
 
+.blogs {
+  margin: 75px auto;
+  max-width: 750px;
+  width: 90%;
+  font-family: var(--secondary-fm);
+}
+
+.blogs .blog {
+  padding: 2rem 3rem;
+  background-color: var(--gray-border-color);
+}
+
+.blogs .blog:not(:last-child) {
+  margin-bottom: 2rem;
+}
+
 .info-details-container {
   height: 100%;
   position: relative;

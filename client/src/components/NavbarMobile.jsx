@@ -50,6 +50,14 @@ export default function NavbarMobile({ isNavHidden }) {
           </Link>
         </div>
         <div
+          className={`nav-link-mobile ${pathname === 'blogs' ? 'active' : ''}`}
+        >
+          <Link to="/blogs">
+            <span className="mobile">Blogs</span>
+            <FontAwesomeIcon icon={faAngleRight} />
+          </Link>
+        </div>
+        <div
           className={`nav-link-mobile ${
             pathname === 'services' ? 'active' : ''
           }`}

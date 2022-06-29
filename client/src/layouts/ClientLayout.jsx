@@ -32,7 +32,7 @@ function ClientLayout({ children }) {
     };
   }, []);
 
-  const isMobile = useMediaQuery({ query: '(max-width:630px)' });
+  const isMobile = useMediaQuery({ query: '(max-width:772px)' });
 
   return (
     <div>
