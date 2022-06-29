@@ -1,4 +1,4 @@
-import React, { useState, Suspense, lazy } from "react";
+import React, { Suspense, lazy } from "react";
 import { AuthProvider } from "./helpers/AuthContext";
 import {
   BrowserRouter as Router,

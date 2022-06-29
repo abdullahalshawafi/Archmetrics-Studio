@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const blogSchema = new mongoose.Schema({
-    Auther: {
+    Author: {
         type: String,
         minLength: 3,
         maxLength: 40,
