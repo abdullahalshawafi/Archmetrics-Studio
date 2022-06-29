@@ -1,21 +1,21 @@
-const Service = require("../models/Service");
-const Project = require("../models/Project");
-const trimInputFields = require("../helpers/trimInputFields");
-const { uploadToGCP, deleteFile } = require("./imageController");
+const Service = require('../models/Service');
+const Project = require('../models/Project');
+const trimInputFields = require('../helpers/trimInputFields');
+const { uploadToGCP, deleteFile } = require('./imageController');
 
 module.exports = {
   getAllProjects: async (req, res) => {
     try {
       const projects = await Project.find(
         {},
-        "-_id -__v -description -services"
+        '-_id -__v -description -services',
       ).sort({ year: -1, title: 1 });
       res.status(200).json({ projects });
     } catch (err) {
       console.log(err);
       return res
         .status(500)
-        .json({ error: "An error has occurred please try again" });
+        .json({ error: 'An error has occurred please try again' });
     }
   },
 
@@ -23,16 +23,16 @@ module.exports = {
     try {
       const project = await Project.findOne(
         { slug: req.params.slug },
-        "-_id -__v"
-      ).populate("services", "-_id title slug", null, {
-        sort: { title: "asc" },
+        '-_id -__v',
+      ).populate('services', '-_id title slug', null, {
+        sort: { title: 'asc' },
       });
       res.status(200).json({ project });
     } catch (err) {
       console.log(err);
       return res
         .status(500)
-        .json({ error: "An error has occurred please try again" });
+        .json({ error: 'An error has occurred please try again' });
     }
   },
 
@@ -52,13 +52,13 @@ module.exports = {
       });
 
       // Generate a slug for the project
-      const slug = req.body.title.toLowerCase().split(" ").join("-");
+      const slug = req.body.title.toLowerCase().split(' ').join('-');
 
       // Check if the project already exists
       const project = await Project.findOne({ slug });
 
       if (project) {
-        return res.status(400).json({ error: "This project already exists" });
+        return res.status(400).json({ error: 'This project already exists' });
       }
 
       const reqServices = req.body.services;
@@ -99,7 +99,7 @@ module.exports = {
       console.log(err);
       return res
         .status(500)
-        .json({ error: "An error has occurred please try again" });
+        .json({ error: 'An error has occurred please try again' });
     }
   },
 
@@ -107,12 +107,12 @@ module.exports = {
     try {
       trimInputFields(req.body);
 
-      const slug = req.body.title.toLowerCase().split(" ").join("-");
+      const slug = req.body.title.toLowerCase().split(' ').join('-');
 
       let project = await Project.findOne({ slug });
 
       if (project && req.params.slug !== slug) {
-        return res.status(400).json({ error: "This project already exists" });
+        return res.status(400).json({ error: 'This project already exists' });
       }
 
       if (project && project.cover !== req.body.cover) {
@@ -158,13 +158,13 @@ module.exports = {
       const updatedProject = await Project.findOneAndUpdate(
         { slug: req.params.slug },
         { ...req.body, images, slug },
-        { new: true }
+        { new: true },
       );
       updatedProject.services = [];
 
       const services = await Service.find({
         slug: { $in: reqServices },
-      }).populate("projects", "_id");
+      }).populate('projects', '_id');
 
       services.forEach(async (service) => {
         updatedProject.services.push(service._id);
@@ -182,7 +182,7 @@ module.exports = {
       console.log(err);
       return res
         .status(500)
-        .json({ error: "An error has occurred please try again" });
+        .json({ error: 'An error has occurred please try again' });
     }
   },
 
@@ -200,7 +200,7 @@ module.exports = {
       services.forEach(async (service) => {
         const updatedService = await Service.findById(service._id);
         updatedService.projects = updatedService.projects.filter(
-          (projectId) => !projectId.equals(_id)
+          (projectId) => !projectId.equals(_id),
         );
         await updatedService.save();
       });
@@ -210,7 +210,7 @@ module.exports = {
       console.log(err);
       return res
         .status(500)
-        .json({ error: "An error has occurred please try again" });
+        .json({ error: 'An error has occurred please try again' });
     }
   },
 };

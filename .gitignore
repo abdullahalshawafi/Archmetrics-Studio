@@ -103,7 +103,6 @@ dist
 # TernJS port file
 .tern-port
 
-.vscode/
 api.http
 
 warm-sunlight-331910-45e7ded0be86.json

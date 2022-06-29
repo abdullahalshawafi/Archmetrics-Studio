@@ -1,21 +1,21 @@
-const router = require("express").Router();
+const router = require('express').Router();
 
 const {
-    getAllBlogs,
-    getSingleBlog,
-    createBlog,
-    editBlog,
-    deleteBlog,
-    addComment
-} = require("../controllers/blogController");
+  getAllBlogs,
+  getSingleBlog,
+  createBlog,
+  editBlog,
+  deleteBlog,
+  addComment,
+} = require('../controllers/blogController');
 
-const { isAuth } = require("../middleware/authMiddleware");
+const { isAuth } = require('../middleware/authMiddleware');
 
 router.get('/', getAllBlogs);
 
-router.get('/:id',isAuth, getSingleBlog);
+router.get('/:id', isAuth, getSingleBlog);
 
-router.post("/:id/addcomment", addComment);
+router.post('/:id/add-comment', addComment);
 
 router.post('/create', isAuth, createBlog);
 

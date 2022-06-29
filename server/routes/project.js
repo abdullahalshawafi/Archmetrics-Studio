@@ -1,12 +1,12 @@
-const router = require("express").Router();
+const router = require('express').Router();
 const {
-    getAllProjects,
-    getSingleProject,
-    createProject,
-    editProject,
-    deleteProject
-} = require("../controllers/projectController");
-const { isAuth } = require("../middleware/authMiddleware");
+  getAllProjects,
+  getSingleProject,
+  createProject,
+  editProject,
+  deleteProject,
+} = require('../controllers/projectController');
+const { isAuth } = require('../middleware/authMiddleware');
 
 router.get('/', getAllProjects);
 

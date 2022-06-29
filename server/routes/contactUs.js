@@ -1,5 +1,5 @@
-const router = require("express").Router();
-const { sendMessage } = require("../controllers/contactUsController");
+const router = require('express').Router();
+const { sendMessage } = require('../controllers/contactUsController');
 
 router.post('/send', sendMessage);
 

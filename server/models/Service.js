@@ -1,5 +1,5 @@
-const mongoose = require("mongoose");
-const Project = require("./Project");
+const mongoose = require('mongoose');
+const Project = require('./Project');
 
 const serviceSchema = new mongoose.Schema(
   {
@@ -36,11 +36,11 @@ const serviceSchema = new mongoose.Schema(
     projects: [
       {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Project",
+        ref: 'Project',
       },
     ],
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
-module.exports = mongoose.model("Service", serviceSchema);
+module.exports = mongoose.model('Service', serviceSchema);

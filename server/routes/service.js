@@ -1,12 +1,12 @@
-const router = require("express").Router();
+const router = require('express').Router();
 const {
-    getAllServices,
-    getSingleService,
-    createService,
-    editService,
-    deleteService
-} = require("../controllers/serviceController");
-const { isAuth } = require("../middleware/authMiddleware");
+  getAllServices,
+  getSingleService,
+  createService,
+  editService,
+  deleteService,
+} = require('../controllers/serviceController');
+const { isAuth } = require('../middleware/authMiddleware');
 
 router.get('/', getAllServices);
 

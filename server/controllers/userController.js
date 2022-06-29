@@ -1,6 +1,6 @@
-const { sign } = require("jsonwebtoken");
-const bcrypt = require("bcrypt");
-const User = require("../models/User");
+const { sign } = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
+const User = require('../models/User');
 
 module.exports = {
   login: async (req, res) => {
@@ -11,7 +11,7 @@ module.exports = {
 
       if (!user) {
         return res.json({
-          error: "Invalid username or password",
+          error: 'Invalid username or password',
         });
       }
 
@@ -19,7 +19,7 @@ module.exports = {
 
       if (!match) {
         return res.json({
-          error: "Invalid username or password",
+          error: 'Invalid username or password',
         });
       }
 
@@ -44,7 +44,7 @@ module.exports = {
 
       if (result) {
         return res.json({
-          error: "This user already exists",
+          error: 'This user already exists',
         });
       }
 
@@ -53,7 +53,7 @@ module.exports = {
       await User.create(req.body);
 
       res.status(201).json({
-        success: "User signed up successfully",
+        success: 'User signed up successfully',
       });
     } catch (error) {
       return res.json({
