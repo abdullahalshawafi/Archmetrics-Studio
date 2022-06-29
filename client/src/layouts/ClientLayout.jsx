@@ -1,21 +1,18 @@
-import React, { useEffect, useState } from "react";
-import AOS from "aos";
-import { useMediaQuery } from "react-responsive";
-import Navbar from "../components/Navbar";
-import NavbarMobile from "../components/NavbarMobile";
-import Footer from "../components/Footer";
-import BackToTop from "../components/BackToTop";
-import { useAuthContext } from "../helpers/AuthContext";
-import "aos/dist/aos.css";
+import React, { useEffect, useState } from 'react';
+import AOS from 'aos';
+import { useMediaQuery } from 'react-responsive';
+import Navbar from '../components/Navbar';
+import NavbarMobile from '../components/NavbarMobile';
+import Footer from '../components/Footer';
+import BackToTop from '../components/BackToTop';
+import 'aos/dist/aos.css';
 
 function ClientLayout({ children }) {
   const [isNavHidden, setIsNavHidden] = useState(false);
-  const { pathname } = useAuthContext();
 
   useEffect(() => {
     AOS.init();
     let prevScrollPos = window.pageYOffset;
-    console.log(pathname);
     const handleWindowScroll = () => {
       const currentScrollPos = window.pageYOffset;
 
@@ -28,14 +25,14 @@ function ClientLayout({ children }) {
       prevScrollPos = currentScrollPos;
     };
 
-    window.addEventListener("scroll", handleWindowScroll);
+    window.addEventListener('scroll', handleWindowScroll);
 
     return () => {
-      window.removeEventListener("scroll", handleWindowScroll);
+      window.removeEventListener('scroll', handleWindowScroll);
     };
   }, []);
 
-  const isMobile = useMediaQuery({ query: "(max-width:630px)" });
+  const isMobile = useMediaQuery({ query: '(max-width:630px)' });
 
   return (
     <div>

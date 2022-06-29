@@ -1,23 +1,23 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import {
   faAngleRight,
   faBars,
   faTimes,
-} from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import logoBlack from "../assets/logo-black.png";
-import "../App.css";
-import { useAuthContext } from "../helpers/AuthContext";
-export default function NavbarMobile({isNavHidden }) {
-  const { pathname } = useAuthContext();
+} from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import logoBlack from '../assets/logo-black.png';
+import '../App.css';
+import { useMainContext } from '../contexts/MainContext';
+export default function NavbarMobile({ isNavHidden }) {
+  const { pathname } = useMainContext();
   const [click, setClick] = useState(false);
   const handleClick = () => setClick(!click);
   const closeMobileMenu = () => setClick(false);
 
   return (
     <div
-      className={`NavbarMobile ${isNavHidden ? "navbar-hidden" : ""}`}
+      className={`NavbarMobile ${isNavHidden ? 'navbar-hidden' : ''}`}
       id="navbar"
     >
       <div className="LogoMobile">
@@ -40,9 +40,9 @@ export default function NavbarMobile({isNavHidden }) {
           />
         )}
       </div>
-      <div className={click ? "nav-options active" : "nav-options"}>
+      <div className={click ? 'nav-options active' : 'nav-options'}>
         <div
-          className={`nav-link-mobile ${pathname === "home" ? "active" : ""}`}
+          className={`nav-link-mobile ${pathname === 'home' ? 'active' : ''}`}
         >
           <Link to="/">
             <span className="mobile">Home</span>
@@ -51,7 +51,7 @@ export default function NavbarMobile({isNavHidden }) {
         </div>
         <div
           className={`nav-link-mobile ${
-            pathname === "services" ? "active" : ""
+            pathname === 'services' ? 'active' : ''
           }`}
         >
           <Link to="/services">
@@ -61,7 +61,7 @@ export default function NavbarMobile({isNavHidden }) {
         </div>
         <div
           className={`nav-link-mobile ${
-            pathname === "projects" ? "active" : ""
+            pathname === 'projects' ? 'active' : ''
           }`}
         >
           <Link to="/projects">

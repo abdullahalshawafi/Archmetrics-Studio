@@ -1,7 +1,7 @@
-import React from "react";
-import Navbar from "../components/admin/Navbar";
+import React from 'react';
+import Navbar from '../components/admin/Navbar';
 
-function AdminLayout({children }) {
+function AdminLayout({ children }) {
   return (
     <div>
       <Navbar />

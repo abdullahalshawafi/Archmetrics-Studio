@@ -1,15 +1,15 @@
-import React, { useState } from "react";
-import { Helmet } from "react-helmet";
-import { Link, Navigate } from "react-router-dom";
-import { loggedIn, login } from "../../services/auth";
+import React, { useState } from 'react';
+import { Helmet } from 'react-helmet';
+import { Link, Navigate } from 'react-router-dom';
+import { loggedIn, login } from '../../services/auth';
 
 function Login() {
   const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState('');
   const [body, setBody] = useState({
-    username: "",
-    password: "",
+    username: '',
+    password: '',
   });
 
   if (loggedIn || success) {
@@ -40,7 +40,7 @@ function Login() {
   return (
     <div
       className="d-flex justify-content-center align-items-center"
-      style={{ minHeight: "100vh" }}
+      style={{ minHeight: '100vh' }}
     >
       <Helmet>
         <title>Archmetrics | Admin Login</title>

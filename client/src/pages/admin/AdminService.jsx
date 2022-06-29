@@ -1,29 +1,29 @@
-import React, { useEffect, useRef, useState } from "react";
-import { Helmet } from "react-helmet";
-import { Link, Navigate, useParams } from "react-router-dom";
-import GalleryUpload from "../../components/admin/GalleryUpload";
-import AdminLayout from "../../layouts/AdminLayout";
-import { uploadImage } from "../../services";
-import { loggedIn } from "../../services/auth";
+import React, { useEffect, useRef, useState } from 'react';
+import { Helmet } from 'react-helmet';
+import { Link, Navigate, useParams } from 'react-router-dom';
+import GalleryUpload from '../../components/admin/GalleryUpload';
+import AdminLayout from '../../layouts/AdminLayout';
+import { uploadImage } from '../../services';
+import { loggedIn } from '../../services/auth';
 import {
   createService,
   editService,
   getSingleService,
-} from "../../services/services";
-import { useAuthContext } from "../../helpers/AuthContext";
+} from '../../services/services';
+import { useMainContext } from '../../contexts/MainContext';
 
 function AdminService() {
-  const { setAdminPage } = useAuthContext();
+  const { setAdminPage } = useMainContext();
   const { service } = useParams();
   const [summaryCount, setSummaryCount] = useState(0);
   const [loading, setLoading] = useState(false);
   const [loadingGallery, setLoadingGallery] = useState(false);
   const [redirect, setRedirect] = useState(false);
   const [body, setBody] = useState({
-    title: "",
-    summary: "",
-    description: "",
-    cover: "",
+    title: '',
+    summary: '',
+    description: '',
+    cover: '',
     images: [],
   });
 
@@ -34,7 +34,7 @@ function AdminService() {
   const summaryLimit = 100;
 
   useEffect(() => {
-    !service && setAdminPage("services");
+    !service && setAdminPage('services');
   });
 
   useEffect(() => {
@@ -42,17 +42,17 @@ function AdminService() {
       getSingleService(service, setBody, setRedirect);
     } else {
       setBody({
-        title: "",
-        summary: "",
-        description: "",
-        cover: "",
+        title: '',
+        summary: '',
+        description: '',
+        cover: '',
         images: [],
       });
     }
   }, [service]);
 
   useEffect(() => {
-    service && body.cover.includes("https://") && showImagePreview(body.cover);
+    service && body.cover.includes('https://') && showImagePreview(body.cover);
     service && setSummaryCount(body.summary.length);
   }, [service, body]);
 
@@ -65,18 +65,18 @@ function AdminService() {
   }
 
   const showImagePreview = (imgSrc) => {
-    defaultText.current.setAttribute("style", "display: none;");
-    imagePreview.current.setAttribute("src", imgSrc);
+    defaultText.current.setAttribute('style', 'display: none;');
+    imagePreview.current.setAttribute('src', imgSrc);
     imagePreview.current.setAttribute(
-      "style",
-      "display: block; max-width: 100%; height: auto;"
+      'style',
+      'display: block; max-width: 100%; height: auto;',
     );
   };
 
   const removeImagePreview = () => {
-    defaultText.current.setAttribute("style", "display: block;");
-    imagePreview.current.setAttribute("src", "#");
-    imagePreview.current.setAttribute("style", "display: none;");
+    defaultText.current.setAttribute('style', 'display: block;');
+    imagePreview.current.setAttribute('src', '#');
+    imagePreview.current.setAttribute('style', 'display: none;');
   };
 
   const readURL = (input) => {
@@ -96,10 +96,10 @@ function AdminService() {
 
   const handleChange = (e) => {
     const count = summaryField.current.value.length;
-    if (e.target.name === "summary" && count <= summaryLimit) {
+    if (e.target.name === 'summary' && count <= summaryLimit) {
       setBody({ ...body, [e.target.name]: e.target.value });
       setSummaryCount(count);
-    } else if (e.target.name !== "summary") {
+    } else if (e.target.name !== 'summary') {
       setBody({ ...body, [e.target.name]: e.target.value });
     }
   };
@@ -118,30 +118,30 @@ function AdminService() {
       if (!service) {
         removeImagePreview();
         setBody({
-          title: "",
-          summary: "",
-          description: "",
-          cover: "",
+          title: '',
+          summary: '',
+          description: '',
+          cover: '',
           images: [],
         });
-        alert("Service created successfully!");
+        alert('Service created successfully!');
         window.location.reload();
       } else {
-        alert("Service modified successfully!");
+        alert('Service modified successfully!');
         setRedirect(true);
       }
     } else {
-      alert("An error occurred. Please try again.");
+      alert('An error occurred. Please try again.');
     }
   };
 
   return (
     <AdminLayout>
       <Helmet>
-        <title>Archmetrics | {service ? "Edit" : "Add"} Service</title>
+        <title>Archmetrics | {service ? 'Edit' : 'Add'} Service</title>
       </Helmet>
       <div className="pt-5 m-5">
-        <h2 className="page-title">{service ? "Edit" : "Add"} a service</h2>
+        <h2 className="page-title">{service ? 'Edit' : 'Add'} a service</h2>
         <form onSubmit={handleSubmit} encType="multipart/form-data">
           <div className="form-group mb-3">
             <label htmlFor="title">Title</label>
@@ -199,7 +199,7 @@ function AdminService() {
               id="cover"
               title=""
               onChange={readURL}
-              style={{ height: "fit-content" }}
+              style={{ height: 'fit-content' }}
             />
             <div className="bg-secondary">
               <div className="d-flex justify-content-center w-50 mx-auto my-3 py-3">
@@ -207,12 +207,12 @@ function AdminService() {
                   src="#"
                   alt="preview"
                   ref={imagePreview}
-                  style={{ display: "none" }}
+                  style={{ display: 'none' }}
                 />
                 <span
                   ref={defaultText}
                   className="text-light text-center"
-                  style={{ display: "block" }}
+                  style={{ display: 'block' }}
                 >
                   Image Preview
                 </span>

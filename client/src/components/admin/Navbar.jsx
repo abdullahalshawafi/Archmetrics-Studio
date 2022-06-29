@@ -1,10 +1,10 @@
-import React, { useEffect, useRef } from "react";
-import { Link } from "react-router-dom";
-import { logout } from "../../services/auth";
-import { useAuthContext } from "../../helpers/AuthContext";
+import React, { useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
+import { logout } from '../../services/auth';
+import { useMainContext } from '../../contexts/MainContext';
 
 function Navbar() {
-  const { adminPage } = useAuthContext();
+  const { adminPage } = useMainContext();
   const navList = useRef(null);
 
   const handleLogout = () => {
@@ -14,7 +14,7 @@ function Navbar() {
   };
 
   useEffect(() => {
-    navList.current.style.setProperty("--bs-scroll-height", "100px");
+    navList.current.style.setProperty('--bs-scroll-height', '100px');
   }, []);
 
   return (
@@ -43,7 +43,7 @@ function Navbar() {
               <li className="nav-item">
                 <Link
                   className={`nav-link ${
-                    adminPage === "dashboard" && "active"
+                    adminPage === 'dashboard' && 'active'
                   }`}
                   aria-current="page"
                   to="/admin/dashboard"
@@ -53,7 +53,7 @@ function Navbar() {
               </li>
               <li className="nav-item">
                 <Link
-                  className={`nav-link ${adminPage === "services" && "active"}`}
+                  className={`nav-link ${adminPage === 'services' && 'active'}`}
                   to="/admin/add-service"
                 >
                   Add Service
@@ -61,7 +61,7 @@ function Navbar() {
               </li>
               <li className="nav-item">
                 <Link
-                  className={`nav-link ${adminPage === "projects" && "active"}`}
+                  className={`nav-link ${adminPage === 'projects' && 'active'}`}
                   to="/admin/add-project"
                 >
                   Add Project

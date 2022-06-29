@@ -1,20 +1,21 @@
-import React, { useEffect, useState } from "react";
-import AdminLayout from "../../layouts/AdminLayout";
-import { faTrash } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Link, Navigate } from "react-router-dom";
-import { loggedIn } from "../../services/auth";
-import { getServices, deleteService } from "../../services/services";
-import { getProjects, deleteProject } from "../../services/projects";
-import { Helmet } from "react-helmet";
-import {useAuthContext} from '../../helpers/AuthContext';
+import React, { useEffect, useState } from 'react';
+import AdminLayout from '../../layouts/AdminLayout';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Link, Navigate } from 'react-router-dom';
+import { loggedIn } from '../../services/auth';
+import { getServices, deleteService } from '../../services/services';
+import { getProjects, deleteProject } from '../../services/projects';
+import { Helmet } from 'react-helmet';
+import { useMainContext } from '../../contexts/MainContext';
+
 function Dashboard() {
-  const { setAdminPage} = useAuthContext();
+  const { setAdminPage } = useMainContext();
   const [services, setServices] = useState([]);
   const [projects, setProjects] = useState([]);
 
   useEffect(() => {
-    setAdminPage("dashboard");
+    setAdminPage('dashboard');
   });
 
   useEffect(() => {
@@ -25,7 +26,7 @@ function Dashboard() {
   const handleServiceDelete = (service) => {
     if (
       window.confirm(
-        "Are you sure you want to delete this service? It can't be undone"
+        "Are you sure you want to delete this service? It can't be undone",
       )
     ) {
       deleteService(services, service, setServices);
@@ -35,7 +36,7 @@ function Dashboard() {
   const handleProjectDelete = (project) => {
     if (
       window.confirm(
-        "Are you sure you want to delete this project? It can't be undone"
+        "Are you sure you want to delete this project? It can't be undone",
       )
     ) {
       deleteProject(projects, project, setProjects);
@@ -55,7 +56,7 @@ function Dashboard() {
           {services.length ? (
             <table
               className="table table-dark table-striped table-bordered table-hover align-middle mt-1 text-center"
-              style={{ height: "fit-content" }}
+              style={{ height: 'fit-content' }}
             >
               <thead>
                 <tr>
@@ -81,7 +82,7 @@ function Dashboard() {
                         className="btn btn-link text-decoration-none text-danger"
                         onClick={() => handleServiceDelete(service.slug)}
                       >
-                        Delete{" "}
+                        Delete{' '}
                         <FontAwesomeIcon className="ms-2" icon={faTrash} />
                       </button>
                     </td>
@@ -97,7 +98,7 @@ function Dashboard() {
           {projects.length ? (
             <table
               className="table table-dark table-striped table-bordered table-hover align-middle mt-1 text-center"
-              style={{ height: "fit-content" }}
+              style={{ height: 'fit-content' }}
             >
               <thead>
                 <tr>
@@ -123,7 +124,7 @@ function Dashboard() {
                         className="btn btn-link text-decoration-none text-danger"
                         onClick={() => handleProjectDelete(project.slug)}
                       >
-                        Delete{" "}
+                        Delete{' '}
                         <FontAwesomeIcon className="ms-2" icon={faTrash} />
                       </button>
                     </td>

@@ -1,21 +1,21 @@
-import React, { useEffect, useState } from "react";
-import { Navigate, useParams } from "react-router-dom";
-import ClientLayout from "../layouts/ClientLayout";
-import InfoCard from "../components/InfoCard";
-import { getSingleService } from "../services/services";
-import { Helmet } from "react-helmet";
-import ImageGallery from "../components/ImagesGallery";
-import { useAuthContext } from "../helpers/AuthContext";
+import React, { useEffect, useState } from 'react';
+import { Navigate, useParams } from 'react-router-dom';
+import ClientLayout from '../layouts/ClientLayout';
+import InfoCard from '../components/InfoCard';
+import { getSingleService } from '../services/services';
+import { Helmet } from 'react-helmet';
+import ImageGallery from '../components/ImagesGallery';
+import { useMainContext } from '../contexts/MainContext';
 
 function ServiceDetails() {
   let { service } = useParams();
   const [serviceDetails, setServiceDetails] = useState(null);
   const [error, setError] = useState(false);
-  const { setPathname } = useAuthContext();
+  const { setPathname } = useMainContext();
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    setPathname("");
+    setPathname('');
   });
 
   useEffect(() => {
@@ -37,12 +37,12 @@ function ServiceDetails() {
             className="slider-container cover-details"
             style={{ backgroundImage: `url('${serviceDetails.cover}')` }}
           >
-            <div style={{ paddingTop: "67px" }}>
+            <div style={{ paddingTop: '67px' }}>
               <h1>{serviceDetails.title}</h1>
             </div>
           </div>
           <div className="service-details">
-            <p style={{ whiteSpace: "pre-line" }}>
+            <p style={{ whiteSpace: 'pre-line' }}>
               {serviceDetails.description}
             </p>
             <div className="service-gallery mx-auto mt-5">
@@ -63,7 +63,7 @@ function ServiceDetails() {
                     >
                       <InfoCard key={index} type="projects" info={project} />
                     </div>
-                  )
+                  ),
                 )}
               </div>
             </div>

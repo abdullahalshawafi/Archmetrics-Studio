@@ -1,21 +1,20 @@
-import React, { useEffect, useState } from "react";
-import { Helmet } from "react-helmet";
-import { Link, Navigate, useParams } from "react-router-dom";
-import ClientLayout from "../layouts/ClientLayout";
-import { getSingleProject } from "../services/projects";
-import ImageGallery from "../components/ImagesGallery";
-import { useAuthContext } from "../helpers/AuthContext";
+import React, { useEffect, useState } from 'react';
+import { Helmet } from 'react-helmet';
+import { Link, Navigate, useParams } from 'react-router-dom';
+import ClientLayout from '../layouts/ClientLayout';
+import { getSingleProject } from '../services/projects';
+import ImageGallery from '../components/ImagesGallery';
+import { useMainContext } from '../contexts/MainContext';
 
 function ProjectDetails() {
-  
-  const { setPathname } = useAuthContext();
+  const { setPathname } = useMainContext();
   let { project } = useParams();
   const [projectDetails, setProjectDetails] = useState(null);
   const [error, setError] = useState(false);
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    setPathname("");
+    setPathname('');
   });
 
   useEffect(() => {
@@ -37,14 +36,14 @@ function ProjectDetails() {
             className="slider-container cover-details"
             style={{ backgroundImage: `url('${projectDetails.cover}')` }}
           >
-            <div style={{ paddingTop: "67px" }}>
+            <div style={{ paddingTop: '67px' }}>
               <h1>{projectDetails.title}</h1>
               <h4>{projectDetails.year}</h4>
             </div>
           </div>
           <div className="project-details project-description">
             <h4>Project Description:</h4>
-            <p style={{ whiteSpace: "pre-line", margin: 0 }}>
+            <p style={{ whiteSpace: 'pre-line', margin: 0 }}>
               {projectDetails.description}
             </p>
           </div>
