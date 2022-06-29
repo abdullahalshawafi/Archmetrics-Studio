@@ -1,4 +1,5 @@
 import React, { useState, Suspense, lazy } from "react";
+import { AuthProvider } from "./helpers/AuthContext";
 import {
   BrowserRouter as Router,
   Routes,
@@ -18,72 +19,72 @@ const AdminService = lazy(() => import("./pages/admin/AdminService"));
 const AdminProject = lazy(() => import("./pages/admin/AdminProject"));
 
 function App() {
-  const [pathname, setPathname] = useState("");
-  const [adminPage, setAdminPage] = useState("dashboard");
-
+  
   return (
+    <AuthProvider>
     <Router>
       <Suspense fallback={<div></div>}>
         <Routes>
           <Route
             path="/"
-            element={<Home pathname={pathname} setPathname={setPathname} />}
+            element={<Home/>}
           />
           <Route
             path="/services"
-            element={<Services pathname={pathname} setPathname={setPathname} />}
+            element={<Services/>}
           />
           <Route
             path="/services/:service"
             element={
-              <ServiceDetails pathname={pathname} setPathname={setPathname} />
+              <ServiceDetails/>
             }
           />
           <Route
             path="/projects"
-            element={<Projects pathname={pathname} setPathname={setPathname} />}
+            element={<Projects/>}
           />
           <Route
             path="/projects/:project"
             element={
-              <ProjectDetails pathname={pathname} setPathname={setPathname} />
+              <ProjectDetails/>
             }
           />
           <Route path="/admin/login" element={<Login />} />
           <Route
             path="/admin/dashboard"
             element={
-              <Dashboard adminPage={adminPage} setAdminPage={setAdminPage} />
+              <Dashboard/>
             }
           />
           <Route
             path="/admin/add-service"
             element={
-              <AdminService adminPage={adminPage} setAdminPage={setAdminPage} />
+              <AdminService/>
             }
           />
           <Route
             path="/admin/add-project"
             element={
-              <AdminProject adminPage={adminPage} setAdminPage={setAdminPage} />
+              <AdminProject/>
             }
           />
           <Route
             path="/admin/edit-service/:service"
             element={
-              <AdminService adminPage={adminPage} setAdminPage={setAdminPage} />
+              <AdminService/>
             }
           />
           <Route
             path="/admin/edit-project/:project"
             element={
-              <AdminProject adminPage={adminPage} setAdminPage={setAdminPage} />
+              <AdminProject/>
             }
           />
           <Route path="/*" element={<Navigate to="/" />} />
         </Routes>
       </Suspense>
     </Router>
+    </AuthProvider>
   );
 }
 

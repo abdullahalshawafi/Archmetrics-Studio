@@ -4,8 +4,11 @@ import { Link, Navigate, useParams } from "react-router-dom";
 import ClientLayout from "../layouts/ClientLayout";
 import { getSingleProject } from "../services/projects";
 import ImageGallery from "../components/ImagesGallery";
+import { useAuthContext } from "../helpers/AuthContext";
 
-function ProjectDetails({ pathname, setPathname }) {
+function ProjectDetails() {
+  
+  const { setPathname } = useAuthContext();
   let { project } = useParams();
   const [projectDetails, setProjectDetails] = useState(null);
   const [error, setError] = useState(false);
@@ -24,7 +27,7 @@ function ProjectDetails({ pathname, setPathname }) {
   }
 
   return (
-    <ClientLayout pathname={pathname}>
+    <ClientLayout>
       {projectDetails && (
         <div>
           <Helmet>

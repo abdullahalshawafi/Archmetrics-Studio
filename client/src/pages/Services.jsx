@@ -5,9 +5,10 @@ import { Helmet } from "react-helmet";
 import cover from "../assets/main_Background.jpg";
 import { getServices } from "../services/services";
 import "../App.css";
-
-export default function Services({ pathname, setPathname }) {
+import { useAuthContext } from "../helpers/AuthContext";
+export default function Services() {
   const [services, setServices] = useState([]);
+  const {pathname, setPathname } = useAuthContext();
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -19,7 +20,7 @@ export default function Services({ pathname, setPathname }) {
   }, []);
 
   return (
-    <ClientLayout pathname={pathname}>
+    <ClientLayout>
       <Helmet>
         <title>Archmetrics | Services</title>
       </Helmet>

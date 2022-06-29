@@ -5,11 +5,13 @@ import InfoCard from "../components/InfoCard";
 import { getSingleService } from "../services/services";
 import { Helmet } from "react-helmet";
 import ImageGallery from "../components/ImagesGallery";
+import { useAuthContext } from "../helpers/AuthContext";
 
-function ServiceDetails({ pathname, setPathname }) {
+function ServiceDetails() {
   let { service } = useParams();
   const [serviceDetails, setServiceDetails] = useState(null);
   const [error, setError] = useState(false);
+  const { setPathname } = useAuthContext();
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -25,7 +27,7 @@ function ServiceDetails({ pathname, setPathname }) {
   }
 
   return (
-    <ClientLayout pathname={pathname}>
+    <ClientLayout>
       {serviceDetails && (
         <div>
           <Helmet>

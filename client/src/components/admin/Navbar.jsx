@@ -1,8 +1,10 @@
 import React, { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { logout } from "../../services/auth";
+import { useAuthContext } from "../../helpers/AuthContext";
 
-function Navbar({ adminPage }) {
+function Navbar() {
+  const { adminPage } = useAuthContext();
   const navList = useRef(null);
 
   const handleLogout = () => {

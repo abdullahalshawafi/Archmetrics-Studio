@@ -10,8 +10,10 @@ import {
   editService,
   getSingleService,
 } from "../../services/services";
+import { useAuthContext } from "../../helpers/AuthContext";
 
-function AdminService({ adminPage, setAdminPage }) {
+function AdminService() {
+  const { setAdminPage } = useAuthContext();
   const { service } = useParams();
   const [summaryCount, setSummaryCount] = useState(0);
   const [loading, setLoading] = useState(false);
@@ -134,7 +136,7 @@ function AdminService({ adminPage, setAdminPage }) {
   };
 
   return (
-    <AdminLayout adminPage={adminPage}>
+    <AdminLayout>
       <Helmet>
         <title>Archmetrics | {service ? "Edit" : "Add"} Service</title>
       </Helmet>

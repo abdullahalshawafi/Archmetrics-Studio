@@ -11,8 +11,10 @@ import {
   getSingleProject,
 } from "../../services/projects";
 import { getServices } from "../../services/services";
+import { useAuthContext } from "../../helpers/AuthContext";
 
-function AdminService({ adminPage, setAdminPage }) {
+function AdminService() {
+  const { setAdminPage } = useAuthContext();
   const { project } = useParams();
   const [loading, setLoading] = useState(false);
   const [loadingGallery, setLoadingGallery] = useState(false);
@@ -189,7 +191,7 @@ function AdminService({ adminPage, setAdminPage }) {
   };
 
   return (
-    <AdminLayout adminPage={adminPage}>
+    <AdminLayout>
       <Helmet>
         <title>Archmetrics | {project ? "Edit" : "Add"} Project</title>
       </Helmet>

@@ -7,8 +7,9 @@ import { loggedIn } from "../../services/auth";
 import { getServices, deleteService } from "../../services/services";
 import { getProjects, deleteProject } from "../../services/projects";
 import { Helmet } from "react-helmet";
-
-function Dashboard({ adminPage, setAdminPage }) {
+import {useAuthContext} from '../../helpers/AuthContext';
+function Dashboard() {
+  const { setAdminPage} = useAuthContext();
   const [services, setServices] = useState([]);
   const [projects, setProjects] = useState([]);
 
@@ -44,7 +45,7 @@ function Dashboard({ adminPage, setAdminPage }) {
   return !loggedIn ? (
     <Navigate to="/" />
   ) : (
-    <AdminLayout adminPage={adminPage}>
+    <AdminLayout>
       <Helmet>
         <title>Archmetrics | Admin Dashboard</title>
       </Helmet>

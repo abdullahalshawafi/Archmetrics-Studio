@@ -1,13 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState} from "react";
 import ClientLayout from "../layouts/ClientLayout";
 import InfoCard from "../components/InfoCard";
 import cover from "../assets/main_Background.jpg";
 import { getProjects } from "../services/projects";
 import "../App.css";
 import { Helmet } from "react-helmet";
-
-export default function Projects({ pathname, setPathname }) {
+import {useAuthContext} from '../helpers/AuthContext';
+export default function Projects() {
   const [projects, setProjects] = useState([]);
+  const { setPathname,pathname } = useAuthContext();
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -19,7 +20,7 @@ export default function Projects({ pathname, setPathname }) {
   }, []);
 
   return (
-    <ClientLayout pathname={pathname}>
+    <ClientLayout>
       <Helmet>
         <title>Archmetrics | Projects</title>
       </Helmet>

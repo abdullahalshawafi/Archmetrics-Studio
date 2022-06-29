@@ -8,8 +8,9 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import logoBlack from "../assets/logo-black.png";
 import "../App.css";
-
-export default function NavbarMobile({ pathname, isNavHidden }) {
+import { useAuthContext } from "../helpers/AuthContext";
+export default function NavbarMobile({isNavHidden }) {
+  const { pathname } = useAuthContext();
   const [click, setClick] = useState(false);
   const handleClick = () => setClick(!click);
   const closeMobileMenu = () => setClick(false);

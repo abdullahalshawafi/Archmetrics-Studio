@@ -5,16 +5,17 @@ import Navbar from "../components/Navbar";
 import NavbarMobile from "../components/NavbarMobile";
 import Footer from "../components/Footer";
 import BackToTop from "../components/BackToTop";
-
+import { useAuthContext } from "../helpers/AuthContext";
 import "aos/dist/aos.css";
 
-function ClientLayout({ pathname, children }) {
+function ClientLayout({ children }) {
   const [isNavHidden, setIsNavHidden] = useState(false);
+  const { pathname } = useAuthContext();
 
   useEffect(() => {
     AOS.init();
     let prevScrollPos = window.pageYOffset;
-
+    console.log(pathname);
     const handleWindowScroll = () => {
       const currentScrollPos = window.pageYOffset;
 
@@ -39,9 +40,9 @@ function ClientLayout({ pathname, children }) {
   return (
     <div>
       {isMobile ? (
-        <NavbarMobile pathname={pathname} isNavHidden={isNavHidden} />
+        <NavbarMobile isNavHidden={isNavHidden} />
       ) : (
-        <Navbar pathname={pathname} isNavHidden={isNavHidden} />
+        <Navbar isNavHidden={isNavHidden} />
       )}
       {children}
       <Footer />

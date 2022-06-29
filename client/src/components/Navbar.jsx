@@ -3,8 +3,9 @@ import { Link } from "react-router-dom";
 import logoWhite from "../assets/logo-white.png";
 import logoBlack from "../assets/logo-black.png";
 import "../App.css";
-
-export default function Navbar({ pathname, isNavHidden }) {
+import { useAuthContext } from "../helpers/AuthContext";
+export default function Navbar({isNavHidden }) {
+  const { pathname } = useAuthContext();
   const [isNavTop, setIsNavTop] = useState(true);
 
   useEffect(() => {
