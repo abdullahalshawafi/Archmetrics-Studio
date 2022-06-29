@@ -1,25 +1,31 @@
 import axios from 'axios';
 
-export const getServices = async (setter) => {
-  const res = await axios.get(`${process.env.REACT_APP_BASE_URL}/service`);
-  setter(res.data.services);
+export const getBlogs = async (setter) => {
+  const res = await axios.get(`${process.env.REACT_APP_BASE_URL}/blog`);
+  setter(res.data.blogs);
 };
 
-export const getSingleService = async (service, setter, error) => {
+export const getSingleBlog = async (blogId, setter, error) => {
   try {
     const res = await axios.get(
-      `${process.env.REACT_APP_BASE_URL}/service/${service}`,
+      `${process.env.REACT_APP_BASE_URL}/blog/${blogId}`,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          [process.env.REACT_APP_HEADER]: localStorage.getItem('token'),
+        },
+      },
     );
-    setter(res.data.service);
+    setter(res.data.blog);
   } catch (err) {
     console.log(err.message);
     error(true);
   }
 };
 
-export const createService = async (body) => {
+export const createBlog = async (body) => {
   const res = await axios.post(
-    `${process.env.REACT_APP_BASE_URL}/service/create`,
+    `${process.env.REACT_APP_BASE_URL}/blog/create`,
     body,
     {
       headers: {
@@ -32,9 +38,9 @@ export const createService = async (body) => {
   return res.status;
 };
 
-export const editService = async (service, body) => {
+export const editBlog = async (blogId, body) => {
   const res = await axios.put(
-    `${process.env.REACT_APP_BASE_URL}/service/edit/${service}`,
+    `${process.env.REACT_APP_BASE_URL}/blog/edit/${blogId}`,
     body,
     {
       headers: {
@@ -47,9 +53,9 @@ export const editService = async (service, body) => {
   return res.status;
 };
 
-export const deleteService = async (services, service, setter) => {
+export const deleteBlog = async (blogs, blogId, setter) => {
   const res = await axios.delete(
-    `${process.env.REACT_APP_BASE_URL}/service/delete/${service}`,
+    `${process.env.REACT_APP_BASE_URL}/blog/delete/${blogId}`,
     {
       headers: {
         'Content-Type': 'application/json',
@@ -58,7 +64,7 @@ export const deleteService = async (services, service, setter) => {
     },
   );
   if (res.status === 200) {
-    services = services.filter((x) => x.slug !== service);
-    setter(services);
+    blogs = blogs.filter((x) => x._id !== blogId);
+    setter(blogs);
   }
 };

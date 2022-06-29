@@ -67,6 +67,14 @@ function Navbar() {
                   Add Project
                 </Link>
               </li>
+              <li className="nav-item">
+                <Link
+                  className={`nav-link ${adminPage === 'blogs' && 'active'}`}
+                  to="/admin/add-blog"
+                >
+                  Add Blog
+                </Link>
+              </li>
             </ul>
             <button
               className="btn btn-outline-warning"

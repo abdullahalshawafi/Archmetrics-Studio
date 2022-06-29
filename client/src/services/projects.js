@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from 'axios';
 
 export const getProjects = async (setter) => {
   const res = await axios.get(`${process.env.REACT_APP_BASE_URL}/project`);
@@ -8,7 +8,7 @@ export const getProjects = async (setter) => {
 export const getSingleProject = async (project, setter, error) => {
   try {
     const res = await axios.get(
-      `${process.env.REACT_APP_BASE_URL}/project/${project}`
+      `${process.env.REACT_APP_BASE_URL}/project/${project}`,
     );
     if (!res.data.project) {
       error(true);
@@ -34,10 +34,10 @@ export const createProject = async (body) => {
     body,
     {
       headers: {
-        "Content-Type": "application/json",
-        [process.env.REACT_APP_HEADER]: localStorage.getItem("token"),
+        'Content-Type': 'application/json',
+        [process.env.REACT_APP_HEADER]: localStorage.getItem('token'),
       },
-    }
+    },
   );
 
   return res.status;
@@ -58,10 +58,10 @@ export const editProject = async (project, body) => {
       body,
       {
         headers: {
-          "Content-Type": "application/json",
-          [process.env.REACT_APP_HEADER]: localStorage.getItem("token"),
+          'Content-Type': 'application/json',
+          [process.env.REACT_APP_HEADER]: localStorage.getItem('token'),
         },
-      }
+      },
     );
 
     return res.status;
@@ -76,10 +76,10 @@ export const deleteProject = async (projects, project, setter) => {
     `${process.env.REACT_APP_BASE_URL}/project/delete/${project}`,
     {
       headers: {
-        "Content-Type": "application/json",
-        [process.env.REACT_APP_HEADER]: localStorage.getItem("token"),
+        'Content-Type': 'application/json',
+        [process.env.REACT_APP_HEADER]: localStorage.getItem('token'),
       },
-    }
+    },
   );
   if (res.status === 200) {
     projects = projects.filter((x) => x.slug !== project);

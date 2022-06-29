@@ -17,6 +17,7 @@ const Login = lazy(() => import('./pages/admin/Login'));
 const Dashboard = lazy(() => import('./pages/admin/Dashboard'));
 const AdminService = lazy(() => import('./pages/admin/AdminService'));
 const AdminProject = lazy(() => import('./pages/admin/AdminProject'));
+const AdminBlog = lazy(() => import('./pages/admin/AdminBlog'));
 
 function App() {
   return (
@@ -33,14 +34,10 @@ function App() {
             <Route path="/admin/dashboard" element={<Dashboard />} />
             <Route path="/admin/add-service" element={<AdminService />} />
             <Route path="/admin/add-project" element={<AdminProject />} />
-            <Route
-              path="/admin/edit-service/:service"
-              element={<AdminService />}
-            />
-            <Route
-              path="/admin/edit-project/:project"
-              element={<AdminProject />}
-            />
+            <Route path="/admin/add-blog" element={<AdminBlog />} />
+            <Route path="/admin/edit-service/:service" element={<AdminService />} />
+            <Route path="/admin/edit-project/:project" element={<AdminProject />} />
+            <Route path="/admin/edit-blog/:blogId" element={<AdminBlog />} />
             <Route path="/*" element={<Navigate to="/" />} />
           </Routes>
         </Suspense>
