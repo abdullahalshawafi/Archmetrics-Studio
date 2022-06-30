@@ -5,7 +5,14 @@ import jwtDecode from 'jwt-decode';
 import moment from 'moment';
 import ImagesGallery from '../components/ImagesGallery';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEllipsisH, faPen, faTrash } from '@fortawesome/free-solid-svg-icons';
+import {
+  faAngleDown,
+  faEllipsisH,
+  faPen,
+  faShare,
+  faTrash,
+} from '@fortawesome/free-solid-svg-icons';
+import { faCommentAlt, faThumbsUp } from '@fortawesome/free-regular-svg-icons';
 import cover from '../assets/main_Background.jpg';
 import { deleteBlog, getBlogs } from '../services/blogs';
 import { useMainContext } from '../contexts/MainContext';
@@ -36,6 +43,10 @@ export default function Blogs() {
       .catch(() => setLoading(false));
   }, []);
 
+  const handlePageScroll = () => {
+    document.querySelector('.blogs').scrollIntoView();
+  };
+
   return (
     <ClientLayout>
       <Helmet>
@@ -48,6 +59,9 @@ export default function Blogs() {
         <div style={{ paddingTop: '67px' }}>
           <h1>Check out our blogs!</h1>
         </div>
+        <div className="scroll-down-arrow" onClick={handlePageScroll}>
+          <FontAwesomeIcon icon={faAngleDown} size="2x" />
+        </div>
       </div>
       <div className="blogs">
         {loading ? (
@@ -59,7 +73,7 @@ export default function Blogs() {
             <div key={blog._id} className="blog" id={blog._id.toString()}>
               <div className="blog-header">
                 <div className="d-flex flex-column">
-                  <h4 className="blog-author">{blog.author}</h4>
+                  <h5 className="blog-author">Author: {blog.author}</h5>
                   <small className="text-muted">
                     {moment(blog.updatedAt).format('h:m A | Do MMM YYYY')}{' '}
                     {blog.createdAt !== blog.updatedAt ? '(Edited)' : ''}
@@ -79,6 +93,27 @@ export default function Blogs() {
                   />
                 </div>
               )}
+              <div className="blog-stats">
+                <span className="text-muted likes-count">0 Likes</span>
+                <span className="text-muted comments-count">
+                  {blog.comments.length} Comments
+                </span>
+              </div>
+              <hr />
+              <div className="interactions">
+                <span className="interaction-btn">
+                  <FontAwesomeIcon icon={faThumbsUp} />
+                  &nbsp; Like
+                </span>
+                <span className="interaction-btn">
+                  <FontAwesomeIcon icon={faCommentAlt} />
+                  &nbsp; Comments
+                </span>
+                <span className="interaction-btn">
+                  <FontAwesomeIcon icon={faShare} />
+                  &nbsp; Share
+                </span>
+              </div>
             </div>
           ))
         )}

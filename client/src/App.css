@@ -236,12 +236,13 @@ a {
 
 .blogs {
   margin: 75px auto;
-  max-width: 700px;
+  max-width: 600px;
   width: 90%;
 }
 
 .blogs .blog {
-  padding: 1.3rem 2rem;
+  padding: 1.3rem 2rem 0.25rem 2rem;
+  border-radius: 5px;
   background-color: var(--gray-border-color);
 }
 
@@ -295,13 +296,51 @@ a {
 
 .blogs .blog .blog-content {
   margin: 0;
-  margin-top: 1rem;
+  margin: 1rem 0;
   white-space: pre-wrap;
   font-size: 1.12rem;
 }
 
 .blogs .blog .blog-gallery {
-  margin-top: 1rem;
+  margin: 1rem 0;
+}
+
+.blogs .blog .blog-stats {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.blogs .blog .blog-stats .comments-count {
+  cursor: pointer;
+}
+
+.blogs .blog .blog-stats .comments-count:hover {
+  text-decoration: underline;
+}
+
+.blogs .blog hr {
+  margin: 0;
+}
+
+.blogs .blog .interactions {
+  margin-top: 0.25rem;
+  display: flex;
+  align-items: center;
+  text-align: center;
+}
+
+.blogs .blog .interactions .interaction-btn {
+  font-weight: 600;
+  padding: 0.5rem 0;
+  flex-grow: 1;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.blogs .blog .interactions .interaction-btn:hover {
+  background-color: #00000028;
 }
 
 .info-details-container {
@@ -879,12 +918,19 @@ a {
   text-transform: uppercase;
   text-align: center;
   width: 100%;
+  position: relative;
 }
 
 .cover-details h1 {
   font-weight: 800;
   font-size: 50px;
   margin: 0 2rem;
+}
+
+.cover-details .scroll-down-arrow {
+  position: absolute;
+  bottom: 1rem;
+  cursor: pointer;
 }
 
 .cover-details h4 {
