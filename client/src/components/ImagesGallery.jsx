@@ -3,7 +3,7 @@ import ImageGallery from 'react-image-gallery';
 import '../App.css';
 import 'react-image-gallery/styles/css/image-gallery.css';
 
-function ImagesGallery({ data, showThumbnails }) {
+function ImagesGallery({ data, showThumbnails, disableKeyDown }) {
   const [images, setImages] = useState(['']);
 
   useEffect(() => {
@@ -24,6 +24,7 @@ function ImagesGallery({ data, showThumbnails }) {
           showPlayButton={false}
           showBullets
           showIndex
+          disableKeyDown={disableKeyDown}
           slideDuration={800}
         />
       </div>

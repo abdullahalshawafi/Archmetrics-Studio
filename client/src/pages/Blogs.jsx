@@ -36,16 +36,6 @@ export default function Blogs() {
       .catch(() => setLoading(false));
   }, []);
 
-  const handleEditButtonClick = (blogId) => {
-    window.location.href = `/admin/edit-blog/${blogId}`;
-  };
-
-  const handleDeleteButtonClick = (blogId) => {
-    if (window.confirm('Are you sure you want to delete this blog?')) {
-      deleteBlog(blogs, blogId, setBlogs);
-    }
-  };
-
   return (
     <ClientLayout>
       <Helmet>
@@ -76,17 +66,17 @@ export default function Blogs() {
                   </small>
                 </div>
                 {!isAuthorized ? null : (
-                  <DropDownMenu
-                    blog={blog}
-                    handleEditButtonClick={handleEditButtonClick}
-                    handleDeleteButtonClick={handleDeleteButtonClick}
-                  />
+                  <DropDownMenu blogs={blogs} setBlogs={setBlogs} blog={blog} />
                 )}
               </div>
               <p className="blog-content">{blog.content}</p>
               {!!blog.images.length && (
                 <div className="blog-gallery">
-                  <ImagesGallery showThumbnails={false} data={blog.images} />
+                  <ImagesGallery
+                    showThumbnails={false}
+                    disableKeyDown={true}
+                    data={blog.images}
+                  />
                 </div>
               )}
             </div>
@@ -97,11 +87,7 @@ export default function Blogs() {
   );
 }
 
-function DropDownMenu({
-  blog,
-  handleEditButtonClick,
-  handleDeleteButtonClick,
-}) {
+function DropDownMenu({ blogs, setBlogs, blog }) {
   const [showDropdown, setShowDropdown] = useState(false);
 
   const dropdownMenu = useRef(null);
@@ -119,6 +105,16 @@ function DropDownMenu({
       window.removeEventListener('click', windowClickHandler);
     };
   }, []);
+
+  const handleEditButtonClick = (blogId) => {
+    window.location.href = `/admin/edit-blog/${blogId}`;
+  };
+
+  const handleDeleteButtonClick = (blogId) => {
+    if (window.confirm('Are you sure you want to delete this blog?')) {
+      deleteBlog(blogs, blogId, setBlogs);
+    }
+  };
 
   return (
     <div className="options-menu" ref={dropdownMenu}>

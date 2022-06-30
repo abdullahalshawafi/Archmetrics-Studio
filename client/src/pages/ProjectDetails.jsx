@@ -71,6 +71,7 @@ function ProjectDetails() {
               {projectDetails.images && (
                 <ImagesGallery
                   showThumbnails={true}
+                  disableKeyDown={false}
                   data={projectDetails.images.map((image) => image.image)}
                 />
               )}

@@ -49,6 +49,7 @@ function ServiceDetails() {
               {serviceDetails.images && (
                 <ImagesGallery
                   showThumbnails={true}
+                  disableKeyDown={false}
                   data={serviceDetails.images}
                 />
               )}
