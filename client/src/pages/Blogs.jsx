@@ -11,29 +11,17 @@ import { deleteBlog, getBlogs } from '../services/blogs';
 import { useMainContext } from '../contexts/MainContext';
 import '../App.css';
 
-export default function Services() {
+export default function Blogs() {
   const [blogs, setBlogs] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [showDropdown, setShowDropdown] = useState(false);
   const [isAuthorized, setIsAuthorized] = useState(false);
   const { setPathname } = useMainContext();
-
-  const dropdownMenu = useRef(null);
 
   useEffect(() => {
     setPathname('blogs');
   });
 
   useEffect(() => {
-    const windowClickHandler = (e) => {
-      console.log(e.target);
-      if (!dropdownMenu.current.contains(e.target)) {
-        setShowDropdown(false);
-      }
-    };
-
-    window.addEventListener('click', windowClickHandler);
-
     const token = localStorage.getItem('token');
     if (token) {
       const decoded = jwtDecode(token);
@@ -46,10 +34,6 @@ export default function Services() {
     getBlogs(setBlogs)
       .then(() => setLoading(false))
       .catch(() => setLoading(false));
-
-    return () => {
-      window.removeEventListener('click', windowClickHandler);
-    };
   }, []);
 
   const handleEditButtonClick = (blogId) => {
@@ -92,38 +76,11 @@ export default function Services() {
                   </small>
                 </div>
                 {!isAuthorized ? null : (
-                  <div className="options-menu" ref={dropdownMenu}>
-                    <span
-                      className="options-button"
-                      onClick={() => {
-                        setShowDropdown(true);
-                      }}
-                    >
-                      <FontAwesomeIcon icon={faEllipsisH} />
-                    </span>
-                    {!showDropdown ? null : (
-                      <div className="options-dropdown">
-                        <div
-                          className="dropdown-item text-warning"
-                          onClick={() => handleEditButtonClick(blog._id)}
-                        >
-                          <span>Edit</span>
-                          <span>
-                            <FontAwesomeIcon icon={faPen} />
-                          </span>
-                        </div>
-                        <div
-                          className="dropdown-item text-danger"
-                          onClick={() => handleDeleteButtonClick(blog._id)}
-                        >
-                          <span>Delete</span>
-                          <span>
-                            <FontAwesomeIcon icon={faTrash} />
-                          </span>
-                        </div>
-                      </div>
-                    )}
-                  </div>
+                  <DropDownMenu
+                    blog={blog}
+                    handleEditButtonClick={handleEditButtonClick}
+                    handleDeleteButtonClick={handleDeleteButtonClick}
+                  />
                 )}
               </div>
               <p className="blog-content">{blog.content}</p>
@@ -137,5 +94,64 @@ export default function Services() {
         )}
       </div>
     </ClientLayout>
+  );
+}
+
+function DropDownMenu({
+  blog,
+  handleEditButtonClick,
+  handleDeleteButtonClick,
+}) {
+  const [showDropdown, setShowDropdown] = useState(false);
+
+  const dropdownMenu = useRef(null);
+
+  useEffect(() => {
+    const windowClickHandler = (e) => {
+      if (!dropdownMenu.current.contains(e.target)) {
+        setShowDropdown(false);
+      }
+    };
+
+    window.addEventListener('click', windowClickHandler);
+
+    return () => {
+      window.removeEventListener('click', windowClickHandler);
+    };
+  }, []);
+
+  return (
+    <div className="options-menu" ref={dropdownMenu}>
+      <span
+        className="options-button"
+        onClick={() => {
+          setShowDropdown(true);
+        }}
+      >
+        <FontAwesomeIcon icon={faEllipsisH} />
+      </span>
+      {!showDropdown ? null : (
+        <div className="options-dropdown">
+          <div
+            className="dropdown-item text-warning"
+            onClick={() => handleEditButtonClick(blog._id)}
+          >
+            <span>Edit</span>
+            <span>
+              <FontAwesomeIcon icon={faPen} />
+            </span>
+          </div>
+          <div
+            className="dropdown-item text-danger"
+            onClick={() => handleDeleteButtonClick(blog._id)}
+          >
+            <span>Delete</span>
+            <span>
+              <FontAwesomeIcon icon={faTrash} />
+            </span>
+          </div>
+        </div>
+      )}
+    </div>
   );
 }
