@@ -40,7 +40,7 @@ function AdminService() {
   }
 
   if (redirect) {
-    return <Navigate to="/admin/dashboard" />;
+    return <Navigate to="/blogs" />;
   }
 
   const handleChange = (e) => {

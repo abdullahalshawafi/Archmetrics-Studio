@@ -113,12 +113,11 @@ module.exports = {
 
   deleteBlog: async (req, res) => {
     try {
-      const blog = await Blog.findById(req.params.id);
+      const blog = await Blog.findByIdAndDelete(req.params.id);
       if (blog) {
         blog.images.forEach((image) => {
           deleteFile(image);
         });
-        await Blog.findOneAndDelete({ title: req.body.title });
         return res.status(200).json({ message: 'Blog deleted successfully' });
       }
     } catch (err) {
