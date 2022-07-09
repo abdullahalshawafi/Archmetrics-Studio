@@ -1,5 +1,6 @@
 const Blog = require('../models/Blog');
 const moment = require('moment');
+const commentValidations = require('../validations/commentValidations');
 const trimInputFields = require('../helpers/trimInputFields');
 const { uploadToGCP, deleteFile } = require('./imageController');
 
@@ -28,24 +29,59 @@ module.exports = {
     }
   },
 
+  getSingleBlogComments: async (req, res) => {
+    try {
+      const comments = await Blog.findById(req.params.id, '-_id comments');
+      res.status(200).json(comments);
+    } catch (err) {
+      console.log(err);
+      return res
+        .status(500)
+        .json({ error: 'An error has occurred please try again' });
+    }
+  },
+
   addComment: async (req, res) => {
     try {
-      const blog = await Blog.findById(req.params.id);
-      if (blog) {
-        const comment = {
-          name: req.body.name,
-          email: req.body.email,
-          comment: req.body.comment,
-          date: moment().format('Do MMM YYYY, hh:mm A'),
-        };
-        blog.comments.push(comment);
-        await blog.save();
-        res
-          .status(200)
-          .json({ blog: blog, message: 'Comment added successfully' });
-      } else {
-        res.status(404).json({ message: 'blog not found' });
+      for (const field in req.body) {
+        if (Object.hasOwnProperty.call(req.body, field)) {
+          req.body[field] = req.body[field].trim();
+          if (field === 'email') {
+            req.body[field] = req.body[field].toLowerCase();
+          }
+        }
       }
+
+      const { error } = commentValidations.validate(req.body);
+
+      if (error) {
+        const errorMessages = {};
+        error.details.forEach((err) => {
+          errorMessages[err.context.label] = err.message;
+        });
+        return res.json({ errorMessages });
+      }
+
+      const blog = await Blog.findById(req.params.id);
+
+      if (!blog) {
+        return res.status(404).json({ message: 'Blog not found' });
+      }
+
+      const { name, email, comment } = req.body;
+
+      blog.comments.push({
+        name,
+        email,
+        comment,
+        date: moment().format('h:m A | Do MMM YYYY'),
+      });
+
+      await blog.save();
+
+      res
+        .status(200)
+        .json({ blog: blog, message: 'Comment added successfully' });
     } catch (error) {
       console.log(error);
       return res

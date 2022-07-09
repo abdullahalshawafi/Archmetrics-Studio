@@ -18,6 +18,7 @@ const blogSchema = new mongoose.Schema(
     comments: {
       type: [
         {
+          _id: mongoose.Schema.Types.ObjectId,
           name: String,
           email: String,
           comment: String,
