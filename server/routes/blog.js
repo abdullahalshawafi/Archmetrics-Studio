@@ -8,6 +8,8 @@ const {
   createBlog,
   editBlog,
   deleteBlog,
+  addLike,
+  removeLike,
 } = require('../controllers/blogController');
 
 const { isAuth } = require('../middleware/authMiddleware');
@@ -19,6 +21,9 @@ router.get('/:id', isAuth, getSingleBlog);
 router.get('/:id/comments', getSingleBlogComments);
 
 router.post('/:id/add-comment', addComment);
+
+router.put('/:id/like', addLike);
+router.put('/:id/unlike', removeLike);
 
 router.post('/create', isAuth, createBlog);
 

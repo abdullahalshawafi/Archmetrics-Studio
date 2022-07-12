@@ -90,6 +90,48 @@ module.exports = {
     }
   },
 
+  addLike: async (req, res) => {
+    try {
+      const blog = await Blog.findById(req.params.id);
+
+      if (!blog) {
+        return res.status(404).json({ message: 'Blog not found' });
+      }
+
+      blog.likes += 1;
+
+      await blog.save();
+
+      res.status(200).json({ blog: blog, message: 'Like added successfully' });
+    } catch (error) {
+      console.log(error);
+      return res
+        .status(500)
+        .json({ error: 'An error has occurred please try again' });
+    }
+  },
+  removeLike: async (req, res) => {
+    try {
+      const blog = await Blog.findById(req.params.id);
+
+      if (!blog) {
+        return res.status(404).json({ message: 'Blog not found' });
+      }
+
+      blog.likes -= 1;
+
+      await blog.save();
+
+      res
+        .status(200)
+        .json({ blog: blog, message: 'Like removed successfully' });
+    } catch (error) {
+      console.log(error);
+      return res
+        .status(500)
+        .json({ error: 'An error has occurred please try again' });
+    }
+  },
   createBlog: async (req, res) => {
     try {
       trimInputFields(req.body);
