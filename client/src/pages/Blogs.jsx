@@ -16,12 +16,12 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { faCommentAlt, faThumbsUp } from '@fortawesome/free-regular-svg-icons';
 import cover from '../assets/main_Background.jpg';
-import { deleteBlog, getBlogs } from '../services/blogs';
+import { blogLike, blogUnlike, deleteBlog, getBlogs } from '../services/blogs';
 import { useMainContext } from '../contexts/MainContext';
 import '../App.css';
 
 export default function Blogs() {
-  const [blogs, setBlogs] = useState([]);
+  const [blogs, setBlogs] = useState({});
   const [loading, setLoading] = useState(false);
   const [isAuthorized, setIsAuthorized] = useState(false);
   const [commentsCounts, setCommentsCounts] = useState({});
@@ -49,14 +49,14 @@ export default function Blogs() {
   }, []);
 
   useEffect(() => {
-    if (blogs.length > 0) {
-      const displays = blogs.reduce((acc, blog) => {
+    if (Object.values(blogs).length > 0) {
+      const displays = Object.values(blogs).reduce((acc, blog) => {
         acc[blog._id] = false;
         return acc;
       }, {});
 
       setCommentsCounts(
-        blogs.reduce((acc, blog) => {
+        Object.values(blogs).reduce((acc, blog) => {
           acc[blog._id] = blog.comments.length;
           return acc;
         }, {}),
@@ -73,15 +73,29 @@ export default function Blogs() {
 
   const handleLikeBtnClick = (blogId) => {
     if (localStorage.getItem(`${blogId}`) === 'liked') {
-      localStorage.removeItem(`${blogId}`);
-      document
-        .querySelector(`#blog-${blogId} .like-btn`)
-        .classList.remove('liked');
+      blogUnlike(blogId)
+        .then((data) => {
+          setBlogs({ ...blogs, [blogId]: data.blog });
+          localStorage.removeItem(`${blogId}`);
+          document
+            .querySelector(`#blog-${blogId} .like-btn`)
+            .classList.remove('liked');
+        })
+        .catch((err) => {
+          alert(err.message);
+        });
     } else {
-      localStorage.setItem(`${blogId}`, 'liked');
-      document
-        .querySelector(`#blog-${blogId} .like-btn`)
-        .classList.add('liked');
+      blogLike(blogId)
+        .then((data) => {
+          setBlogs({ ...blogs, [blogId]: data.blog });
+          localStorage.setItem(`${blogId}`, 'liked');
+          document
+            .querySelector(`#blog-${blogId} .like-btn`)
+            .classList.add('liked');
+        })
+        .catch((err) => {
+          alert(err.message);
+        });
     }
   };
 
@@ -104,10 +118,10 @@ export default function Blogs() {
       <div className="blogs">
         {loading ? (
           <h2 className="text-center">Loading...</h2>
-        ) : blogs.length === 0 ? (
+        ) : Object.values(blogs).length === 0 ? (
           <h2 className="text-center">There are no blogs at the moment :(</h2>
         ) : (
-          blogs.map((blog) => (
+          Object.values(blogs).map((blog) => (
             <div
               key={blog._id}
               className="blog"
@@ -139,7 +153,7 @@ export default function Blogs() {
               )}
               <div className="blog-stats">
                 <span className="text-muted likes-count">
-                  {blog.likes ? blog.likes : 0} Likes
+                  {blog.likes} Likes
                 </span>
                 <span
                   className="text-muted comments-count"

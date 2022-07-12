@@ -1,4 +1,3 @@
-const { number, required } = require('joi');
 const mongoose = require('mongoose');
 
 const blogSchema = new mongoose.Schema(
@@ -19,7 +18,10 @@ const blogSchema = new mongoose.Schema(
     comments: {
       type: [
         {
-          _id: mongoose.Schema.Types.ObjectId,
+          _id: {
+            type: mongoose.Schema.Types.ObjectId,
+            auto: true,
+          },
           name: String,
           email: String,
           comment: String,

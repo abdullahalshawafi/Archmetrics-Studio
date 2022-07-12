@@ -102,7 +102,7 @@ module.exports = {
 
       await blog.save();
 
-      res.status(200).json({ blog: blog, message: 'Like added successfully' });
+      res.status(200).json({ blog, message: 'Like added successfully' });
     } catch (error) {
       console.log(error);
       return res
@@ -110,6 +110,7 @@ module.exports = {
         .json({ error: 'An error has occurred please try again' });
     }
   },
+
   removeLike: async (req, res) => {
     try {
       const blog = await Blog.findById(req.params.id);
@@ -122,9 +123,7 @@ module.exports = {
 
       await blog.save();
 
-      res
-        .status(200)
-        .json({ blog: blog, message: 'Like removed successfully' });
+      res.status(200).json({ blog, message: 'Like removed successfully' });
     } catch (error) {
       console.log(error);
       return res
@@ -132,6 +131,7 @@ module.exports = {
         .json({ error: 'An error has occurred please try again' });
     }
   },
+
   createBlog: async (req, res) => {
     try {
       trimInputFields(req.body);

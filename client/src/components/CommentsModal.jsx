@@ -44,7 +44,7 @@ function CommentsModal({ display, setDisplay, blogId }) {
         <div className="modal-body">
           {comments.length > 0 ? (
             comments.map((comment) => (
-              <div key={comment.date} className="comment-container">
+              <div key={comment._id} className="comment-container">
                 <p className="comment">{comment.comment}</p>
                 <small className="d-block text-muted">{comment.name}</small>
                 <small className="d-block text-muted">
