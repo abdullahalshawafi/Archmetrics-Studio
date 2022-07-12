@@ -22,8 +22,8 @@ router.get('/:id/comments', getSingleBlogComments);
 
 router.post('/:id/add-comment', addComment);
 
-router.post('/:id/like', addLike);
-router.post('/:id/unlike', removeLike);
+router.put('/:id/like', addLike);
+router.put('/:id/unlike', removeLike);
 
 router.post('/create', isAuth, createBlog);
 
