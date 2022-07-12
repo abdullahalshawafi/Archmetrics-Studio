@@ -15,20 +15,6 @@ const blogSchema = new mongoose.Schema(
     images: {
       type: [String],
     },
-    comments: {
-      type: [
-        {
-          _id: {
-            type: mongoose.Schema.Types.ObjectId,
-            auto: true,
-          },
-          name: String,
-          email: String,
-          comment: String,
-          date: String,
-        },
-      ],
-    },
     likes: {
       type: Number,
       default: 0,
@@ -36,5 +22,11 @@ const blogSchema = new mongoose.Schema(
   },
   { timestamps: true },
 );
+
+blogSchema.virtual('Comments', {
+  ref: 'BlogComment',
+  localField: '_id',
+  foreignField: 'blogID',
+});
 
 module.exports = mongoose.model('Blog', blogSchema);

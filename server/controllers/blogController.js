@@ -1,4 +1,5 @@
 const Blog = require('../models/Blog');
+const BlogComment = require('../models/BlogComment');
 const moment = require('moment');
 const commentValidations = require('../validations/commentValidations');
 const trimInputFields = require('../helpers/trimInputFields');
@@ -7,7 +8,26 @@ const { uploadToGCP, deleteFile } = require('./imageController');
 module.exports = {
   getAllBlogs: async (req, res) => {
     try {
-      const blogs = await Blog.find({}, '-__v').sort({ createdAt: 'desc' });
+      let blogs = await Blog.find({}, '-__v').sort({ createdAt: 'desc' });
+      let comments = [];
+      blogs = await Promise.all(
+        blogs.map(async (blog) => {
+          comments = await blog.populate(
+            'Comments',
+            'name email comment date',
+            null,
+            {
+              sort: { createdAt: 'desc' },
+            },
+          );
+          blog = {
+            ...blog._doc,
+            comments: comments.Comments,
+          };
+          return blog;
+        }),
+      );
+      ``;
       res.status(200).json({ blogs });
     } catch (err) {
       console.log(err);
@@ -19,7 +39,19 @@ module.exports = {
 
   getSingleBlog: async (req, res) => {
     try {
-      const blog = await Blog.findById(req.params.id, '-__v');
+      let blog = await Blog.findById(req.params.id, '-__v');
+      let comments = await blog.populate(
+        'Comments',
+        'name email comment date',
+        null,
+        {
+          sort: { createdAt: 'desc' },
+        },
+      );
+      blog = {
+        ...blog._doc,
+        comments: comments.Comments,
+      };
       res.status(200).json({ blog });
     } catch (err) {
       console.log(err);
@@ -31,8 +63,16 @@ module.exports = {
 
   getSingleBlogComments: async (req, res) => {
     try {
-      const comments = await Blog.findById(req.params.id, '-_id comments');
-      res.status(200).json(comments);
+      let blog = await Blog.findById(req.params.id, '-__v');
+      let comments = await blog.populate(
+        'Comments',
+        'name email comment date',
+        null,
+        {
+          sort: { createdAt: 'desc' },
+        },
+      );
+      res.status(200).json(comments.Comments);
     } catch (err) {
       console.log(err);
       return res
@@ -70,14 +110,15 @@ module.exports = {
 
       const { name, email, comment } = req.body;
 
-      blog.comments.push({
+      const newComment = new BlogComment({
+        blogID: req.params.id,
         name,
         email,
         comment,
         date: moment().format('h:m A | Do MMM YYYY'),
       });
 
-      await blog.save();
+      await newComment.save();
 
       res
         .status(200)
@@ -195,6 +236,10 @@ module.exports = {
       if (blog) {
         blog.images.forEach((image) => {
           deleteFile(image);
+        });
+        let comments = await blog.populate('Comments');
+        comments.Comments.forEach((comment) => {
+          BlogComment.findByIdAndDelete(comment._id);
         });
         return res.status(200).json({ message: 'Blog deleted successfully' });
       }
