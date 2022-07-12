@@ -4,6 +4,8 @@ import { Helmet } from 'react-helmet';
 import jwtDecode from 'jwt-decode';
 import moment from 'moment';
 import ImagesGallery from '../components/ImagesGallery';
+import AddCommentModal from '../components/AddCommentModal';
+import CommentsModal from '../components/CommentsModal';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faAngleDown,
@@ -22,6 +24,9 @@ export default function Blogs() {
   const [blogs, setBlogs] = useState([]);
   const [loading, setLoading] = useState(false);
   const [isAuthorized, setIsAuthorized] = useState(false);
+  const [commentsCounts, setCommentsCounts] = useState({});
+  const [displayComments, setDisplayComments] = useState({});
+  const [displayCommentForms, setDisplayCommentForms] = useState({});
   const { setPathname } = useMainContext();
 
   useEffect(() => {
@@ -43,8 +48,41 @@ export default function Blogs() {
       .catch(() => setLoading(false));
   }, []);
 
+  useEffect(() => {
+    if (blogs.length > 0) {
+      const displays = blogs.reduce((acc, blog) => {
+        acc[blog._id] = false;
+        return acc;
+      }, {});
+
+      setCommentsCounts(
+        blogs.reduce((acc, blog) => {
+          acc[blog._id] = blog.comments.length;
+          return acc;
+        }, {}),
+      );
+
+      setDisplayComments(displays);
+      setDisplayCommentForms(displays);
+    }
+  }, [blogs]);
+
   const handlePageScroll = () => {
     document.querySelector('.blogs').scrollIntoView();
+  };
+
+  const handleLikeBtnClick = (blogId) => {
+    if (localStorage.getItem(`${blogId}`) === 'liked') {
+      localStorage.removeItem(`${blogId}`);
+      document
+        .querySelector(`#blog-${blogId} .like-btn`)
+        .classList.remove('liked');
+    } else {
+      localStorage.setItem(`${blogId}`, 'liked');
+      document
+        .querySelector(`#blog-${blogId} .like-btn`)
+        .classList.add('liked');
+    }
   };
 
   return (
@@ -65,15 +103,21 @@ export default function Blogs() {
       </div>
       <div className="blogs">
         {loading ? (
-          <h1>Loading...</h1>
+          <h2 className="text-center">Loading...</h2>
         ) : blogs.length === 0 ? (
-          <h1>There are no blogs at the moment :(</h1>
+          <h2 className="text-center">There are no blogs at the moment :(</h2>
         ) : (
           blogs.map((blog) => (
-            <div key={blog._id} className="blog" id={blog._id.toString()}>
+            <div
+              key={blog._id}
+              className="blog"
+              id={`blog-${blog._id}`}
+              data-aos="fade-up"
+              data-aos-duration="1000"
+            >
               <div className="blog-header">
                 <div className="d-flex flex-column">
-                  <h5 className="blog-author">Author: {blog.author}</h5>
+                  <h5 className="blog-author">{blog.author}</h5>
                   <small className="text-muted">
                     {moment(blog.updatedAt).format('h:m A | Do MMM YYYY')}{' '}
                     {blog.createdAt !== blog.updatedAt ? '(Edited)' : ''}
@@ -94,18 +138,41 @@ export default function Blogs() {
                 </div>
               )}
               <div className="blog-stats">
-                <span className="text-muted likes-count">0 Likes</span>
-                <span className="text-muted comments-count">
-                  {blog.comments.length} Comments
+                <span className="text-muted likes-count">
+                  {blog.likes ? blog.likes : 0} Likes
+                </span>
+                <span
+                  className="text-muted comments-count"
+                  onClick={() => {
+                    setDisplayComments({
+                      ...displayComments,
+                      [blog._id]: true,
+                    });
+                  }}
+                >
+                  {commentsCounts[blog._id]} Comments
                 </span>
               </div>
               <hr />
               <div className="interactions">
-                <span className="interaction-btn">
+                <span
+                  className={`interaction-btn like-btn ${
+                    blog.liked ? 'liked' : ''
+                  }`}
+                  onClick={() => handleLikeBtnClick(blog._id)}
+                >
                   <FontAwesomeIcon icon={faThumbsUp} />
                   &nbsp; Like
                 </span>
-                <span className="interaction-btn">
+                <span
+                  className="interaction-btn"
+                  onClick={() =>
+                    setDisplayCommentForms({
+                      ...displayCommentForms,
+                      [blog._id]: true,
+                    })
+                  }
+                >
                   <FontAwesomeIcon icon={faCommentAlt} />
                   &nbsp; Comments
                 </span>
@@ -114,6 +181,18 @@ export default function Blogs() {
                   &nbsp; Share
                 </span>
               </div>
+              <AddCommentModal
+                display={displayCommentForms}
+                setDisplay={setDisplayCommentForms}
+                setCount={setCommentsCounts}
+                blogId={blog._id}
+              />
+              <CommentsModal
+                display={displayComments}
+                setDisplay={setDisplayComments}
+                blogId={blog._id}
+                comments={blog.comments}
+              />
             </div>
           ))
         )}

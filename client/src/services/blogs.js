@@ -3,7 +3,13 @@ import axios from 'axios';
 export const getBlogs = async (setter) => {
   try {
     const res = await axios.get(`${process.env.REACT_APP_BASE_URL}/blog`);
-    setter(res.data.blogs);
+    const blogs = res.data.blogs.map((blog) => {
+      if (localStorage.getItem(`${blog._id}`) === 'liked') {
+        return { ...blog, liked: true };
+      }
+      return { ...blog, liked: false };
+    });
+    setter(blogs);
   } catch (err) {
     throw err;
   }

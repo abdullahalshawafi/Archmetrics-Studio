@@ -326,6 +326,7 @@ a {
 .blogs .blog .interactions {
   margin-top: 0.25rem;
   display: flex;
+  gap: 5px;
   align-items: center;
   text-align: center;
 }
@@ -339,8 +340,80 @@ a {
   transition: background-color 0.2s ease-in-out;
 }
 
+.blogs .blog .interactions .like-btn.liked {
+  background-color: #7dcbff5f;
+  color: var(--primary-color);
+}
+
+.blogs .blog .interactions .like-btn.liked:hover {
+  background-color: #4bb7ff5f;
+}
+
 .blogs .blog .interactions .interaction-btn:hover {
   background-color: #00000028;
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.3s ease-in-out;
+}
+
+.modal .modal-content {
+  width: 90%;
+  max-width: 500px;
+  max-height: 90vh;
+  background-color: var(--white-color);
+  border-radius: 5px;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s ease-in-out;
+}
+
+.modal .modal-content .modal-header {
+  padding: 0;
+  border: none;
+  align-self: center;
+}
+
+.modal .modal-content .modal-header .modal-title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.add-comment-form.modal .modal-content .modal-body {
+  padding: 1rem 0 0 0;
+}
+
+.comments-modal.modal .modal-content .modal-body {
+  padding: 0.5rem 0 0 0;
+  max-height: 100%;
+  overflow-y: auto;
+  position: relative;
+}
+
+.comments-modal.modal .modal-content .modal-body::-webkit-scrollbar {
+  width: 5px;
+}
+
+.comments-modal.modal .modal-content .modal-body .comment-container {
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--gray-border-color);
+}
+
+.comments-modal.modal .modal-content .modal-body .comment-container .comment {
+  font-size: 1.2rem;
+  margin: 0;
 }
 
 .info-details-container {
@@ -598,13 +671,25 @@ a {
   color: var(--primary-color);
 }
 
-.contact-us-form {
-  margin: 4.5rem 6.5rem 0 6.5rem;
+.contact-us-form,
+.add-comment-form {
   display: grid;
   gap: 1rem;
   grid-template-columns: 1fr 1fr;
+}
+
+.contact-us-form {
+  margin: 4.5rem 6.5rem 0 6.5rem;
   grid-template-areas:
     'name email'
+    'message message'
+    'submit submit';
+}
+
+.add-comment-form {
+  grid-template-areas:
+    'name name'
+    'email email'
     'message message'
     'submit submit';
 }
@@ -625,23 +710,28 @@ a {
   outline: var(--primary-color) 1px solid;
 }
 
-.contact-us-form .name {
+.contact-us-form .name,
+.add-comment-form .name {
   grid-area: name;
 }
 
-.contact-us-form .email {
+.contact-us-form .email,
+.add-comment-form .email {
   grid-area: email;
 }
 
-.contact-us-form .message {
+.contact-us-form .message,
+.add-comment-form .message {
   grid-area: message;
 }
 
-.contact-us-form .message>textarea {
+.contact-us-form .message>textarea,
+.add-comment-form .message>textarea {
   resize: none;
 }
 
-.contact-us-form button {
+.contact-us-form button,
+.add-comment-form button {
   display: block;
   width: fit-content;
   margin: auto;
@@ -656,7 +746,8 @@ a {
   font-family: var(--primary-fm);
 }
 
-.contact-us-form button {
+.contact-us-form button,
+.add-comment-form button {
   grid-area: submit;
   background-color: var(--primary-color);
   border: var(--primary-color) 2px solid;
@@ -665,12 +756,15 @@ a {
 }
 
 .contact-us-form button:hover,
-.contact-us-form button:focus-visible {
+.add-comment-form button:hover,
+.contact-us-form button:focus-visible,
+.add-comment-form button:focus-visible {
   background-color: transparent;
   color: var(--primary-color);
 }
 
-.contact-us-form button:disabled {
+.contact-us-form button:disabled,
+.add-comment-form button:disabled {
   background-color: transparent;
   border: var(--light-gray-color) 1px solid;
   color: var(--light-gray-color);
@@ -931,6 +1025,11 @@ a {
   position: absolute;
   bottom: 1rem;
   cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.cover-details .scroll-down-arrow:hover {
+  transform: translateY(5px);
 }
 
 .cover-details h4 {
