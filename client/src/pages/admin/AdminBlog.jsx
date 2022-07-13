@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
-import { Link, Navigate, useParams } from 'react-router-dom';
+import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import GalleryUpload from '../../components/admin/GalleryUpload';
 import AdminLayout from '../../layouts/AdminLayout';
 import { loggedIn } from '../../services/auth';
@@ -18,6 +18,8 @@ function AdminService() {
     content: '',
     images: [],
   });
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     !blogId && setAdminPage('blogs');
@@ -60,10 +62,8 @@ function AdminService() {
     if (status === 200) {
       if (!blogId) {
         setBody({
-          title: '',
-          summary: '',
-          description: '',
-          cover: '',
+          author: '',
+          content: '',
           images: [],
         });
         alert('Blog created successfully!');
@@ -128,9 +128,15 @@ function AdminService() {
           >
             Submit
           </button>
-          <Link to="/admin/dashboard" className="btn btn-secondary ms-3">
+          <button
+            type="button"
+            onClick={() => {
+              navigate(-1);
+            }}
+            className="btn btn-secondary ms-3"
+          >
             Cancel
-          </Link>
+          </button>
         </form>
       </div>
     </AdminLayout>

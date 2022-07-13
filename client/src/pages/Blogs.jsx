@@ -72,6 +72,7 @@ export default function Blogs() {
   };
 
   const handleLikeBtnClick = (blogId) => {
+    console.log(blogId);
     if (localStorage.getItem(`${blogId}`) === 'liked') {
       blogUnlike(blogId)
         .then((data) => {
@@ -133,7 +134,7 @@ export default function Blogs() {
                 <div className="d-flex flex-column">
                   <h5 className="blog-author">{blog.author}</h5>
                   <small className="text-muted">
-                    {moment(blog.updatedAt).format('h:m A | Do MMM YYYY')}{' '}
+                    {moment(blog.updatedAt).format('h:mm A | Do MMM YYYY')}{' '}
                     {blog.createdAt !== blog.updatedAt ? '(Edited)' : ''}
                   </small>
                 </div>
