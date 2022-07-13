@@ -100,8 +100,9 @@ export const deleteBlog = async (blogs, blogId, setter) => {
       },
     );
     if (res.status === 200) {
-      blogs = blogs.filter((x) => x._id !== blogId);
-      setter(blogs);
+      const tempBlogs = { ...blogs };
+      delete tempBlogs[blogId];
+      setter(tempBlogs);
     }
   } catch (err) {
     throw err;

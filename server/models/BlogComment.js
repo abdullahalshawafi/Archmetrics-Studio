@@ -2,10 +2,11 @@ const mongoose = require('mongoose');
 
 const BlogComment = new mongoose.Schema(
   {
-    blogID: {
+    blogId: {
       type: mongoose.Schema.Types.ObjectId,
-      required: true,
       ref: 'Blog',
+      required: true,
+      index: true,
     },
     name: String,
     email: String,

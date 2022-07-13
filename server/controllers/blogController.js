@@ -9,25 +9,7 @@ module.exports = {
   getAllBlogs: async (req, res) => {
     try {
       let blogs = await Blog.find({}, '-__v').sort({ createdAt: 'desc' });
-      let comments = [];
-      blogs = await Promise.all(
-        blogs.map(async (blog) => {
-          comments = await blog.populate(
-            'Comments',
-            'name email comment date',
-            null,
-            {
-              sort: { createdAt: 'desc' },
-            },
-          );
-          blog = {
-            ...blog._doc,
-            comments: comments.Comments,
-          };
-          return blog;
-        }),
-      );
-      ``;
+
       res.status(200).json({ blogs });
     } catch (err) {
       console.log(err);
@@ -39,19 +21,19 @@ module.exports = {
 
   getSingleBlog: async (req, res) => {
     try {
-      let blog = await Blog.findById(req.params.id, '-__v');
-      let comments = await blog.populate(
-        'Comments',
+      const blog = await Blog.findById(req.params.id, '-_id -__v').populate(
+        'comments',
         'name email comment date',
         null,
         {
           sort: { createdAt: 'desc' },
         },
       );
-      blog = {
-        ...blog._doc,
-        comments: comments.Comments,
-      };
+
+      if (!blog) {
+        return res.status(404).json({ message: 'Blog not found' });
+      }
+
       res.status(200).json({ blog });
     } catch (err) {
       console.log(err);
@@ -63,16 +45,12 @@ module.exports = {
 
   getSingleBlogComments: async (req, res) => {
     try {
-      let blog = await Blog.findById(req.params.id, '-__v');
-      let comments = await blog.populate(
-        'Comments',
-        'name email comment date',
-        null,
-        {
-          sort: { createdAt: 'desc' },
-        },
-      );
-      res.status(200).json(comments.Comments);
+      let comments = await BlogComment.find(
+        { blogId: req.params.id },
+        '-__v',
+      ).sort({ createdAt: 'desc' });
+
+      res.status(200).json({ comments });
     } catch (err) {
       console.log(err);
       return res
@@ -111,18 +89,19 @@ module.exports = {
       const { name, email, comment } = req.body;
 
       const newComment = new BlogComment({
-        blogID: req.params.id,
+        blogId: req.params.id,
         name,
         email,
         comment,
-        date: moment().format('h:m A | Do MMM YYYY'),
+        date: moment().format('h:mm A | Do MMM YYYY'),
       });
 
-      await newComment.save();
+      blog.comments.push(newComment);
 
-      res
-        .status(200)
-        .json({ blog: blog, message: 'Comment added successfully' });
+      await newComment.save();
+      await blog.save();
+
+      res.status(200).json({ message: 'Comment added successfully!' });
     } catch (error) {
       console.log(error);
       return res
@@ -176,16 +155,19 @@ module.exports = {
   createBlog: async (req, res) => {
     try {
       trimInputFields(req.body);
+
       if (req.body.images) {
         req.body.images = req.body.images.map((img) => {
           uploadToGCP(img);
           return process.env.CLOUD_STORAGE_PATH + img;
         });
       }
+
       let blog = await Blog.create(req.body);
+
       return res
         .status(200)
-        .json({ message: 'Blog created successfully', blog: blog });
+        .json({ message: 'Blog created successfully', blog });
     } catch (err) {
       console.log(err);
       await req.body.images.forEach((image) => {
@@ -201,27 +183,34 @@ module.exports = {
     try {
       trimInputFields(req.body);
       const blog = await Blog.findById(req.params.id);
-      if (blog) {
-        let images = req.body.images;
-        blog.images.forEach((image) => {
-          !images.includes(image) && deleteFile(image);
-        });
-        images = images.map((image) => {
-          if (image.includes(process.env.CLOUD_STORAGE_PATH)) {
-            return image;
-          }
-          uploadToGCP(image);
-          return process.env.CLOUD_STORAGE_PATH + image;
-        });
-        req.body.images = images;
-        let new_blog = await Blog.findOneAndUpdate(
-          { title: req.body.title },
-          req.body,
-        );
-        return res
-          .status(200)
-          .json({ message: 'Blog updated successfully', blog: new_blog });
+      if (!blog) {
+        return res.status(404).json({ message: 'Blog not found' });
       }
+
+      let images = req.body.images;
+
+      blog.images.forEach((image) => {
+        !images.includes(image) && deleteFile(image);
+      });
+
+      images = images.map((image) => {
+        if (image.includes(process.env.CLOUD_STORAGE_PATH)) {
+          return image;
+        }
+        uploadToGCP(image);
+        return process.env.CLOUD_STORAGE_PATH + image;
+      });
+
+      req.body.images = images;
+
+      let new_blog = await Blog.findByIdAndUpdate(req.params.id, {
+        ...req.body,
+        updatedAt: Date.now(),
+      });
+
+      return res
+        .status(200)
+        .json({ message: 'Blog updated successfully', blog: new_blog });
     } catch (err) {
       console.log(err);
       return res
@@ -233,16 +222,18 @@ module.exports = {
   deleteBlog: async (req, res) => {
     try {
       const blog = await Blog.findByIdAndDelete(req.params.id);
-      if (blog) {
-        blog.images.forEach((image) => {
-          deleteFile(image);
-        });
-        let comments = await blog.populate('Comments');
-        comments.Comments.forEach((comment) => {
-          BlogComment.findByIdAndDelete(comment._id);
-        });
-        return res.status(200).json({ message: 'Blog deleted successfully' });
+
+      if (!blog) {
+        return res.status(404).json({ message: 'Blog not found' });
       }
+
+      blog.images.forEach((image) => {
+        deleteFile(image);
+      });
+
+      await BlogComment.deleteMany({ blogId: blog._id });
+
+      return res.status(200).json({ message: 'Blog deleted successfully' });
     } catch (err) {
       console.log(err);
       return res
