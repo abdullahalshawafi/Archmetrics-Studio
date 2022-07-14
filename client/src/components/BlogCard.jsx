@@ -20,6 +20,7 @@ import { Link } from 'react-router-dom';
 
 export default function BlogCard({
   blog,
+  IsSingleBlog,
   handleDeleteBlog,
   displayShare,
   setDisplayShares,
@@ -80,8 +81,21 @@ export default function BlogCard({
             {blog.createdAt !== blog.updatedAt ? '(Edited)' : ''}
           </small>
         </div>
-        {!isAuthorized ? null : (
-          <DropDownMenu handleDeleteBlog={handleDeleteBlog} blog={blog} />
+        {console.log(IsSingleBlog)}
+        {IsSingleBlog ? (
+          !isAuthorized ? null : (
+            <DropDownMenu
+              isAuthorized={isAuthorized}
+              handleDeleteBlog={handleDeleteBlog}
+              blog={blog}
+            />
+          )
+        ) : (
+          <DropDownMenu
+            isAuthorized={isAuthorized}
+            handleDeleteBlog={handleDeleteBlog}
+            blog={blog}
+          />
         )}
       </div>
       <p className="blog-content">{blog.content}</p>
@@ -147,7 +161,7 @@ export default function BlogCard({
   );
 }
 
-function DropDownMenu({ blog, handleDeleteBlog }) {
+function DropDownMenu({ isAuthorized, blog, handleDeleteBlog }) {
   const [showDropdown, setShowDropdown] = useState(false);
 
   const { pathname } = useMainContext();
@@ -209,24 +223,28 @@ function DropDownMenu({ blog, handleDeleteBlog }) {
               </span>
             </Link>
           ) : null}
-          <div
-            className="dropdown-item text-warning"
-            onClick={() => handleEditButtonClick(blog._id)}
-          >
-            <span>Edit</span>
-            <span>
-              <FontAwesomeIcon icon={faPen} />
-            </span>
-          </div>
-          <div
-            className="dropdown-item text-danger"
-            onClick={() => handleDeleteButtonClick(blog._id)}
-          >
-            <span>Delete</span>
-            <span>
-              <FontAwesomeIcon icon={faTrash} />
-            </span>
-          </div>
+          {!isAuthorized ? null : (
+            <div
+              className="dropdown-item text-warning"
+              onClick={() => handleEditButtonClick(blog._id)}
+            >
+              <span>Edit</span>
+              <span>
+                <FontAwesomeIcon icon={faPen} />
+              </span>
+            </div>
+          )}
+          {!isAuthorized ? null : (
+            <div
+              className="dropdown-item text-danger"
+              onClick={() => handleDeleteButtonClick(blog._id)}
+            >
+              <span>Delete</span>
+              <span>
+                <FontAwesomeIcon icon={faTrash} />
+              </span>
+            </div>
+          )}
         </div>
       )}
     </div>

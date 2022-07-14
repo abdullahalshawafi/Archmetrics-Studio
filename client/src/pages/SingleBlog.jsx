@@ -70,6 +70,7 @@ export default function SingleBlog() {
         ) : (
           <BlogCard
             key={blog._id}
+            IsSingleBlog={true}
             blog={blog}
             handleDeleteBlog={handleDeleteBlog}
             displayShare={displayShares[blog._id]}
