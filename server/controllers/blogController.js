@@ -21,7 +21,7 @@ module.exports = {
 
   getSingleBlog: async (req, res) => {
     try {
-      const blog = await Blog.findById(req.params.id, '-_id -__v').populate(
+      const blog = await Blog.findById(req.params.id, '-__v').populate(
         'comments',
         'name email comment date',
         null,
@@ -122,7 +122,7 @@ module.exports = {
 
       await blog.save();
 
-      res.status(200).json({ blog, message: 'Like added successfully' });
+      res.status(200).json({ message: 'Like added successfully' });
     } catch (error) {
       console.log(error);
       return res
@@ -143,7 +143,7 @@ module.exports = {
 
       await blog.save();
 
-      res.status(200).json({ blog, message: 'Like removed successfully' });
+      res.status(200).json({ message: 'Like removed successfully' });
     } catch (error) {
       console.log(error);
       return res
@@ -203,10 +203,7 @@ module.exports = {
 
       req.body.images = images;
 
-      let new_blog = await Blog.findByIdAndUpdate(req.params.id, {
-        ...req.body,
-        updatedAt: Date.now(),
-      });
+      let new_blog = await Blog.findByIdAndUpdate(req.params.id, req.body);
 
       return res
         .status(200)

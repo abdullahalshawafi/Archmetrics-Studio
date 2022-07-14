@@ -16,7 +16,7 @@ const { isAuth } = require('../middleware/authMiddleware');
 
 router.get('/', getAllBlogs);
 
-router.get('/:id', isAuth, getSingleBlog);
+router.get('/:id', getSingleBlog);
 
 router.get('/:id/comments', getSingleBlogComments);
 

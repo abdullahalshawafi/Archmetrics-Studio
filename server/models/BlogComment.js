@@ -8,10 +8,22 @@ const BlogComment = new mongoose.Schema(
       required: true,
       index: true,
     },
-    name: String,
-    email: String,
-    comment: String,
-    date: String,
+    name: {
+      type: String,
+      required: true,
+    },
+    email: {
+      type: String,
+      required: true,
+    },
+    comment: {
+      type: String,
+      required: true,
+    },
+    date: {
+      type: String,
+      required: true,
+    },
   },
   { timestamps: true },
 );
