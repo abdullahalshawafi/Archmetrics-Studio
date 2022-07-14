@@ -20,7 +20,7 @@ export const getBlogs = async (setter) => {
   }
 };
 
-export const getSingleBlog = async (blogId, setter, error) => {
+export const getSingleBlog = async (blogId, setter) => {
   try {
     const res = await axios.get(
       `${process.env.REACT_APP_BASE_URL}/blog/${blogId}`,
@@ -31,10 +31,11 @@ export const getSingleBlog = async (blogId, setter, error) => {
         },
       },
     );
-    setter(res.data.blog);
+    const { blog } = res.data;
+    blog.liked = localStorage.getItem(`${blog._id}`) === 'liked';
+    setter(blog);
   } catch (err) {
-    console.log(err.message);
-    error(true);
+    throw err;
   }
 };
 
@@ -52,9 +53,10 @@ export const getSingleBlogComments = async (blogId, setter, error) => {
 
 export const createBlog = async (body) => {
   try {
+    const now = new Date();
     const res = await axios.post(
       `${process.env.REACT_APP_BASE_URL}/blog/create`,
-      body,
+      { ...body, createdAt: now, updatedAt: now },
       {
         headers: {
           'Content-Type': 'application/json',
@@ -71,9 +73,10 @@ export const createBlog = async (body) => {
 
 export const editBlog = async (blogId, body) => {
   try {
+    const now = new Date();
     const res = await axios.put(
       `${process.env.REACT_APP_BASE_URL}/blog/edit/${blogId}`,
-      body,
+      { ...body, updatedAt: now },
       {
         headers: {
           'Content-Type': 'application/json',
@@ -88,7 +91,7 @@ export const editBlog = async (blogId, body) => {
   }
 };
 
-export const deleteBlog = async (blogs, blogId, setter) => {
+export const deleteBlog = async (blogId) => {
   try {
     const res = await axios.delete(
       `${process.env.REACT_APP_BASE_URL}/blog/delete/${blogId}`,
@@ -100,9 +103,7 @@ export const deleteBlog = async (blogs, blogId, setter) => {
       },
     );
     if (res.status === 200) {
-      const tempBlogs = { ...blogs };
-      delete tempBlogs[blogId];
-      setter(tempBlogs);
+      alert(res.data.message);
     }
   } catch (err) {
     throw err;
@@ -124,12 +125,10 @@ export const addBlogComment = async (blogId, body) => {
 
 export const blogLike = async (blogId) => {
   try {
-    const res = await axios.put(
+    await axios.put(
       `${process.env.REACT_APP_BASE_URL}/blog/${blogId}/like`,
       {},
     );
-
-    return res.data;
   } catch (err) {
     throw err;
   }
@@ -137,12 +136,10 @@ export const blogLike = async (blogId) => {
 
 export const blogUnlike = async (blogId) => {
   try {
-    const res = await axios.put(
+    await axios.put(
       `${process.env.REACT_APP_BASE_URL}/blog/${blogId}/unlike`,
       {},
     );
-
-    return res.data;
   } catch (err) {
     throw err;
   }

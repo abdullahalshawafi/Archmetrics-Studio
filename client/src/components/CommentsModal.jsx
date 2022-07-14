@@ -7,7 +7,7 @@ function CommentsModal({ display, setDisplay, blogId }) {
   const commentsModalRef = useRef(null);
 
   useEffect(() => {
-    if (display[blogId]) {
+    if (display) {
       document.body.style.overflow = 'hidden';
       getSingleBlogComments(blogId, setComments, setLoading);
     } else {
@@ -18,7 +18,7 @@ function CommentsModal({ display, setDisplay, blogId }) {
   useEffect(() => {
     const handleClosingModal = (e) => {
       if (commentsModalRef.current === e.target || e.key === 'Escape') {
-        setDisplay({ ...display, [blogId]: false });
+        setDisplay((prev) => ({ ...prev, [blogId]: false }));
       }
     };
 
@@ -33,13 +33,13 @@ function CommentsModal({ display, setDisplay, blogId }) {
     // eslint-disable-next-line
   }, [setDisplay]);
 
-  return !display[blogId] ? null : loading ? (
+  return !display ? null : loading ? (
     <h3>Loading comments...</h3>
   ) : (
     <div className="comments-modal modal" ref={commentsModalRef}>
       <div className="modal-content" data-aos="fade-down">
         <div className="modal-header">
-          <h2>Comments</h2>
+          <h2 className="modal-title">Comments</h2>
         </div>
         <div className="modal-body">
           {comments.length > 0 ? (

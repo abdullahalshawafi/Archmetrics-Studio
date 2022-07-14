@@ -13,7 +13,7 @@ function AddCommentModal({ display, setDisplay, setCount, blogId }) {
   const modalRef = useRef(null);
 
   useEffect(() => {
-    if (display[blogId]) {
+    if (display) {
       document.body.style.overflow = 'hidden';
     } else {
       document.body.style.overflow = 'auto';
@@ -24,7 +24,7 @@ function AddCommentModal({ display, setDisplay, setCount, blogId }) {
     const handleClosingModal = (e) => {
       if (modalRef.current === e.target || e.key === 'Escape') {
         setErrorMessages({});
-        setDisplay({ ...display, [blogId]: false });
+        setDisplay((prev) => ({ ...prev, [blogId]: false }));
       }
     };
 
@@ -61,7 +61,7 @@ function AddCommentModal({ display, setDisplay, setCount, blogId }) {
           setErrorMessages(data.errorMessages);
         } else {
           setErrorMessages({});
-          setDisplay({ ...display, [blogId]: false });
+          setDisplay((prev) => ({ ...prev, [blogId]: false }));
           setCount((prevCount) => ({
             ...prevCount,
             [blogId]: prevCount[blogId] + 1,
@@ -82,7 +82,7 @@ function AddCommentModal({ display, setDisplay, setCount, blogId }) {
       });
   };
 
-  return !display[blogId] ? null : (
+  return !display ? null : (
     <div className="add-comment-modal modal" ref={modalRef}>
       <div className="modal-content" data-aos="fade-down">
         <div className="modal-header">
