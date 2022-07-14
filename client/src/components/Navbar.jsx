@@ -10,15 +10,21 @@ export default function Navbar({ isNavHidden }) {
 
   useEffect(() => {
     const handleWindowScroll = () => {
-      setIsNavTop(window.pageYOffset > 150 ? false : true);
+      if (pathname !== 'single-blog') {
+        setIsNavTop(window.pageYOffset > 150 ? false : true);
+      }
     };
+
+    if (pathname === 'single-blog') {
+      setIsNavTop(false);
+    }
 
     window.addEventListener('scroll', handleWindowScroll);
 
     return () => {
       window.removeEventListener('scroll', handleWindowScroll);
     };
-  }, []);
+  }, [pathname]);
 
   return (
     <div
