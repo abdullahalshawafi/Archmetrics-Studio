@@ -41,7 +41,7 @@ export default function BlogCard({
           setLikesCounts((prev) => ({ ...prev, [blogId]: prev[blogId] - 1 }));
           localStorage.removeItem(`${blogId}`);
           document
-            .querySelector(`#blog-${blogId} .like-btn`)
+            .querySelector(`.blog-${blogId} .like-btn`)
             .classList.remove('liked');
         })
         .catch((err) => {
@@ -53,7 +53,7 @@ export default function BlogCard({
           setLikesCounts((prev) => ({ ...prev, [blogId]: prev[blogId] + 1 }));
           localStorage.setItem(`${blogId}`, 'liked');
           document
-            .querySelector(`#blog-${blogId} .like-btn`)
+            .querySelector(`.blog-${blogId} .like-btn`)
             .classList.add('liked');
         })
         .catch((err) => {
@@ -67,7 +67,7 @@ export default function BlogCard({
   };
 
   return (
-    <div className="blog" data-aos="fade-up" data-aos-duration="1000">
+    <div className={`blog blog-${blog._id}`} data-aos="fade-up" data-aos-duration="1000">
       <div className="blog-header">
         <div className="d-flex flex-column">
           <h5 className="blog-author">{blog.author}</h5>
