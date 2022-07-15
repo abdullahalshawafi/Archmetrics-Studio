@@ -104,7 +104,7 @@ export default function Blogs() {
             <BlogCard
               key={blog._id}
               blog={blog}
-              IsSingleBlog={false}
+              isSingleBlog={false}
               handleDeleteBlog={handleDeleteBlog}
               displayShare={displayShares[blog._id]}
               setDisplayShares={setDisplayShares}

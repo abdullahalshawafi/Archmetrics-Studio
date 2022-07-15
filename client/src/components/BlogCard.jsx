@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { Link } from 'react-router-dom';
 import moment from 'moment';
 import ImagesGallery from '../components/ImagesGallery';
 import AddCommentModal from '../components/AddCommentModal';
@@ -13,14 +14,13 @@ import {
   faTrash,
 } from '@fortawesome/free-solid-svg-icons';
 import { faCommentAlt, faThumbsUp } from '@fortawesome/free-regular-svg-icons';
+import { useMainContext } from '../contexts/MainContext';
 import { blogLike, blogUnlike, deleteBlog } from '../services/blogs';
 import '../App.css';
-import { useMainContext } from '../contexts/MainContext';
-import { Link } from 'react-router-dom';
 
 export default function BlogCard({
   blog,
-  IsSingleBlog,
+  isSingleBlog,
   handleDeleteBlog,
   displayShare,
   setDisplayShares,
@@ -67,12 +67,7 @@ export default function BlogCard({
   };
 
   return (
-    <div
-      className="blog"
-      id={`blog-${blog._id}`}
-      data-aos="fade-up"
-      data-aos-duration="1000"
-    >
+    <div className="blog" data-aos="fade-up" data-aos-duration="1000">
       <div className="blog-header">
         <div className="d-flex flex-column">
           <h5 className="blog-author">{blog.author}</h5>
@@ -81,16 +76,7 @@ export default function BlogCard({
             {blog.createdAt !== blog.updatedAt ? '(Edited)' : ''}
           </small>
         </div>
-        {console.log(IsSingleBlog)}
-        {IsSingleBlog ? (
-          !isAuthorized ? null : (
-            <DropDownMenu
-              isAuthorized={isAuthorized}
-              handleDeleteBlog={handleDeleteBlog}
-              blog={blog}
-            />
-          )
-        ) : (
+        {isSingleBlog && !isAuthorized ? null : (
           <DropDownMenu
             isAuthorized={isAuthorized}
             handleDeleteBlog={handleDeleteBlog}
@@ -224,26 +210,26 @@ function DropDownMenu({ isAuthorized, blog, handleDeleteBlog }) {
             </Link>
           ) : null}
           {!isAuthorized ? null : (
-            <div
-              className="dropdown-item text-warning"
-              onClick={() => handleEditButtonClick(blog._id)}
-            >
-              <span>Edit</span>
-              <span>
-                <FontAwesomeIcon icon={faPen} />
-              </span>
-            </div>
-          )}
-          {!isAuthorized ? null : (
-            <div
-              className="dropdown-item text-danger"
-              onClick={() => handleDeleteButtonClick(blog._id)}
-            >
-              <span>Delete</span>
-              <span>
-                <FontAwesomeIcon icon={faTrash} />
-              </span>
-            </div>
+            <>
+              <div
+                className="dropdown-item text-warning"
+                onClick={() => handleEditButtonClick(blog._id)}
+              >
+                <span>Edit</span>
+                <span>
+                  <FontAwesomeIcon icon={faPen} />
+                </span>
+              </div>
+              <div
+                className="dropdown-item text-danger"
+                onClick={() => handleDeleteButtonClick(blog._id)}
+              >
+                <span>Delete</span>
+                <span>
+                  <FontAwesomeIcon icon={faTrash} />
+                </span>
+              </div>
+            </>
           )}
         </div>
       )}
