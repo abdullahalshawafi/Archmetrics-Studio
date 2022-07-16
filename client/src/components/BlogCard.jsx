@@ -67,7 +67,11 @@ export default function BlogCard({
   };
 
   return (
-    <div className={`blog blog-${blog._id}`} data-aos="fade-up" data-aos-duration="1000">
+    <div
+      className={`blog blog-${blog._id}`}
+      data-aos="fade-up"
+      data-aos-duration="1000"
+    >
       <div className="blog-header">
         <div className="d-flex flex-column">
           <h5 className="blog-author">{blog.author}</h5>
@@ -95,12 +99,14 @@ export default function BlogCard({
         </div>
       )}
       <div className="blog-stats">
-        <span className="text-muted likes-count">{likesCount} Likes</span>
+        <span className="text-muted likes-count">
+          {likesCount} {likesCount === 1 ? 'Like' : 'Likes'}
+        </span>
         <span
           className="text-muted comments-count"
           onClick={() => handleOpenModal(setDisplayComments, blog._id)}
         >
-          {commentsCount} Comments
+          {commentsCount} {commentsCount === 1 ? 'Comment' : 'Comments'}
         </span>
       </div>
       <hr />
